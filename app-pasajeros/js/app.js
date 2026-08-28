@@ -14,6 +14,9 @@ document.addEventListener('click', (e) => {
   const abrir = e.target.closest('[data-abrir-ruta]');
   if (abrir) { abrirRuta(abrir.dataset.abrirRuta); return; }
 
+  const asiento = e.target.closest('[data-asiento]');
+  if (asiento) { alternarAsiento(asiento.dataset.asiento); return; }
+
   const horario = e.target.closest('[data-elegir-horario]');
   if (horario) { elegirHorario(Number(horario.dataset.elegirHorario)); return; }
 
@@ -50,7 +53,9 @@ document.addEventListener('click', (e) => {
     'cerrar-sesion': cerrarSesion,
     'buscar-desde-home': buscarDesdeHome,
     'mi-ubicacion': mostrarMiUbicacion,
-    'volver-detalle': () => ir('detalle-ruta'),
+    'volver-detalle': () => ir('asientos'),
+    'volver-horarios': () => ir('detalle-ruta'),
+    'continuar-asientos': continuarAlPago,
     'pagar': pagar,
     'enviar-reporte': enviarReporte,
   }[accion.dataset.accion] || (() => {}))();

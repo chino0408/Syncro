@@ -353,3 +353,150 @@ body{
   font-family:var(--display); font-weight:500; font-size:14px;
   color:var(--texto-tenue); margin:20px 0 10px 0;
 }
+
+/* ==========================================================
+   SELECCIÓN DE ASIENTOS
+   Vista superior del bus. La carrocería usa el cian de la marca;
+   el interior va claro para que los asientos se lean de un vistazo.
+   ========================================================== */
+
+.asientos-conteo{
+  font-size:13px; color:var(--texto-tenue);
+  text-align:center; margin-bottom:14px;
+}
+
+/* ---------- Referencia de colores ---------- */
+.leyenda{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:9px 14px;
+  padding:12px; margin-bottom:18px;
+  background:var(--fondo-2); border-radius:12px;
+}
+.leyenda-item{
+  display:flex; align-items:center; gap:7px;
+  font-size:11.5px; color:var(--texto-tenue);
+}
+.leyenda .muestra{
+  width:14px; height:14px; border-radius:4px; flex-shrink:0;
+  border:1px solid rgba(0,0,0,.25);
+}
+.leyenda .muestra.libre{ background:#3DDC84; }
+.leyenda .muestra.vendido{ background:#F14336; }
+.leyenda .muestra.accesible{ background:#1B3B7A; }
+.leyenda .muestra.elegido{ background:#FFFFFF; box-shadow:0 0 0 2px var(--cian); }
+
+/* ---------- Carrocería ---------- */
+.bus{
+  max-width:268px; margin:0 auto 18px auto;
+  background:var(--cian);
+  border-radius:30px 30px 22px 22px;
+  padding:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+/* Frente y parte trasera: barras oscuras tipo parachoques */
+.bus-frente, .bus-trasera{
+  background:var(--grafito);
+  height:20px; margin:0 6px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 8px;
+}
+.bus-frente{ border-radius:22px 22px 4px 4px; margin-bottom:6px; }
+.bus-trasera{ border-radius:4px 4px 16px 16px; margin-top:6px; }
+
+.bus-frente::before, .bus-frente::after,
+.bus-trasera::before, .bus-trasera::after{
+  content:''; width:16px; height:7px; border-radius:3px;
+  background:rgba(255,255,255,.28);
+}
+
+/* Interior claro, donde van los asientos */
+.bus-interior{
+  background:#F4F7F9;
+  border-radius:8px;
+  padding:12px 10px;
+}
+
+.bus-fila{
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:7px;
+}
+.bus-fila:last-child{ margin-bottom:0; }
+.bus-par{ display:flex; gap:5px; }
+.bus-pasillo{ width:30px; flex-shrink:0; }
+
+/* ---------- Asiento ---------- */
+.asiento{
+  width:40px; height:40px; flex-shrink:0; padding:0;
+  border:none; background:none; cursor:pointer;
+  position:relative; display:block;
+  transition:transform .1s ease;
+}
+.asiento:active{ transform:scale(.9); }
+.asiento svg{ width:100%; height:100%; display:block; }
+.asiento .num{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  padding-top:5px;
+  font-family:var(--cuerpo); font-size:12px; font-weight:600;
+  color:var(--texto);
+  pointer-events:none;
+}
+
+/* Colores según estado */
+.asiento.libre     { --relleno:#3DDC84; --borde:#2BA862; --texto:#0C2E1B; }
+.asiento.vendido   { --relleno:#F14336; --borde:#B32A20; --texto:#FFFFFF; cursor:not-allowed; }
+.asiento.accesible { --relleno:#1B3B7A; --borde:#0E2450; --texto:#FFFFFF; }
+.asiento.elegido   { --relleno:#FFFFFF; --borde:var(--cian-oscuro); --texto:#0B101B; }
+
+.asiento.libre:hover:not(.vendido),
+.asiento.accesible:hover:not(.vendido){ filter:brightness(1.12); }
+
+.asiento.elegido::after{
+  content:''; position:absolute; inset:-3px;
+  border:2px solid var(--cian); border-radius:9px;
+  pointer-events:none;
+}
+
+.asiento.vacio{ visibility:hidden; }
+
+/* Ícono de silla de ruedas en los asientos accesibles */
+.asiento .icono-acc{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  padding-top:4px; pointer-events:none;
+}
+.asiento .icono-acc svg{ width:19px; height:19px; color:#FFFFFF; }
+
+.asientos-nota{
+  font-size:12px; color:var(--texto-tenue);
+  text-align:center; line-height:1.65; max-width:290px; margin:0 auto;
+}
+
+/* ---------- Barra fija con el total ---------- */
+.asientos-barra{
+  position:fixed; bottom:0; left:0; right:0;
+  max-width:480px; margin:0 auto;
+  background:rgba(19,44,59,.96);
+  backdrop-filter:blur(12px);
+  border-top:1px solid rgba(29,205,241,.2);
+  padding:14px 18px calc(14px + var(--safe-b)) 18px;
+  display:flex; align-items:center; gap:14px;
+  z-index:45;
+}
+.asientos-barra > div{ flex:1; min-width:0; }
+.asientos-barra .btn{ width:auto; flex-shrink:0; padding:13px 18px; }
+.ar-etq{
+  font-family:var(--display); font-weight:500; font-size:13px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.ar-sub{ font-size:11.5px; color:var(--texto-tenue); margin-top:3px; }
+.ar-total{
+  font-family:var(--display); font-weight:600; font-size:19px;
+  color:var(--cian); margin-top:2px;
+}
+
+@media (max-width:360px){
+  .asiento{ width:36px; height:36px; }
+  .bus{ max-width:246px; }
+  .bus-pasillo{ width:24px; }
+}

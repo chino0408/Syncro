@@ -30,7 +30,7 @@ function pintarTiquetes() {
           </div>
           <div style="min-width:0">
             <div class="fila-titulo">${ruta.origen} → ${ruta.destino}</div>
-            <div class="fila-sub">${fechaRelativa(t.hora)} · ${horaCorta(t.hora)} · Asiento ${t.asiento}</div>
+            <div class="fila-sub">${fechaRelativa(t.hora)} · ${horaCorta(t.hora)} · ${textoAsientos(t)}</div>
           </div>
         </div>
         <span class="chip ${pasado ? 'chip-usado' : 'chip-valido'}">${pasado ? 'Usado' : 'Válido'}</span>
@@ -49,7 +49,8 @@ function abrirTiquete(id) {
       <span class="chip ${pasado ? 'chip-usado' : 'chip-valido'}" style="margin-bottom:16px;">${pasado ? 'Usado' : 'Válido'}</span>
       <div class="qr-caja"><canvas id="qr-canvas" width="180" height="180"></canvas></div>
       <div style="font-family:var(--display); font-weight:600; font-size:17px; margin-bottom:4px;">${ruta.origen} → ${ruta.destino}</div>
-      <div style="font-size:13px; color:var(--texto-tenue);">${fechaRelativa(t.hora)} · ${horaCorta(t.hora)} · Asiento ${t.asiento}</div>
+      <div style="font-size:13px; color:var(--texto-tenue);">${fechaRelativa(t.hora)} · ${horaCorta(t.hora)}</div>
+      <div style="font-family:var(--display); font-weight:500; font-size:14px; color:var(--cian); margin-top:8px;">${textoAsientos(t)}</div>
     </div>
 
     <div class="card">

@@ -163,6 +163,51 @@
     </div>
   </section>
 
+  <!-- ============ SELECCIÓN DE ASIENTOS ============ -->
+  <section class="screen" id="pantalla-asientos">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-accion="volver-horarios" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div style="min-width:0">
+        <div id="asientos-titulo" style="font-size:19px; line-height:1.2;">Elegí tu asiento</div>
+        <div id="asientos-sub" style="font-size:12.5px; color:var(--texto-tenue); font-family:var(--cuerpo); font-weight:400; margin-top:3px;"></div>
+      </div>
+    </div>
+
+    <div class="contenido" style="padding-bottom:120px">
+      <div id="asientos-disponibles" class="asientos-conteo"></div>
+
+      <!-- Referencia de colores -->
+      <div class="leyenda">
+        <div class="leyenda-item"><span class="muestra libre"></span>Disponible</div>
+        <div class="leyenda-item"><span class="muestra vendido"></span>Ocupado</div>
+        <div class="leyenda-item"><span class="muestra accesible"></span>Accesible</div>
+        <div class="leyenda-item"><span class="muestra elegido"></span>Tu elección</div>
+      </div>
+
+      <!-- El bus visto desde arriba -->
+      <div class="bus">
+        <div class="bus-frente"></div>
+        <div class="bus-interior" id="bus-asientos"></div>
+        <div class="bus-trasera"></div>
+      </div>
+
+      <p class="asientos-nota">
+        Los asientos azules están reservados para personas con discapacidad.
+        Podés elegir hasta 8 asientos en una misma compra.
+      </p>
+    </div>
+
+    <!-- Barra fija con el total -->
+    <div class="asientos-barra">
+      <div id="asientos-detalle"></div>
+      <button class="btn btn-primario" id="btn-continuar-asientos" data-accion="continuar-asientos" disabled>
+        Elegí un asiento
+      </button>
+    </div>
+  </section>
+
   <!-- ============ RESUMEN Y PAGO ============ -->
   <section class="screen" id="pantalla-compra">
     <div class="titulo-pantalla">
@@ -416,6 +461,7 @@
 <script src="js/pantalla-home.js"></script>
 <script src="js/pantalla-rutas.js"></script>
 <script src="js/pantalla-detalle-ruta.js"></script>
+<script src="js/pantalla-asientos.js"></script>
 <script src="js/pantalla-compra.js"></script>
 <script src="js/pantalla-tiquetes.js"></script>
 <script src="js/notificaciones.js"></script>

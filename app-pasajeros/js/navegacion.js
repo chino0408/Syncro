@@ -11,7 +11,8 @@ function ir(pantalla) {
   if (destino) destino.classList.add('active');
 
   // Barra inferior: visible solo en las pantallas raíz + secundarias con contexto
-  const mostrarNav = estado.sesion && pantalla !== 'bienvenida' && pantalla !== 'compra';
+  const sinNav = ['bienvenida', 'compra', 'asientos'];
+  const mostrarNav = estado.sesion && !sinNav.includes(pantalla);
   $('#nav-inferior').style.display = mostrarNav ? 'flex' : 'none';
 
   // Marcar pestaña activa
@@ -27,6 +28,7 @@ function ir(pantalla) {
     perfil: pintarPerfil,
     notificaciones: pintarNotificaciones,
     'detalle-ruta': pintarDetalleRuta,
+    asientos: pintarAsientos,
     compra: pintarCompra,
     'ayuda-reporte': prepararReporte,
   }[pantalla];

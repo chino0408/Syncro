@@ -1,30 +1,30 @@
 /* Syncro — pantalla-compra.js
    Ver README.md para el orden de carga de los archivos. */
 
-/* ---------- 11. Compra ---------- */
-function elegirHorario(indice) {
-  const ruta = RUTAS.find(r => r.id === estado.rutaAbierta);
-  const salida = estado._salidas[indice];
-  estado.compra = {
-    rutaId: ruta.id,
-    hora: salida.hora,
-    precio: ruta.precio,
-    asiento: 1 + Math.floor(Math.random() * 40),
-  };
-  estado.pagoElegido = METODOS_PAGO[0].id;
-  ir('compra');
-}
+/* ---------- 11. Compra ----------
+   La elección del horario ahora lleva a la pantalla de asientos
+   (ver pantalla-asientos.js). Acá se cobra lo que se eligió ahí. */
 
 function pintarCompra() {
   const c = estado.compra;
-  if (!c) return ir('rutas');
+  if (!c || !c.asientos || !c.asientos.length) return ir('rutas');
   const ruta = RUTAS.find(r => r.id === c.rutaId);
+
+  const cantidad = c.asientos.length;
+  const subtotal = cantidad * c.precio;
 
   $('#compra-resumen').innerHTML = `
     <div class="resumen-linea"><span class="etq">Ruta</span><span>${ruta.origen} → ${ruta.destino}</span></div>
     <div class="resumen-linea"><span class="etq">Salida</span><span>${fechaRelativa(c.hora)}, ${horaCorta(c.hora)}</span></div>
-    <div class="resumen-linea"><span class="etq">Asiento</span><span>${c.asiento}</span></div>
-    <div class="resumen-linea"><span class="etq">Total</span><span class="resumen-total">${colones(c.precio)}</span></div>`;
+    <div class="resumen-linea">
+      <span class="etq">${cantidad === 1 ? 'Asiento' : 'Asientos'}</span>
+      <span>${c.asientos.join(', ')}</span>
+    </div>
+    <div class="resumen-linea">
+      <span class="etq">${colones(c.precio)} × ${cantidad}</span>
+      <span>${colones(subtotal)}</span>
+    </div>
+    <div class="resumen-linea"><span class="etq">Total</span><span class="resumen-total">${colones(subtotal)}</span></div>`;
 
   $('#compra-pagos').innerHTML = METODOS_PAGO.map(m => `
     <div class="opcion-pago ${estado.pagoElegido === m.id ? 'elegida' : ''}" data-pago="${m.id}">
@@ -44,7 +44,7 @@ function pintarCompra() {
 
 function pagar() {
   const c = estado.compra;
-  if (!c) return;
+  if (!c || !c.asientos.length) return;
   const boton = $('#btn-pagar');
   boton.disabled = true;
   boton.textContent = 'Procesando…';
@@ -59,12 +59,14 @@ function pagar() {
       return mostrarError('#compra-error', 'El pago no se completó. Probá con otro método o intentá de nuevo.');
     }
 
+    const cantidad = c.asientos.length;
     const tiquete = {
       id: 'TK' + Date.now().toString().slice(-8),
       rutaId: c.rutaId,
       hora: c.hora,
-      precio: c.precio,
-      asiento: c.asiento,
+      precio: c.precio * cantidad,   // lo que se pagó en total
+      precioUnitario: c.precio,
+      asientos: [...c.asientos],
       comprado: new Date().toISOString(),
       estado: 'valido',
     };
@@ -74,7 +76,7 @@ function pagar() {
     agregarNotificacion({
       tipo: 'compra',
       titulo: 'Compra completada',
-      texto: `Tu tiquete de ${ruta.origen} a ${ruta.destino} está listo. Asiento ${c.asiento}.`,
+      texto: `Tu tiquete de ${ruta.origen} a ${ruta.destino} está listo. ${textoAsientos(tiquete)}.`,
       tiqueteId: tiquete.id,
     });
     // Aviso programado: 15 minutos antes de la salida
@@ -89,6 +91,14 @@ function pagar() {
     estado.compra = null;
     persistir();
     abrirTiquete(tiquete.id);
-    toast('Tiquete comprado');
+    toast(cantidad === 1 ? 'Tiquete comprado' : `${cantidad} tiquetes comprados`);
   }, 900);
+}
+
+/* Texto de asientos. Sirve tanto para los tiquetes nuevos como para
+   los comprados antes de que existiera la selección múltiple. */
+function textoAsientos(t) {
+  const lista = t.asientos || (t.asiento ? [t.asiento] : []);
+  if (!lista.length) return 'Sin asiento';
+  return (lista.length === 1 ? 'Asiento ' : 'Asientos ') + lista.join(', ');
 }
