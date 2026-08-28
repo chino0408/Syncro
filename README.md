@@ -13,6 +13,7 @@ Proyecto integrador — Universidad Invenio, carrera de TICE.
 | `app-pasajeros/` | App móvil para el pasajero: consulta rutas, compra tiquetes con QR |
 | `panel-empresas/` | Panel web para las empresas autobuseras: rutas, precios, flota, choferes y horarios |
 | `documentacion/` | Diagramas de flujo, lámina de marca, wireframes y documentos del curso |
+| `documentacion/base-datos/` | Modelo entidad-relación y scripts SQL de PostgreSQL |
 
 Los dos productos comparten la misma identidad visual pero se usan en contextos distintos: el pasajero necesita algo rápido y en movimiento, la empresa necesita ver muchos datos a la vez.
 
@@ -154,8 +155,12 @@ La lámina completa está en `documentacion/marca/`.
 
 ### En camino
 
-- Base de datos y backend compartido
+- Conexión de las apps a la base de datos
 - Instalación como app en el teléfono
+
+### Listo, sin conectar todavía
+
+- Modelo de base de datos en PostgreSQL: 17 tablas, 2 vistas, probado y con datos de ejemplo (`documentacion/base-datos/`)
 
 ### Simulado por ahora
 
