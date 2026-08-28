@@ -1,0 +1,26 @@
+{
+  "name": "Syncro",
+  "short_name": "Syncro",
+  "description": "Plataforma digital de transporte público: consultá rutas, comprá tu tiquete y viajá sin filas.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B101B",
+  "theme_color": "#0B101B",
+  "lang": "es-CR",
+  "icons": [
+    {
+      "src": "assets/icons/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

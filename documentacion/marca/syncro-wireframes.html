@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syncro — Wireframes de baja fidelidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   WIREFRAMES — baja fidelidad, escala de grises.
+   Sin color de marca, sin tipografía definitiva: en esta etapa
+   solo se discute jerarquía, estructura y ubicación.
+   Marco de trabajo: 390 × 844 px (estándar móvil de Figma).
+   ========================================================== */
+:root{
+  --papel:#EDEDEA;
+  --marco:#FFFFFF;
+  --linea:#C9C9C4;
+  --bloque:#DCDCD8;
+  --bloque-fuerte:#C2C2BC;
+  --texto:#3A3A38;
+  --tenue:#8A8A85;
+  --nota:#5F5E5A;
+
+  --mono:'IBM Plex Mono', monospace;
+  --sans:'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  background:var(--papel);
+  font-family:var(--sans);
+  color:var(--texto);
+  padding:56px 32px 90px;
+}
+
+/* ---------- Cabecera del documento ---------- */
+.doc-head{ max-width:1280px; margin:0 auto 56px; }
+.doc-eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--tenue); margin-bottom:12px;
+}
+.doc-title{
+  font-size:38px; font-weight:600; letter-spacing:-.02em; margin-bottom:14px;
+}
+.doc-sub{
+  font-size:14.5px; color:var(--nota); line-height:1.7; max-width:640px;
+}
+.doc-meta{
+  display:flex; gap:32px; flex-wrap:wrap; margin-top:24px;
+  padding-top:20px; border-top:1px solid var(--linea);
+  font-family:var(--mono); font-size:11.5px; color:var(--tenue);
+}
+.doc-meta b{ color:var(--texto); font-weight:500; }
+
+/* ---------- Rejilla de pantallas ---------- */
+.grid{
+  max-width:1280px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:56px 40px;
+}
+.item{ display:flex; flex-direction:column; }
+.item-label{
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--tenue); margin-bottom:4px;
+}
+.item-name{ font-size:16px; font-weight:600; margin-bottom:4px; }
+.item-desc{ font-size:12.5px; color:var(--nota); line-height:1.6; margin-bottom:14px; min-height:40px; }
+
+/* ---------- El marco del teléfono ---------- */
+.frame{
+  width:100%; aspect-ratio:390/844;
+  background:var(--marco);
+  border:1px solid var(--linea);
+  border-radius:4px;
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+  container-type:inline-size;
+}
+/* Todo el interior se mide en cqw para que escale con el marco */
+.inner{ position:absolute; inset:0; display:flex; flex-direction:column; }
+
+/* Barra de estado del sistema */
+.status{
+  height:6.5cqw; display:flex; align-items:center; justify-content:space-between;
+  padding:0 4.5cqw; flex-shrink:0;
+}
+.status i{ display:block; height:1.6cqw; background:var(--bloque-fuerte); border-radius:1cqw; }
+
+/* Zona de contenido */
+.body{ flex:1; padding:2cqw 4.5cqw; overflow:hidden; }
+.body.pad-top{ padding-top:4cqw; }
+
+/* ---------- Piezas de wireframe ---------- */
+.bar{ background:var(--bloque); border-radius:.8cqw; }
+.bar-strong{ background:var(--bloque-fuerte); }
+.box{ background:var(--bloque); border-radius:2cqw; }
+.box-out{ border:1px dashed var(--linea); border-radius:2cqw; background:transparent; }
+.circ{ background:var(--bloque); border-radius:50%; }
+.circ-out{ border:1px solid var(--linea); border-radius:50%; }
+
+/* Marcador de imagen / mapa: caja con aspa */
+.media{
+  background:var(--bloque); border-radius:2cqw; position:relative; overflow:hidden;
+}
+.media::before, .media::after{
+  content:''; position:absolute; top:0; left:0; width:100%; height:100%;
+  border-top:1px solid var(--bloque-fuerte); transform-origin:top left;
+}
+.media::before{ transform:rotate(var(--a1)); }
+.media::after{ transform:rotate(var(--a2)); }
+
+/* Botón: caja fuerte con una barra de texto centrada */
+.btn{
+  background:var(--bloque-fuerte); border-radius:1.6cqw;
+  height:9cqw; display:flex; align-items:center; justify-content:center;
+}
+.btn.hollow{ background:transparent; border:1px solid var(--bloque-fuerte); }
+.btn i{ display:block; height:1.8cqw; background:var(--marco); border-radius:1cqw; }
+.btn.hollow i{ background:var(--bloque-fuerte); }
+
+/* Campo de formulario */
+.field{
+  height:9cqw; border:1px solid var(--linea); border-radius:1.4cqw;
+  display:flex; align-items:center; gap:2cqw; padding:0 3cqw;
+}
+.field .ico{ width:3.6cqw; height:3.6cqw; background:var(--bloque-fuerte); border-radius:.6cqw; flex-shrink:0; }
+.field i{ display:block; height:1.8cqw; background:var(--bloque); border-radius:1cqw; }
+
+/* Fila de lista */
+.row{
+  border:1px solid var(--linea); border-radius:1.6cqw;
+  padding:2.6cqw; display:flex; align-items:center; gap:2.6cqw;
+}
+.row .ico{ width:8cqw; height:8cqw; background:var(--bloque); border-radius:1.4cqw; flex-shrink:0; }
+.row .txt{ flex:1; display:flex; flex-direction:column; gap:1.4cqw; }
+.row .txt i{ display:block; height:1.9cqw; background:var(--bloque-fuerte); border-radius:1cqw; }
+.row .txt i.b{ height:1.6cqw; background:var(--bloque); }
+.row .end{ width:4.6cqw; height:4.6cqw; border:1px solid var(--bloque-fuerte); border-radius:50%; flex-shrink:0; }
+
+/* Navegación inferior */
+.tabbar{
+  height:14cqw; border-top:1px solid var(--linea); flex-shrink:0;
+  display:flex; align-items:center; justify-content:space-around; padding-bottom:2cqw;
+}
+.tabbar .tab{ display:flex; flex-direction:column; align-items:center; gap:1.2cqw; }
+.tabbar .tab .sq{ width:5cqw; height:5cqw; background:var(--bloque); border-radius:1cqw; }
+.tabbar .tab .lb{ width:8cqw; height:1.4cqw; background:var(--bloque); border-radius:1cqw; }
+.tabbar .tab.on .sq, .tabbar .tab.on .lb{ background:var(--texto); opacity:.55; }
+
+/* Etiqueta de zona: nombra la región sin dibujarla */
+.zone{
+  font-family:var(--mono); font-size:2.6cqw; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--tenue);
+}
+
+/* Utilidades de espaciado dentro del marco */
+.stack{ display:flex; flex-direction:column; }
+.gap1{ gap:1.6cqw; } .gap2{ gap:2.6cqw; } .gap3{ gap:4cqw; } .gap4{ gap:6cqw; }
+.mt1{ margin-top:2.6cqw; } .mt2{ margin-top:4cqw; } .mt3{ margin-top:6cqw; }
+.mb1{ margin-bottom:2.6cqw; } .mb2{ margin-bottom:4cqw; }
+.between{ display:flex; align-items:center; justify-content:space-between; }
+.center{ display:flex; flex-direction:column; align-items:center; }
+.grow{ flex:1; }
+
+/* Notas numeradas sobre la pantalla */
+.pin{
+  position:absolute; width:5.4cqw; height:5.4cqw; border-radius:50%;
+  background:var(--texto); color:var(--marco);
+  font-family:var(--mono); font-size:2.9cqw; font-weight:500;
+  display:flex; align-items:center; justify-content:center;
+  z-index:5;
+}
+.notes{
+  margin-top:14px; display:flex; flex-direction:column; gap:7px;
+}
+.note{
+  display:flex; gap:9px; font-size:12px; color:var(--nota); line-height:1.55;
+}
+.note b{
+  font-family:var(--mono); font-size:10.5px; font-weight:600; color:var(--texto);
+  border:1px solid var(--linea); border-radius:50%;
+  width:17px; height:17px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+
+/* Leyenda */
+.legend{
+  max-width:1280px; margin:0 auto 48px;
+  border:1px solid var(--linea); border-radius:4px; padding:22px 26px;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:20px 30px;
+}
+.legend h3{
+  grid-column:1/-1; font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--tenue); font-weight:500;
+}
+.leg{ display:flex; align-items:center; gap:12px; font-size:12.5px; color:var(--nota); }
+.leg .sample{ width:44px; height:26px; flex-shrink:0; }
+
+@media print{
+  body{ background:#fff; padding:0; }
+  .grid{ gap:30px 20px; }
+  .item{ break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="doc-eyebrow">Syncro · Sprint 3 · Semanas 6–7</div>
+  <h1 class="doc-title">Wireframes de baja fidelidad</h1>
+  <p class="doc-sub">
+    Estructura de las 12 pantallas de la app móvil, sin color ni tipografía de marca.
+    En esta etapa se define qué elementos lleva cada pantalla, su jerarquía y su ubicación.
+    El tratamiento visual se resuelve en el sprint de mockups.
+  </p>
+  <div class="doc-meta">
+    <span><b>Marco</b> 390 × 844 px</span>
+    <span><b>Márgenes</b> 18 px</span>
+    <span><b>Rejilla</b> 4 columnas</span>
+    <span><b>Base de espaciado</b> 4 px</span>
+    <span><b>Pantallas</b> 12</span>
+  </div>
+</header>
+
+<section class="legend">
+  <h3>Cómo leer estos wireframes</h3>
+  <div class="leg">
+    <span class="sample bar" style="height:8px; margin:9px 0;"></span>
+    <span>Texto: el ancho de la barra sugiere el largo del contenido</span>
+  </div>
+  <div class="leg">
+    <span class="sample media" style="--a1:33deg; --a2:-33deg;"></span>
+    <span>Imagen, mapa o código QR</span>
+  </div>
+  <div class="leg">
+    <span class="sample btn" style="height:26px;"><i style="width:20px;"></i></span>
+    <span>Botón de acción principal</span>
+  </div>
+  <div class="leg">
+    <span class="sample box-out"></span>
+    <span>Contenedor o tarjeta</span>
+  </div>
+</section>
+
+<main class="grid">
+
+  <!-- ===== 1. BIENVENIDA / LOGIN ===== -->
+  <article class="item">
+    <div class="item-label">01 · Acceso</div>
+    <div class="item-name">Bienvenida — Iniciar sesión</div>
+    <p class="item-desc">Primera pantalla para usuario sin sesión. El logo ancla la identidad; el formulario ocupa el centro óptico.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body center" style="justify-content:center; padding-bottom:12cqw;">
+          <div class="pin" style="top:19cqw; right:5cqw;">1</div>
+          <div class="media" style="width:22cqw; height:25cqw; --a1:41deg; --a2:-41deg;"></div>
+          <div class="bar bar-strong mt2" style="width:34cqw; height:6.5cqw;"></div>
+          <div class="bar mt1" style="width:52cqw; height:2cqw;"></div>
+          <div class="bar" style="width:40cqw; height:2cqw; margin-top:1.6cqw;"></div>
+
+          <div class="stack gap1 mt3" style="width:100%;">
+            <div class="bar" style="width:14cqw; height:1.8cqw;"></div>
+            <div class="field"><span class="ico"></span><i style="width:40cqw"></i></div>
+            <div class="bar mt1" style="width:20cqw; height:1.8cqw;"></div>
+            <div class="field"><span class="ico"></span><i style="width:28cqw"></i></div>
+            <div class="pin" style="top:auto; bottom:26cqw; right:5cqw;">2</div>
+            <div class="btn mt1"><i style="width:26cqw"></i></div>
+            <div class="center mt1"><div class="bar" style="width:44cqw; height:1.8cqw;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Logo y nombre de marca, jerarquía máxima.</span></div>
+      <div class="note"><b>2</b><span>Enlace para alternar a registro, subordinado al botón.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 2. REGISTRO ===== -->
+  <article class="item">
+    <div class="item-label">02 · Acceso</div>
+    <div class="item-name">Registro</div>
+    <p class="item-desc">Misma estructura que el login con un campo más. Reusar el layout reduce la carga cognitiva al alternar.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body center" style="justify-content:center; padding-bottom:12cqw;">
+          <div class="media" style="width:22cqw; height:25cqw; --a1:41deg; --a2:-41deg;"></div>
+          <div class="bar bar-strong mt2" style="width:34cqw; height:6.5cqw;"></div>
+          <div class="bar mt1" style="width:48cqw; height:2cqw;"></div>
+
+          <div class="stack gap1 mt3" style="width:100%;">
+            <div class="bar" style="width:24cqw; height:1.8cqw;"></div>
+            <div class="field"><span class="ico"></span><i style="width:30cqw"></i></div>
+            <div class="bar mt1" style="width:14cqw; height:1.8cqw;"></div>
+            <div class="field"><span class="ico"></span><i style="width:40cqw"></i></div>
+            <div class="bar mt1" style="width:20cqw; height:1.8cqw;"></div>
+            <div class="pin" style="top:auto; bottom:32cqw; right:5cqw;">1</div>
+            <div class="field"><span class="ico"></span><i style="width:34cqw"></i></div>
+            <div class="btn mt1"><i style="width:24cqw"></i></div>
+            <div class="center mt1"><div class="bar" style="width:46cqw; height:1.8cqw;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Nombre, correo y contraseña: los tres campos del diagrama de registro.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 3. HOME CON VIAJE ===== -->
+  <article class="item">
+    <div class="item-label">03 · Principal</div>
+    <div class="item-name">Home — con próximo viaje</div>
+    <p class="item-desc">El tiquete activo va primero: es lo que el usuario necesita con urgencia al abrir la app en la parada.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body">
+          <div class="between mb2">
+            <div class="stack gap1">
+              <div class="bar" style="width:12cqw; height:1.8cqw;"></div>
+              <div class="bar bar-strong" style="width:22cqw; height:3.4cqw;"></div>
+            </div>
+            <div class="pin" style="top:8cqw; right:2cqw;">1</div>
+            <div style="display:flex; gap:2cqw;">
+              <div class="circ" style="width:9cqw; height:9cqw;"></div>
+              <div class="circ circ-out" style="width:9cqw; height:9cqw;"></div>
+            </div>
+          </div>
+
+          <div class="box-out mb1" style="padding:3.4cqw;">
+            <div class="bar" style="width:24cqw; height:1.8cqw;"></div>
+            <div class="between mt1">
+              <div class="bar bar-strong" style="width:40cqw; height:2.6cqw;"></div>
+              <div class="bar" style="width:16cqw; height:2cqw;"></div>
+            </div>
+            <div class="pin" style="top:29cqw; right:2cqw;">2</div>
+            <div class="btn mt1"><i style="width:28cqw"></i></div>
+          </div>
+
+          <div class="box-out mb1" style="padding:3.4cqw;">
+            <div class="bar bar-strong mb1" style="width:34cqw; height:2.6cqw;"></div>
+            <div class="stack gap1">
+              <div class="field"><span class="ico"></span><i style="width:18cqw"></i></div>
+              <div class="field"><span class="ico"></span><i style="width:22cqw"></i></div>
+              <div class="pin" style="top:auto; bottom:31cqw; right:2cqw;">3</div>
+              <div class="btn"><i style="width:24cqw"></i></div>
+            </div>
+          </div>
+
+          <div class="row"><span class="ico"></span><span class="txt"><i style="width:44cqw"></i><i class="b" style="width:62cqw"></i></span></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Notificaciones y perfil, accesos secundarios en la esquina.</span></div>
+      <div class="note"><b>2</b><span>“Ver mi tiquete” siempre lleva a Tiquetes.</span></div>
+      <div class="note"><b>3</b><span>Buscador origen/destino: acción más frecuente.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 4. HOME VACÍO ===== -->
+  <article class="item">
+    <div class="item-label">04 · Principal</div>
+    <div class="item-name">Home — sin viajes</div>
+    <p class="item-desc">Estado vacío del primer uso. La tarjeta no desaparece: se convierte en invitación a comprar.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body">
+          <div class="between mb2">
+            <div class="stack gap1">
+              <div class="bar" style="width:12cqw; height:1.8cqw;"></div>
+              <div class="bar bar-strong" style="width:22cqw; height:3.4cqw;"></div>
+            </div>
+            <div style="display:flex; gap:2cqw;">
+              <div class="circ" style="width:9cqw; height:9cqw;"></div>
+              <div class="circ circ-out" style="width:9cqw; height:9cqw;"></div>
+            </div>
+          </div>
+
+          <div class="box-out mb1" style="padding:3.4cqw;">
+            <div class="bar" style="width:24cqw; height:1.8cqw;"></div>
+            <div class="pin" style="top:24cqw; right:2cqw;">1</div>
+            <div class="bar mt1" style="width:70cqw; height:1.9cqw;"></div>
+            <div class="bar" style="width:52cqw; height:1.9cqw; margin-top:1.4cqw;"></div>
+            <div class="btn hollow mt1"><i style="width:30cqw"></i></div>
+          </div>
+
+          <div class="box-out mb1" style="padding:3.4cqw;">
+            <div class="bar bar-strong mb1" style="width:34cqw; height:2.6cqw;"></div>
+            <div class="stack gap1">
+              <div class="field"><span class="ico"></span><i style="width:18cqw"></i></div>
+              <div class="field"><span class="ico"></span><i style="width:22cqw"></i></div>
+              <div class="btn"><i style="width:24cqw"></i></div>
+            </div>
+          </div>
+
+          <div class="row"><span class="ico"></span><span class="txt"><i style="width:44cqw"></i><i class="b" style="width:62cqw"></i></span></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Mensaje y botón que dirigen a la acción, no solo “no hay nada”.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 5. RUTAS ===== -->
+  <article class="item">
+    <div class="item-label">05 · Rutas</div>
+    <div class="item-name">Rutas — listado</div>
+    <p class="item-desc">Buscador, ubicación y pestañas por encima de la lista. La estrella permite marcar favoritas sin entrar al detalle.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="bar bar-strong mb2" style="width:22cqw; height:4.4cqw;"></div>
+          <div class="field mb1"><span class="ico"></span><i style="width:40cqw"></i></div>
+          <div class="pin" style="top:31cqw; right:2cqw;">1</div>
+          <div class="btn hollow mb2"><i style="width:26cqw"></i></div>
+
+          <div class="between mb2" style="gap:6cqw; justify-content:flex-start; border-bottom:1px solid var(--linea); padding-bottom:2cqw;">
+            <div class="bar bar-strong" style="width:14cqw; height:2.2cqw;"></div>
+            <div class="bar" style="width:18cqw; height:2.2cqw;"></div>
+          </div>
+
+          <div class="pin" style="top:56cqw; right:2cqw;">2</div>
+          <div class="stack gap1">
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:40cqw"></i><i class="b" style="width:52cqw"></i></span><span class="end"></span></div>
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:44cqw"></i><i class="b" style="width:48cqw"></i></span><span class="end"></span></div>
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:36cqw"></i><i class="b" style="width:54cqw"></i></span><span class="end"></span></div>
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:42cqw"></i><i class="b" style="width:46cqw"></i></span><span class="end"></span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>“Mi ubicación”: despliega el mapa de geolocalización.</span></div>
+      <div class="note"><b>2</b><span>Estrella al final de cada fila: alterna favorita sin navegar.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 6. DETALLE DE RUTA ===== -->
+  <article class="item">
+    <div class="item-label">06 · Rutas</div>
+    <div class="item-name">Detalle de ruta</div>
+    <p class="item-desc">El mapa arriba da contexto geográfico; las paradas confirman el recorrido; los horarios son la zona de decisión.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="between mb2" style="justify-content:flex-start; gap:2.6cqw;">
+            <div class="bar bar-strong" style="width:4cqw; height:4cqw;"></div>
+            <div class="bar bar-strong" style="width:44cqw; height:4cqw;"></div>
+          </div>
+
+          <div class="pin" style="top:22cqw; right:2cqw;">1</div>
+          <div class="media mb2" style="height:38cqw; --a1:22deg; --a2:-22deg;"></div>
+
+          <div class="zone mb1">Paradas</div>
+          <div class="box-out mb2" style="padding:2.6cqw;">
+            <div class="stack gap1">
+              <div style="display:flex; align-items:center; gap:2.6cqw;"><span class="circ" style="width:2.4cqw;height:2.4cqw;"></span><span class="bar" style="width:40cqw;height:1.9cqw;"></span></div>
+              <div style="display:flex; align-items:center; gap:2.6cqw;"><span class="circ" style="width:2.4cqw;height:2.4cqw;"></span><span class="bar" style="width:32cqw;height:1.9cqw;"></span></div>
+              <div style="display:flex; align-items:center; gap:2.6cqw;"><span class="circ" style="width:2.4cqw;height:2.4cqw;"></span><span class="bar" style="width:36cqw;height:1.9cqw;"></span></div>
+            </div>
+          </div>
+
+          <div class="pin" style="top:auto; bottom:22cqw; right:2cqw;">2</div>
+          <div class="zone mb1">Horarios de hoy</div>
+          <div class="stack gap1">
+            <div class="row" style="padding:2cqw;"><span class="ico" style="width:6.4cqw;height:6.4cqw;"></span><span class="txt"><i style="width:22cqw"></i><i class="b" style="width:38cqw"></i></span><span class="bar bar-strong" style="width:12cqw;height:2.4cqw;"></span></div>
+            <div class="row" style="padding:2cqw;"><span class="ico" style="width:6.4cqw;height:6.4cqw;"></span><span class="txt"><i style="width:20cqw"></i><i class="b" style="width:40cqw"></i></span><span class="bar bar-strong" style="width:12cqw;height:2.4cqw;"></span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Mapa con el recorrido trazado y las paradas marcadas.</span></div>
+      <div class="note"><b>2</b><span>Cada horario muestra hora, asientos y precio: todo para decidir.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 7. COMPRA ===== -->
+  <article class="item">
+    <div class="item-label">07 · Compra</div>
+    <div class="item-name">Confirmar compra</div>
+    <p class="item-desc">Sin navegación inferior: el usuario está en un flujo cerrado y solo debe confirmar o volver.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="between mb2" style="justify-content:flex-start; gap:2.6cqw;">
+            <div class="bar bar-strong" style="width:4cqw; height:4cqw;"></div>
+            <div class="bar bar-strong" style="width:40cqw; height:4cqw;"></div>
+          </div>
+
+          <div class="pin" style="top:24cqw; right:2cqw;">1</div>
+          <div class="box-out mb2" style="padding:3.4cqw;">
+            <div class="bar mb1" style="width:18cqw; height:1.8cqw;"></div>
+            <div class="stack gap2">
+              <div class="between"><span class="bar" style="width:12cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:34cqw;height:1.9cqw;"></span></div>
+              <div class="between"><span class="bar" style="width:14cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:28cqw;height:1.9cqw;"></span></div>
+              <div class="between"><span class="bar" style="width:16cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:10cqw;height:1.9cqw;"></span></div>
+              <div class="between" style="border-top:1px solid var(--linea); padding-top:2.6cqw;"><span class="bar" style="width:11cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:20cqw;height:4cqw;"></span></div>
+            </div>
+          </div>
+
+          <div class="pin" style="top:auto; bottom:34cqw; right:2cqw;">2</div>
+          <div class="zone mb1">Método de pago</div>
+          <div class="stack gap1 mb2">
+            <div class="row" style="border-width:2px; border-style:solid; border-color:var(--bloque-fuerte);"><span class="ico" style="width:6cqw;height:6cqw;"></span><span class="txt"><i style="width:46cqw"></i><i class="b" style="width:26cqw"></i></span></div>
+            <div class="row"><span class="ico" style="width:6cqw;height:6cqw;"></span><span class="txt"><i style="width:30cqw"></i><i class="b" style="width:22cqw"></i></span></div>
+          </div>
+
+          <div class="btn"><i style="width:44cqw"></i></div>
+          <div class="center mt1"><div class="bar" style="width:52cqw; height:1.6cqw;"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Resumen completo antes de pagar: ruta, salida, asiento y total.</span></div>
+      <div class="note"><b>2</b><span>Método seleccionado marcado con borde, no solo con color.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 8. TIQUETES ===== -->
+  <article class="item">
+    <div class="item-label">08 · Tiquetes</div>
+    <div class="item-name">Tiquetes — listado</div>
+    <p class="item-desc">Orden fijo del viaje más próximo al menos próximo. La etiqueta de estado distingue válidos de usados.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="bar bar-strong mb2" style="width:36cqw; height:4.4cqw;"></div>
+          <div class="pin" style="top:22cqw; right:2cqw;">1</div>
+          <div class="stack gap1">
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:40cqw"></i><i class="b" style="width:56cqw"></i></span><span class="bar bar-strong" style="width:13cqw;height:4.4cqw;border-radius:3cqw;"></span></div>
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:44cqw"></i><i class="b" style="width:50cqw"></i></span><span class="bar bar-strong" style="width:13cqw;height:4.4cqw;border-radius:3cqw;"></span></div>
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:38cqw"></i><i class="b" style="width:54cqw"></i></span><span class="bar" style="width:13cqw;height:4.4cqw;border-radius:3cqw;"></span></div>
+            <div class="row"><span class="ico"></span><span class="txt"><i style="width:42cqw"></i><i class="b" style="width:48cqw"></i></span><span class="bar" style="width:13cqw;height:4.4cqw;border-radius:3cqw;"></span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Etiqueta de estado a la derecha: válido o usado.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 9. TIQUETE QR ===== -->
+  <article class="item">
+    <div class="item-label">09 · Tiquetes</div>
+    <div class="item-name">Tiquete — código QR</div>
+    <p class="item-desc">El QR domina la pantalla: se muestra a un chofer, a distancia y con prisa. Todo lo demás es secundario.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="between mb2" style="justify-content:flex-start; gap:2.6cqw;">
+            <div class="bar bar-strong" style="width:4cqw; height:4cqw;"></div>
+            <div class="bar bar-strong" style="width:26cqw; height:4cqw;"></div>
+          </div>
+
+          <div class="pin" style="top:30cqw; right:2cqw;">1</div>
+          <div class="box-out center mb2" style="padding:5cqw;">
+            <div class="bar bar-strong mb2" style="width:16cqw; height:4.4cqw; border-radius:3cqw;"></div>
+            <div class="media" style="width:50cqw; height:50cqw; --a1:45deg; --a2:-45deg;"></div>
+            <div class="bar bar-strong mt2" style="width:44cqw; height:3.4cqw;"></div>
+            <div class="bar mt1" style="width:56cqw; height:2cqw;"></div>
+          </div>
+
+          <div class="pin" style="top:auto; bottom:26cqw; right:2cqw;">2</div>
+          <div class="box-out" style="padding:3.4cqw;">
+            <div class="stack gap2">
+              <div class="between"><span class="bar" style="width:14cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:24cqw;height:1.9cqw;"></span></div>
+              <div class="between"><span class="bar" style="width:16cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:14cqw;height:1.9cqw;"></span></div>
+              <div class="between"><span class="bar" style="width:20cqw;height:1.9cqw;"></span><span class="bar bar-strong" style="width:28cqw;height:1.9cqw;"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Estado, QR y datos del viaje en una sola tarjeta.</span></div>
+      <div class="note"><b>2</b><span>Código, monto y fecha de compra: consulta, no acción.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 10. NOTIFICACIONES ===== -->
+  <article class="item">
+    <div class="item-label">10 · Avisos</div>
+    <div class="item-name">Notificaciones</div>
+    <p class="item-desc">Dos tipos de aviso: compra completada y salida en 15 minutos. El ícono los diferencia de un vistazo.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="between mb2" style="justify-content:flex-start; gap:2.6cqw;">
+            <div class="bar bar-strong" style="width:4cqw; height:4cqw;"></div>
+            <div class="bar bar-strong" style="width:38cqw; height:4cqw;"></div>
+          </div>
+          <div class="pin" style="top:24cqw; right:2cqw;">1</div>
+          <div class="stack gap1">
+            <div class="row" style="align-items:flex-start;"><span class="ico"></span><span class="txt"><i style="width:38cqw"></i><i class="b" style="width:64cqw"></i><i class="b" style="width:44cqw"></i><i class="b" style="width:22cqw"></i></span></div>
+            <div class="row" style="align-items:flex-start;"><span class="ico"></span><span class="txt"><i style="width:34cqw"></i><i class="b" style="width:60cqw"></i><i class="b" style="width:48cqw"></i><i class="b" style="width:22cqw"></i></span></div>
+            <div class="row" style="align-items:flex-start;"><span class="ico"></span><span class="txt"><i style="width:40cqw"></i><i class="b" style="width:56cqw"></i><i class="b" style="width:22cqw"></i></span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Al tocar un aviso se abre el tiquete relacionado.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 11. PERFIL ===== -->
+  <article class="item">
+    <div class="item-label">11 · Cuenta</div>
+    <div class="item-name">Perfil</div>
+    <p class="item-desc">Identidad arriba, datos de uso al centro, opciones abajo. Cerrar sesión queda separado del resto.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="bar bar-strong mb2" style="width:20cqw; height:4.4cqw;"></div>
+
+          <div style="display:flex; align-items:center; gap:3.4cqw;" class="mb2">
+            <div class="circ" style="width:15cqw; height:15cqw;"></div>
+            <div class="stack gap1">
+              <div class="bar bar-strong" style="width:34cqw; height:3cqw;"></div>
+              <div class="bar" style="width:44cqw; height:2cqw;"></div>
+            </div>
+          </div>
+
+          <div class="pin" style="top:38cqw; right:2cqw;">1</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2.6cqw;" class="mb2">
+            <div class="box-out center" style="padding:3.4cqw;"><div class="bar bar-strong" style="width:8cqw;height:5cqw;"></div><div class="bar mt1" style="width:24cqw;height:1.7cqw;"></div></div>
+            <div class="box-out center" style="padding:3.4cqw;"><div class="bar bar-strong" style="width:6cqw;height:5cqw;"></div><div class="bar mt1" style="width:22cqw;height:1.7cqw;"></div></div>
+          </div>
+
+          <div class="stack" style="gap:0;">
+            <div class="between" style="padding:3.4cqw 0; border-bottom:1px solid var(--linea);">
+              <div style="display:flex; align-items:center; gap:3cqw;"><span class="bar bar-strong" style="width:4.4cqw;height:4.4cqw;"></span><span class="bar" style="width:32cqw;height:2.2cqw;"></span></div>
+              <span class="bar" style="width:2cqw;height:3cqw;"></span>
+            </div>
+          </div>
+
+          <div class="pin" style="top:auto; bottom:24cqw; right:2cqw;">2</div>
+          <div class="btn hollow mt3"><i style="width:26cqw"></i></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>Viajes comprados y rutas favoritas.</span></div>
+      <div class="note"><b>2</b><span>Cerrar sesión separado por espacio, para evitar toques por error.</span></div>
+    </div>
+  </article>
+
+  <!-- ===== 12. AYUDA ===== -->
+  <article class="item">
+    <div class="item-label">12 · Soporte</div>
+    <div class="item-name">Ayuda</div>
+    <p class="item-desc">Una pregunta y dos caminos. La pregunta grande orienta antes de que el usuario tenga que elegir.</p>
+    <div class="frame">
+      <div class="inner">
+        <div class="status"><i style="width:9cqw"></i><i style="width:13cqw"></i></div>
+        <div class="body pad-top">
+          <div class="between mb2" style="justify-content:flex-start; gap:2.6cqw;">
+            <div class="bar bar-strong" style="width:4cqw; height:4cqw;"></div>
+            <div class="bar bar-strong" style="width:20cqw; height:4cqw;"></div>
+          </div>
+
+          <div class="pin" style="top:22cqw; right:2cqw;">1</div>
+          <div class="bar bar-strong" style="width:76cqw; height:5.4cqw;"></div>
+          <div class="bar bar-strong mt1 mb2" style="width:48cqw; height:5.4cqw;"></div>
+
+          <div class="stack gap1 mt2">
+            <div class="row" style="align-items:flex-start; padding:4cqw;">
+              <span class="ico" style="width:10cqw;height:10cqw;"></span>
+              <span class="txt"><i style="width:48cqw"></i><i class="b" style="width:62cqw"></i><i class="b" style="width:40cqw"></i></span>
+            </div>
+            <div class="row" style="align-items:flex-start; padding:4cqw;">
+              <span class="ico" style="width:10cqw;height:10cqw;"></span>
+              <span class="txt"><i style="width:26cqw"></i><i class="b" style="width:58cqw"></i><i class="b" style="width:44cqw"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+          <div class="tab"><span class="sq"></span><span class="lb"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><b>1</b><span>“¿Cómo podemos ayudarte?” como título de peso.</span></div>
+    </div>
+  </article>
+
+</main>
+
+</body>
+</html>

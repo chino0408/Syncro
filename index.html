@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B101B">
+<title>Syncro — Plataforma digital de transporte público</title>
+<link rel="icon" href="app-pasajeros/assets/icons/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cian:#1DCDF1; --cian-oscuro:#10B0D4;
+  --superficie:#163649; --base:#0B101B;
+  --tenue:#8CA3B3; --borde:rgba(29,205,241,.15);
+  --display:'Poppins',system-ui,sans-serif;
+  --cuerpo:'Inter',system-ui,sans-serif;
+  --dato:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(900px 480px at 50% -8%, rgba(29,205,241,.10), transparent 60%),
+    var(--base);
+  color:#fff; font-family:var(--cuerpo); min-height:100vh;
+  padding:64px 24px 72px;
+}
+.envoltura{max-width:900px;margin:0 auto;}
+
+.marca{display:flex;align-items:center;gap:16px;margin-bottom:38px;}
+.marca img{width:52px;height:58px;object-fit:contain;}
+.marca .nom{font-family:var(--display);font-weight:600;font-size:32px;letter-spacing:-.02em;line-height:1;}
+.marca .tag{font-family:var(--dato);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cian);margin-top:6px;}
+
+h1{font-family:var(--display);font-weight:600;font-size:31px;letter-spacing:-.02em;margin-bottom:12px;line-height:1.25;}
+.intro{color:var(--tenue);font-size:15px;line-height:1.7;max-width:620px;margin-bottom:44px;}
+
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:44px;}
+.tarjeta{
+  background:var(--superficie);border:1px solid var(--borde);border-radius:16px;
+  padding:26px;text-decoration:none;color:inherit;display:block;
+  transition:border-color .16s ease, transform .16s ease;
+}
+.tarjeta:hover{border-color:rgba(29,205,241,.45);transform:translateY(-2px);}
+.tarjeta .etq{font-family:var(--dato);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cian);margin-bottom:12px;}
+.tarjeta h2{font-family:var(--display);font-weight:600;font-size:19px;margin-bottom:8px;}
+.tarjeta p{color:var(--tenue);font-size:13.5px;line-height:1.65;margin-bottom:18px;}
+.tarjeta .cuenta{
+  font-family:var(--dato);font-size:11.5px;color:var(--tenue);
+  border-top:1px solid var(--borde);padding-top:14px;line-height:1.8;
+}
+.tarjeta .cuenta b{color:var(--cian);font-weight:500;}
+
+.nota{
+  border-left:3px solid var(--cian-oscuro);
+  background:rgba(29,205,241,.05);
+  border-radius:0 12px 12px 0;
+  padding:18px 22px;font-size:13.5px;color:var(--tenue);line-height:1.7;
+}
+.nota b{color:#fff;font-weight:500;}
+
+footer{margin-top:52px;padding-top:24px;border-top:1px solid var(--borde);
+  font-size:12px;color:var(--tenue);line-height:1.7;}
+footer a{color:var(--cian);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+@media (max-width:640px){
+  body{padding:40px 18px 56px;}
+  h1{font-size:25px;}
+  .marca .nom{font-size:27px;}
+}
+</style>
+</head>
+<body>
+<div class="envoltura">
+
+  <div class="marca">
+    <img src="app-pasajeros/assets/icons/logo.svg" alt="">
+    <div>
+      <div class="nom">Syncro</div>
+      <div class="tag">Transporte público digital</div>
+    </div>
+  </div>
+
+  <h1>Dos productos, una sola plataforma</h1>
+  <p class="intro">
+    Syncro conecta a los pasajeros del transporte público con las empresas autobuseras.
+    El pasajero consulta rutas, compra su tiquete y lo muestra como código QR al abordar.
+    La empresa publica sus rutas, define precios y administra su flota desde un panel web.
+  </p>
+
+  <div class="tarjetas">
+    <a class="tarjeta" href="app-pasajeros/index.html">
+      <div class="etq">Para el pasajero</div>
+      <h2>App móvil</h2>
+      <p>Consultá rutas y horarios, comprá tu tiquete y mostralo como QR al abordar. Pensada para usarse en movimiento.</p>
+      <div class="cuenta">
+        Correo <b>demo@syncro.cr</b><br>
+        Contraseña <b>123456</b>
+      </div>
+    </a>
+
+    <a class="tarjeta" href="panel-empresas/index.html">
+      <div class="etq">Para la empresa</div>
+      <h2>Panel web</h2>
+      <p>Publicá rutas y precios, registrá tu flota y tus choferes, y programá las salidas del día. Pensado para escritorio.</p>
+      <div class="cuenta">
+        Correo <b>admin@transportescr.com</b><br>
+        Contraseña <b>admin123</b>
+      </div>
+    </a>
+  </div>
+
+  <div class="nota">
+    <b>Es una demo.</b> Los datos se guardan en este navegador y el pago está simulado.
+    El panel y la app todavía no comparten información: esa conexión llega con la base de datos.
+  </div>
+
+  <footer>
+    Universidad Invenio · Carrera de TICE · Proyecto integrador<br>
+    <a href="https://github.com/USUARIO/syncro">Ver el código en GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>

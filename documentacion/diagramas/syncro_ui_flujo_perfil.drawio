@@ -1,0 +1,93 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Flujo Interfaz - Perfil" id="ui-perfil">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="750" math="0" shadow="0" background="#163649">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="n1" value="Usuario entra a Perfil desde el nav. inferior o tocando su avatar en Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="320" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2" value="Perfil muestra foto, nombre, estadísticas de viajes y menú de opciones" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="500" y="140" width="320" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Editar perfil -->
+        <mxCell id="n3" value="Formulario Editar Perfil (nombre, correo, teléfono)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="30" y="300" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" value="¿Guarda los&#10;Cambios?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="50" y="410" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="Datos actualizados" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="30" y="560" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Métodos de pago -->
+        <mxCell id="n6" value="Pantalla Métodos de Pago (tarjetas guardadas)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="320" y="300" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="Agrega o elimina una tarjeta" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="320" y="410" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Notificaciones -->
+        <mxCell id="n8" value="Pantalla de Preferencias de Notificaciones (activar/desactivar alertas por tipo)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="610" y="300" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Ayuda -->
+        <mxCell id="n9" value="Pantalla de Ayuda y Soporte" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="920" y="300" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Cerrar sesión -->
+        <mxCell id="n10" value="¿Confirma&#10;Cerrar Sesión?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="290" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" value="Vuelve a la Pantalla de Inicio de Sesión → ver diagrama de Login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="450" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Nav inferior -->
+        <mxCell id="ext1" value="Pantalla Home&#10;→ ver diagrama Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="30" y="640" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ext2" value="Pantalla Rutas&#10;→ ver diagrama Rutas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="640" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ext3" value="Pantalla Tiquetes&#10;→ ver diagrama Tiquetes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="570" y="640" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_edit" value="Toca &quot;Editar perfil&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n3" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n4" target="n5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5back" value="Regresa a Perfil" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=0;exitY=0.5;entryX=0;entryY=1;" edge="1" parent="1" source="n5" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4no" value="Cancela" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;exitX=1;exitY=0.5;entryX=0.3;entryY=1;" edge="1" parent="1" source="n4" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_pago" value="Toca &quot;Métodos de pago&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7back" value="Regresa a Perfil" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=0.7;exitY=0;entryX=0.6;entryY=1;" edge="1" parent="1" source="n7" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_notif" value="Toca &quot;Notificaciones&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8back" value="Regresa a Perfil" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=1;exitY=0.2;entryX=0.8;entryY=1;" edge="1" parent="1" source="n8" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_ayuda" value="Toca &quot;Ayuda y soporte&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_logout" value="Toca &quot;Cerrar sesión&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n10" target="n11"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;exitX=1;exitY=0.3;entryX=1;entryY=0.9;" edge="1" parent="1" source="n10" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_home" value="Toca pestaña &quot;Inicio&quot; (nav. inferior)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="ext1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_rutas" value="Toca pestaña &quot;Rutas&quot; (nav. inferior)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="ext2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_tiq" value="Toca pestaña &quot;Tiquetes&quot; (nav. inferior)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="ext3"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,122 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Ejemplo - Consultar Rutas (detallado)" id="ejemplo1">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1000" math="0" shadow="0" background="#0B101B">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===== Carriles (lanes) de fondo ===== -->
+        <mxCell id="lane1" value="USUARIO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=none;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=15;align=left;verticalAlign=top;spacingLeft=24;spacingTop=14;opacity=55;" vertex="1" parent="1">
+          <mxGeometry x="0" y="40" width="2760" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" value="APP MÓVIL (FRONTEND)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=none;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=15;align=left;verticalAlign=top;spacingLeft=24;spacingTop=14;opacity=22;" vertex="1" parent="1">
+          <mxGeometry x="0" y="260" width="2760" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3" value="API BACKEND" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=none;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=15;align=left;verticalAlign=top;spacingLeft=24;spacingTop=14;opacity=18;" vertex="1" parent="1">
+          <mxGeometry x="0" y="480" width="2760" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="lane4" value="BASE DE DATOS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=none;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=15;align=left;verticalAlign=top;spacingLeft=24;spacingTop=14;opacity=55;" vertex="1" parent="1">
+          <mxGeometry x="0" y="700" width="2760" height="220" as="geometry" />
+        </mxCell>
+
+        <!-- separadores de linea -->
+        <mxCell id="sep1" style="endArrow=none;html=1;strokeColor=#1DCDF1;strokeWidth=1;opacity=40;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="0" y="260" as="sourcePoint"/><mxPoint x="2760" y="260" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="sep2" style="endArrow=none;html=1;strokeColor=#1DCDF1;strokeWidth=1;opacity=40;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="0" y="480" as="sourcePoint"/><mxPoint x="2760" y="480" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="sep3" style="endArrow=none;html=1;strokeColor=#1DCDF1;strokeWidth=1;opacity=40;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="0" y="700" as="sourcePoint"/><mxPoint x="2760" y="700" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- ===== Pasos ===== -->
+
+        <mxCell id="A" value="Ingresa origen y destino en el formulario de búsqueda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="40" y="115" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="B" value="¿Campos&#10;Completos?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="300" y="315" width="180" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Err" value="Muestra: &quot;Complete origen y destino&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#F14336;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="290" y="430" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="C" value="Envía petición: GET /api/rutas?origen={o}&amp;destino={d}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="520" y="335" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="D" value="Recibe petición: valida parámetros y token JWT de sesión" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="555" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="E" value="Invoca RouteService.buscarRutas(origen, destino)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="555" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="F" value="Ejecuta: SELECT * FROM routes JOIN schedules WHERE origin=? AND destination=? AND active=true" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="775" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="G" value="Devuelve resultado de la consulta (0..n filas) al backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="775" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="H" value="¿Existen&#10;Rutas&#10;Disponibles?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="535" width="180" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Ino" value="Responde 404: sin rutas disponibles" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#F14336;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="655" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Jno" value="Muestra mensaje: &quot;No hay rutas para este origen/destino&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#F14336;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1820" y="340" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Iyes" value="Filtra horarios ya pasados y ordena por hora de salida más próxima" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1820" y="555" width="260" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="K" value="Responde 200 OK con JSON: lista de rutas (horario, precio, asientos disponibles)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="2120" y="555" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L" value="Recibe respuesta y renderiza la lista de rutas disponibles en pantalla" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="2420" y="335" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="M" value="Visualiza las rutas y selecciona una → continúa en 'Seleccionar Asiento / Horario'" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="2420" y="115" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Conexiones ===== -->
+        <mxCell id="e_ab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="A" target="B"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_b_no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;" edge="1" parent="1" source="B" target="Err"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_err_a" value="Reintentar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;exitX=0;exitY=0.5;entryX=0;entryY=1;" edge="1" parent="1" source="Err" target="A"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_b_si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;" edge="1" parent="1" source="B" target="C"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_cd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="C" target="D"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_de" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="D" target="E"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_ef" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="E" target="F"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_fg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="F" target="G"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_gh" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="G" target="H"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_h_no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;" edge="1" parent="1" source="H" target="Ino"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_ino_jno" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="Ino" target="Jno"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_jno_a" value="Nueva búsqueda" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" edge="1" parent="1" source="Jno" target="A"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_h_si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;" edge="1" parent="1" source="H" target="Iyes"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_iyes_k" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="Iyes" target="K"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_kl" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="K" target="L"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_lm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="L" target="M"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

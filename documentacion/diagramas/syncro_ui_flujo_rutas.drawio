@@ -1,0 +1,77 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Flujo Interfaz - Rutas" id="ui-rutas">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="700" math="0" shadow="0" background="#163649">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="n1" value="Usuario entra a Rutas desde el nav. inferior o desde &quot;Rutas favoritas&quot; en Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="340" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2" value="Rutas muestra el buscador, las pestañas &quot;Todas&quot; / &quot;Favoritas&quot; y la lista de rutas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="500" y="140" width="340" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n3" value="La lista se filtra en tiempo real por nombre de ruta o parada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="30" y="300" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n4" value="La lista muestra solo las rutas marcadas con estrella" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="350" y="300" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n5" value="¿La Ruta&#10;ya era&#10;Favorita?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="700" y="290" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" value="Se quita de favoritas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="640" y="440" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="Se agrega a favoritas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="900" y="440" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n8" value="Pantalla Detalle de Ruta: horarios, paradas y precio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="300" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="Continúa en flujo de Selección de Asiento/Horario" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="440" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Nav inferior -->
+        <mxCell id="ext1" value="Pantalla Home&#10;→ ver diagrama Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="30" y="560" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ext2" value="Pantalla Tiquetes&#10;→ ver diagrama Tiquetes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="560" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ext3" value="Pantalla Perfil&#10;→ ver diagrama Perfil" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="570" y="560" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_buscar" value="Escribe en el buscador" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3back" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;exitX=0;exitY=0;entryX=0.2;entryY=1;" edge="1" parent="1" source="n3" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_fav" value="Toca la pestaña &quot;Favoritas&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4back" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;exitX=1;exitY=0;entryX=0.6;entryY=1;" edge="1" parent="1" source="n4" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_star" value="Toca la estrella de una ruta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n5" target="n6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n5" target="n7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6back" value="Lista se actualiza" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" parent="1" source="n6" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7back" value="Lista se actualiza" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=0.5;exitY=0;entryX=0.9;entryY=1;" edge="1" parent="1" source="n7" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_tap" value="Toca una ruta de la lista" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_comprar" value="Toca &quot;Comprar tiquete&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n8" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_home" value="Toca pestaña &quot;Inicio&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="ext1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_tiq" value="Toca pestaña &quot;Tiquetes&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="ext2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_perfil" value="Toca pestaña &quot;Perfil&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="ext3"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

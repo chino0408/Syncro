@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Flujo Interfaz - Login y Registro" id="ui-login-registro">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="800" math="0" shadow="0" background="#163649">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="n1" value="Usuario nuevo abre la app por primera vez, o un usuario cierra sesión y vuelve a abrirla" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="480" y="20" width="380" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2" value="Pantalla de bienvenida: opciones &quot;Iniciar sesión&quot; y &quot;Registrarse&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="480" y="140" width="380" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Rama Iniciar sesion -->
+        <mxCell id="n3" value="Formulario: correo y contraseña" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" value="¿Credenciales&#10;Correctas?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="90" y="400" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_home1" value="Entra a Home&#10;→ ver diagrama Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="560" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="Muestra error: &quot;Correo o contraseña incorrectos&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#F14336;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="390" y="560" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Rama Registrarse -->
+        <mxCell id="n6" value="Formulario de registro: nombre, correo y contraseña" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="900" y="280" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="¿Datos&#10;Válidos?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="950" y="400" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" value="Cuenta creada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="900" y="560" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_home2" value="Entra a Home&#10;→ ver diagrama Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="900" y="660" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="Muestra error: correo ya registrado o datos incompletos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#F14336;fontColor=#FFFFFF;fontFamily=Inter;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="560" width="260" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_login" value="Toca &quot;Iniciar sesión&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_ingresar" value="Toca &quot;Ingresar&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n3" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n4" target="ext_home1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n4" target="n5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5back" value="Reintentar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=1;exitY=0;entryX=1;entryY=1;" edge="1" parent="1" source="n5" target="n3"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e_registro" value="Toca &quot;Registrarse&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B0D4;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_crear" value="Toca &quot;Crear cuenta&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n7" target="n8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n8" target="ext_home2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n7" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9back" value="Reintentar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F14336;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;exitX=1;exitY=0;entryX=1;entryY=1;" edge="1" parent="1" source="n9" target="n6"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

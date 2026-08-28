@@ -1,0 +1,54 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Flujo Interfaz - Notificaciones" id="ui-notificaciones">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="700" math="0" shadow="0" background="#163649">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="n1" value="Usuario toca el ícono de notificaciones en Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=13;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="480" y="20" width="320" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2" value="¿Hay&#10;Notificaciones?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#0B101B;strokeColor=#1DCDF1;fontColor=#FFFFFF;fontFamily=Poppins;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="540" y="120" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n3" value="Muestra la lista de notificaciones" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="180" y="270" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n3a" value="Aviso: &quot;Tu viaje sale en 15 minutos&quot; (automático antes de un próximo viaje)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=11;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="40" y="390" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n3b" value="Confirmación: &quot;Tu compra de tiquete se completó&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1DCDF1;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Inter;fontSize=11;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="360" y="390" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ext_tk" value="Toca la notificación → Pantalla Tiquetes&#10;→ ver diagrama Tiquetes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="190" y="520" width="290" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n4" value="Muestra un estado vacío: &quot;No tenés notificaciones&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B0D4;strokeColor=#0B101B;fontColor=#0B101B;fontFamily=Poppins;fontStyle=1;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="800" y="270" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ext_home" value="Toca &quot;Regresar al Home&quot; → Pantalla Home&#10;→ ver diagrama Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#163649;strokeColor=#1DCDF1;dashed=1;fontColor=#FFFFFF;fontFamily=Inter;fontStyle=2;fontSize=12;arcSize=16;" vertex="1" parent="1">
+          <mxGeometry x="800" y="400" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n3" target="n3a"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n3" target="n3b"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3a_ext" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n3a" target="ext_tk"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3b_ext" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n3b" target="ext_tk"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e2no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;" edge="1" parent="1" source="n2" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4_ext" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#1DCDF1;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="n4" target="ext_home"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

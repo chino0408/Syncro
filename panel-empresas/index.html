@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B101B">
+<title>Syncro Admin — Panel de empresas</title>
+<link rel="icon" href="assets/icons/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<!-- ============ ACCESO ============ -->
+<section id="acceso">
+  <div class="acceso-caja">
+    <div class="acceso-marca">
+      <img src="assets/icons/logo.svg" alt="">
+      <div>
+        <div class="nom">Syncro</div>
+        <div class="rol">Panel de empresas</div>
+      </div>
+    </div>
+
+    <h1 class="acceso-titulo">Ingresá a tu operación</h1>
+    <p class="acceso-sub">Administrá rutas, horarios, flota y choferes. Los cambios que publiques se reflejan de inmediato en la app de los pasajeros.</p>
+
+    <div class="aviso-error" id="acceso-error"></div>
+
+    <div class="campo">
+      <label for="acc-correo">Correo de la empresa</label>
+      <input type="email" id="acc-correo" placeholder="operaciones@empresa.cr" autocomplete="username">
+    </div>
+    <div class="campo">
+      <label for="acc-clave">Contraseña</label>
+      <input type="password" id="acc-clave" placeholder="Tu contraseña" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primario btn-ancho" data-accion="entrar">Entrar al panel</button>
+
+    <p style="font-size:12px; color:var(--tenue); margin-top:22px; line-height:1.6;">
+      Cuenta de prueba: <span style="font-family:var(--dato); color:var(--cian)">admin@transportescr.com</span> · contraseña <span style="font-family:var(--dato); color:var(--cian)">admin123</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ PANEL ============ -->
+<div id="panel">
+
+  <!-- ---- Menú lateral ---- -->
+  <aside class="lateral" id="lateral">
+    <div class="lateral-marca">
+      <img src="assets/icons/logo.svg" alt="">
+      <div>
+        <div class="nom">Syncro</div>
+        <div class="rol">Panel de empresas</div>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <div class="menu-grupo">Operación</div>
+      <button class="menu-item" data-vista="resumen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Resumen
+      </button>
+      <button class="menu-item" data-vista="horarios">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        Horarios
+      </button>
+      <button class="menu-item" data-vista="rutas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20 3 17V4l6 3 6-3 6 3v13l-6-3-6 3z"/><path d="M9 7v13M15 4v13"/></svg>
+        Rutas y precios
+      </button>
+
+      <div class="menu-grupo">Recursos</div>
+      <button class="menu-item" data-vista="flota">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11"/><path d="M2 17h20M6 21v-2M18 21v-2M4 11h16"/></svg>
+        Flota
+      </button>
+      <button class="menu-item" data-vista="choferes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Choferes
+      </button>
+
+      <div class="menu-grupo">Pasajeros</div>
+      <button class="menu-item" data-vista="reportes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0"/><path d="M12 9v4M12 17h.01"/></svg>
+        Reportes
+        <span class="globo" id="globo-reportes" style="display:none">0</span>
+      </button>
+
+      <div class="menu-grupo">Cuenta</div>
+      <button class="menu-item" data-vista="empresa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V7l7-4 7 4v14"/><path d="M17 11h4v10M7 9h.01M7 13h.01M7 17h.01M12 9h.01M12 13h.01M12 17h.01"/></svg>
+        Datos de la empresa
+      </button>
+    </nav>
+
+    <div class="lateral-pie">
+      <div class="empresa-tarjeta">
+        <div class="sigla" id="emp-sigla">—</div>
+        <div style="flex:1; min-width:0">
+          <div class="nom" id="emp-nombre">—</div>
+          <div class="tipo">Empresa autobusera</div>
+        </div>
+        <button class="btn-icono" data-accion="salir" title="Cerrar sesión" aria-label="Cerrar sesión">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ---- Contenido ---- -->
+  <main class="contenido">
+    <header class="barra-superior">
+      <div>
+        <h1 id="titulo-vista">Resumen</h1>
+        <div class="sub" id="sub-vista">La operación de hoy</div>
+      </div>
+      <div class="barra-acciones" id="acciones-vista"></div>
+    </header>
+
+    <!-- Resumen -->
+    <section class="vista" id="vista-resumen">
+      <div class="indicadores" id="resumen-indicadores"></div>
+      <div class="dos-columnas">
+        <div class="bloque">
+          <div class="bloque-cabeza">
+            <div>
+              <h2>Próximas salidas</h2>
+              <div class="sub">Lo que sale en las siguientes horas</div>
+            </div>
+            <button class="btn btn-linea" data-vista="horarios">Ver todas</button>
+          </div>
+          <div id="resumen-salidas"></div>
+        </div>
+        <div class="bloque">
+          <div class="bloque-cabeza">
+            <div>
+              <h2>Últimos reportes</h2>
+              <div class="sub">Lo que reportan los pasajeros</div>
+            </div>
+          </div>
+          <div id="resumen-reportes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horarios -->
+    <section class="vista" id="vista-horarios">
+      <div class="indicadores" id="horarios-indicadores"></div>
+      <div class="bloque">
+        <div class="bloque-cabeza">
+          <div>
+            <h2>Salidas del día</h2>
+            <div class="sub" id="horarios-fecha">—</div>
+          </div>
+          <div class="filtro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="filtro-horarios" placeholder="Filtrar por ruta, placa o chofer">
+          </div>
+        </div>
+        <div class="bloque-cuerpo" id="horarios-riel"></div>
+      </div>
+    </section>
+
+    <!-- Rutas -->
+    <section class="vista" id="vista-rutas">
+      <div class="bloque">
+        <div class="bloque-cabeza">
+          <div>
+            <h2>Rutas publicadas</h2>
+            <div class="sub">Origen, destino, paradas y precio del tiquete</div>
+          </div>
+          <div class="filtro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="filtro-rutas" placeholder="Filtrar por origen o destino">
+          </div>
+        </div>
+        <div id="rutas-tabla"></div>
+      </div>
+    </section>
+
+    <!-- Flota -->
+    <section class="vista" id="vista-flota">
+      <div class="indicadores" id="flota-indicadores"></div>
+      <div class="bloque">
+        <div class="bloque-cabeza">
+          <div>
+            <h2>Unidades</h2>
+            <div class="sub">Buses registrados y su estado</div>
+          </div>
+          <div class="filtro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="filtro-flota" placeholder="Filtrar por placa o modelo">
+          </div>
+        </div>
+        <div id="flota-tabla"></div>
+      </div>
+    </section>
+
+    <!-- Choferes -->
+    <section class="vista" id="vista-choferes">
+      <div class="bloque">
+        <div class="bloque-cabeza">
+          <div>
+            <h2>Personal de conducción</h2>
+            <div class="sub">Choferes registrados y su disponibilidad</div>
+          </div>
+          <div class="filtro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="filtro-choferes" placeholder="Filtrar por nombre o licencia">
+          </div>
+        </div>
+        <div id="choferes-tabla"></div>
+      </div>
+    </section>
+
+    <!-- Reportes -->
+    <section class="vista" id="vista-reportes">
+      <div class="bloque">
+        <div class="bloque-cabeza">
+          <div>
+            <h2>Reportes de pasajeros</h2>
+            <div class="sub">Incidencias enviadas desde la app</div>
+          </div>
+          <button class="btn btn-fantasma" data-accion="marcar-reportes">Marcar todo como visto</button>
+        </div>
+        <div id="reportes-lista"></div>
+      </div>
+    </section>
+
+    <!-- Empresa -->
+    <section class="vista" id="vista-empresa">
+      <div class="dos-columnas">
+        <div class="bloque">
+          <div class="bloque-cabeza"><div><h2>Datos de la empresa</h2><div class="sub">Lo que ven los pasajeros en la app</div></div></div>
+          <div class="bloque-cuerpo">
+            <div class="campo">
+              <label for="emp-razon">Nombre comercial</label>
+              <input type="text" id="emp-razon">
+            </div>
+            <div class="campo-fila">
+              <div class="campo">
+                <label for="emp-cedula">Cédula jurídica</label>
+                <input type="text" id="emp-cedula">
+              </div>
+              <div class="campo">
+                <label for="emp-tel">Teléfono</label>
+                <input type="text" id="emp-tel">
+              </div>
+            </div>
+            <div class="campo">
+              <label for="emp-correo">Correo de contacto</label>
+              <input type="email" id="emp-correo">
+            </div>
+            <button class="btn btn-primario" data-accion="guardar-empresa">Guardar cambios</button>
+          </div>
+        </div>
+        <div class="bloque">
+          <div class="bloque-cabeza"><div><h2>Datos de la demo</h2><div class="sub">Solo para pruebas</div></div></div>
+          <div class="bloque-cuerpo">
+            <p style="font-size:13px; color:var(--tenue); line-height:1.65; margin-bottom:16px;">
+              Toda la información de este panel se guarda en este navegador. Podés restablecer los datos de ejemplo para volver al estado inicial.
+            </p>
+            <button class="btn btn-peligro btn-ancho" data-accion="restablecer">Restablecer datos de ejemplo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ VENTANA MODAL ============ -->
+<div id="velo">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-cabeza">
+      <div>
+        <h3 id="modal-titulo">—</h3>
+        <div class="sub" id="modal-sub"></div>
+      </div>
+      <button class="btn-icono" data-accion="cerrar-modal" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-cuerpo" id="modal-cuerpo"></div>
+    <div class="modal-pie">
+      <button class="btn btn-fantasma" data-accion="cerrar-modal">Cancelar</button>
+      <button class="btn btn-primario" id="modal-guardar">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div id="aviso" role="status" aria-live="polite"></div>
+
+<!-- El orden importa: cada archivo usa lo que definió el anterior -->
+<script src="js/almacenamiento.js"></script>
+<script src="js/datos.js"></script>
+<script src="js/estado.js"></script>
+<script src="js/utilidades.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/navegacion.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/panel-resumen.js"></script>
+<script src="js/panel-horarios.js"></script>
+<script src="js/panel-rutas.js"></script>
+<script src="js/panel-flota.js"></script>
+<script src="js/panel-choferes.js"></script>
+<script src="js/panel-reportes.js"></script>
+<script src="js/panel-empresa.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

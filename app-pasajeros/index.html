@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0B101B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Syncro">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icons/logo.svg">
+<title>Syncro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ BIENVENIDA / LOGIN / REGISTRO ============ -->
+  <section class="screen" id="pantalla-bienvenida">
+    <div class="bienvenida">
+      <!-- LOGO OFICIAL: reemplazá assets/icons/logo.svg por el archivo real de la marca -->
+      <img class="marca-logo" src="assets/icons/logo.svg" alt="Syncro">
+      <h1 class="marca-nombre">Syncro</h1>
+      <p class="marca-tag" id="bienvenida-tag">Consultá rutas, comprá tu tiquete<br>y viajá sin filas.</p>
+
+      <div class="error-msg" id="auth-error"></div>
+
+      <!-- Formulario de inicio de sesión -->
+      <div class="form-auth" id="form-login">
+        <label class="etiqueta-campo">Correo</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          <input type="email" id="login-correo" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+        </div>
+        <label class="etiqueta-campo">Contraseña</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" id="login-clave" placeholder="Tu contraseña" autocomplete="current-password">
+        </div>
+        <button class="btn btn-primario" style="margin-top:14px" data-accion="entrar">Iniciar sesión</button>
+      </div>
+
+      <!-- Formulario de registro -->
+      <div class="form-auth" id="form-registro" style="display:none">
+        <label class="etiqueta-campo">Nombre completo</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" id="reg-nombre" placeholder="Tu nombre" autocomplete="name">
+        </div>
+        <label class="etiqueta-campo">Correo</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          <input type="email" id="reg-correo" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+        </div>
+        <label class="etiqueta-campo">Contraseña</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" id="reg-clave" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+        </div>
+        <button class="btn btn-primario" style="margin-top:14px" data-accion="crear-cuenta">Crear cuenta</button>
+      </div>
+
+      <button class="link-cambio" data-accion="alternar-auth" id="link-alternar">¿No tenés cuenta? Registrate</button>
+    </div>
+  </section>
+
+  <!-- ============ HOME ============ -->
+  <section class="screen" id="pantalla-home">
+    <div class="top-bar">
+      <div>
+        <div class="saludo-label">Hola,</div>
+        <div class="saludo-nombre" id="home-nombre">—</div>
+      </div>
+      <div class="top-acciones">
+        <button class="icon-btn" data-ir="notificaciones" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          <span class="punto-alerta" id="punto-notif" style="display:none"></span>
+        </button>
+        <button class="avatar" data-ir="perfil" id="home-avatar" aria-label="Perfil">—</button>
+      </div>
+    </div>
+
+    <div class="contenido">
+      <!-- Próximo viaje -->
+      <div id="home-proximo"></div>
+
+      <!-- Buscador -->
+      <div class="card card-oscura">
+        <div style="font-family:var(--display); font-weight:500; font-size:15px; margin-bottom:12px;">¿A dónde vas hoy?</div>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          <select id="home-origen">
+            <option value="">Origen</option>
+          </select>
+        </div>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--cian-oscuro)"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          <select id="home-destino">
+            <option value="">Destino</option>
+          </select>
+        </div>
+        <button class="btn btn-primario" style="margin-top:4px" data-accion="buscar-desde-home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          Buscar ruta
+        </button>
+      </div>
+
+      <button class="opcion-ayuda" data-ir="ayuda">
+        <span class="oa-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </span>
+        <span>
+          <span class="oa-titulo">Ayuda y soporte</span>
+          <span class="oa-texto">Aprendé a usar la app o reportá un problema con tu compra.</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ RUTAS ============ -->
+  <section class="screen" id="pantalla-rutas">
+    <div class="titulo-pantalla">Rutas</div>
+    <div class="contenido">
+      <div class="campo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="rutas-buscar" placeholder="Buscar ruta o parada">
+      </div>
+
+      <button class="btn btn-secundario" style="margin-bottom:16px" data-accion="mi-ubicacion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+        Mi ubicación
+      </button>
+
+      <div id="rutas-mapa-ubicacion" style="display:none"></div>
+
+      <div class="tabs">
+        <button class="tab activa" data-tab="todas">Todas</button>
+        <button class="tab" data-tab="favoritas">Favoritas</button>
+      </div>
+
+      <div id="rutas-lista"></div>
+    </div>
+  </section>
+
+  <!-- ============ DETALLE DE RUTA ============ -->
+  <section class="screen" id="pantalla-detalle-ruta">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-ir="rutas" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span id="detalle-titulo">Ruta</span>
+    </div>
+    <div class="contenido">
+      <div id="detalle-mapa"></div>
+      <div class="seccion-titulo">Paradas</div>
+      <div id="detalle-paradas" class="card"></div>
+      <div class="seccion-titulo">Horarios disponibles hoy</div>
+      <div id="detalle-horarios"></div>
+    </div>
+  </section>
+
+  <!-- ============ RESUMEN Y PAGO ============ -->
+  <section class="screen" id="pantalla-compra">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-accion="volver-detalle" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span>Confirmar compra</span>
+    </div>
+    <div class="contenido sin-nav">
+      <div class="card">
+        <div class="eyebrow">Resumen</div>
+        <div id="compra-resumen"></div>
+      </div>
+
+      <div class="seccion-titulo">Método de pago</div>
+      <div id="compra-pagos"></div>
+
+      <div class="error-msg" id="compra-error"></div>
+
+      <button class="btn btn-primario" style="margin-top:8px" data-accion="pagar" id="btn-pagar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        Pagar y generar tiquete
+      </button>
+      <p style="font-size:11.5px; color:var(--texto-tenue); text-align:center; margin-top:12px; line-height:1.5;">
+        Demo: el pago es simulado, no se cobra nada.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TIQUETES ============ -->
+  <section class="screen" id="pantalla-tiquetes">
+    <div class="titulo-pantalla">Mis tiquetes</div>
+    <div class="contenido">
+      <div id="tiquetes-lista"></div>
+    </div>
+  </section>
+
+  <!-- ============ DETALLE DE TIQUETE (QR) ============ -->
+  <section class="screen" id="pantalla-tiquete-qr">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-ir="tiquetes" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span>Tu tiquete</span>
+    </div>
+    <div class="contenido">
+      <div id="qr-contenido"></div>
+    </div>
+  </section>
+
+  <!-- ============ NOTIFICACIONES ============ -->
+  <section class="screen" id="pantalla-notificaciones">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-ir="home" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span>Notificaciones</span>
+    </div>
+    <div class="contenido">
+      <div id="notif-lista"></div>
+    </div>
+  </section>
+
+  <!-- ============ PERFIL ============ -->
+  <section class="screen" id="pantalla-perfil">
+    <div class="titulo-pantalla">Perfil</div>
+    <div class="contenido">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+        <div class="avatar" style="width:58px; height:58px; font-size:21px;" id="perfil-avatar">—</div>
+        <div>
+          <div style="font-family:var(--display); font-weight:500; font-size:16px;" id="perfil-nombre">—</div>
+          <div style="font-size:12.5px; color:var(--texto-tenue);" id="perfil-correo">—</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="num" id="stat-viajes">0</div><div class="etq">Viajes comprados</div></div>
+        <div class="stat"><div class="num" id="stat-favoritas">0</div><div class="etq">Rutas favoritas</div></div>
+      </div>
+
+      <button class="menu-item" data-ir="ayuda">
+        <span class="menu-item-izq">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          Ayuda y soporte
+        </span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      <button class="btn btn-peligro" style="margin-top:22px" data-accion="cerrar-sesion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ AYUDA ============ -->
+  <section class="screen" id="pantalla-ayuda">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-ir="home" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span>Ayuda</span>
+    </div>
+    <div class="contenido">
+      <p class="pregunta-ayuda">¿Cómo podemos ayudarte?</p>
+
+      <button class="opcion-ayuda" data-ir="ayuda-reporte">
+        <span class="oa-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0"/><path d="M12 9v4M12 17h.01"/></svg>
+        </span>
+        <span>
+          <span class="oa-titulo">Reportar un problema</span>
+          <span class="oa-texto">Contanos qué pasó con la compra de tu tiquete y soporte te responde.</span>
+        </span>
+      </button>
+
+      <button class="opcion-ayuda" data-ir="ayuda-comenzar">
+        <span class="oa-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>
+        </span>
+        <span>
+          <span class="oa-titulo">Comenzar</span>
+          <span class="oa-texto">Conocé qué es Syncro y cómo consultar cualquier ruta.</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ AYUDA: REPORTE ============ -->
+  <section class="screen" id="pantalla-ayuda-reporte">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-ir="ayuda" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span>Reportar un problema</span>
+    </div>
+    <div class="contenido">
+      <div id="reporte-form">
+        <p style="font-size:13.5px; color:var(--texto-tenue); line-height:1.6; margin-bottom:18px;">
+          Describí qué pasó con tu compra. Soporte revisa el reporte y te responde al correo de tu cuenta.
+        </p>
+        <label class="etiqueta-campo">Tu nombre</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" id="rep-nombre" placeholder="Nombre completo">
+        </div>
+        <label class="etiqueta-campo">Correo de contacto</label>
+        <div class="campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          <input type="email" id="rep-correo" placeholder="tucorreo@ejemplo.com">
+        </div>
+        <label class="etiqueta-campo">¿Qué pasó?</label>
+        <div class="campo">
+          <textarea id="rep-detalle" placeholder="Ej: pagué el tiquete pero no me apareció en la app."></textarea>
+        </div>
+        <div class="error-msg" id="reporte-error"></div>
+        <button class="btn btn-primario" style="margin-top:6px" data-accion="enviar-reporte">Enviar reporte</button>
+      </div>
+
+      <div id="reporte-enviado" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- ============ AYUDA: COMENZAR ============ -->
+  <section class="screen" id="pantalla-ayuda-comenzar">
+    <div class="titulo-pantalla">
+      <button class="btn-volver" data-ir="ayuda" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span>Comenzar</span>
+    </div>
+    <div class="contenido">
+      <div class="card card-oscura">
+        <div class="eyebrow">Qué es Syncro</div>
+        <p style="font-size:14px; line-height:1.7; color:#D7E3EB;">
+          Syncro conecta a los pasajeros del transporte público con las empresas autobuseras.
+          Consultás rutas y horarios reales, comprás tu tiquete desde el teléfono y lo mostrás
+          como código QR al abordar. Sin filas y sin efectivo.
+        </p>
+      </div>
+
+      <div class="seccion-titulo">Cómo funciona</div>
+
+      <div class="paso-intro">
+        <span class="paso-num">1</span>
+        <span>
+          <span class="paso-titulo">Buscá tu ruta</span>
+          <span class="paso-texto">Elegí origen y destino desde el inicio, o entrá a Rutas para ver todas las disponibles.</span>
+        </span>
+      </div>
+      <div class="paso-intro">
+        <span class="paso-num">2</span>
+        <span>
+          <span class="paso-titulo">Elegí un horario</span>
+          <span class="paso-texto">Vas a ver el recorrido en el mapa, las paradas, el precio y las salidas del día.</span>
+        </span>
+      </div>
+      <div class="paso-intro">
+        <span class="paso-num">3</span>
+        <span>
+          <span class="paso-titulo">Pagá y recibí tu QR</span>
+          <span class="paso-texto">El tiquete queda guardado en la app y te avisamos 15 minutos antes de la salida.</span>
+        </span>
+      </div>
+      <div class="paso-intro">
+        <span class="paso-num">4</span>
+        <span>
+          <span class="paso-titulo">Mostrá el QR al abordar</span>
+          <span class="paso-texto">El chofer lo escanea y listo. No necesitás imprimir nada.</span>
+        </span>
+      </div>
+
+      <button class="btn btn-primario" style="margin-top:10px" data-ir="rutas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver todas las rutas
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ NAVEGACIÓN INFERIOR ============ -->
+  <nav class="nav-inferior" id="nav-inferior" style="display:none">
+    <button class="nav-item" data-ir="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      <span>Inicio</span>
+    </button>
+    <button class="nav-item" data-ir="rutas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20 3 17V4l6 3 6-3 6 3v13l-6-3-6 3z"/><path d="M9 7v13M15 4v13"/></svg>
+      <span>Rutas</span>
+    </button>
+    <button class="nav-item" data-ir="tiquetes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 1 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>
+      <span>Tiquetes</span>
+    </button>
+    <button class="nav-item" data-ir="perfil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Perfil</span>
+    </button>
+  </nav>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<!-- El orden importa: cada archivo usa lo que definió el anterior -->
+<script src="js/almacenamiento.js"></script>
+<script src="js/datos.js"></script>
+<script src="js/estado.js"></script>
+<script src="js/utilidades.js"></script>
+<script src="js/navegacion.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/mapa.js"></script>
+<script src="js/pantalla-home.js"></script>
+<script src="js/pantalla-rutas.js"></script>
+<script src="js/pantalla-detalle-ruta.js"></script>
+<script src="js/pantalla-compra.js"></script>
+<script src="js/pantalla-tiquetes.js"></script>
+<script src="js/notificaciones.js"></script>
+<script src="js/pantalla-perfil.js"></script>
+<script src="js/ayuda.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
