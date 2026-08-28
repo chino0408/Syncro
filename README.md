@@ -146,12 +146,13 @@ La lámina completa está en `documentacion/marca/`.
 - Registro, inicio de sesión y cierre de sesión en ambas
 - Compra de tiquetes con generación de QR
 - Gestión de rutas, precios, flota, choferes y horarios
+- Selección de asientos con mapa del bus
+- Recuperación de contraseña en tres pasos
+- Mapas reales con geolocalización del dispositivo
 
 ### En camino
 
 - Diseño adaptable a distintos tamaños de pantalla
-- Recuperación de contraseña
-- Geolocalización real
 - Base de datos y backend compartido
 - Instalación como app en el teléfono
 
@@ -159,7 +160,6 @@ La lámina completa está en `documentacion/marca/`.
 
 - **El pago.** No hay pasarela real; 1 de cada 8 intentos falla a propósito para poder mostrar el camino de error.
 - **El código QR.** Es un patrón visual, todavía no lo lee un escáner.
-- **El mapa.** Es un esquema dibujado, sin geolocalización real.
 - **Los datos.** Se guardan en el navegador. El panel y la app todavía no comparten información.
 - **El logo.** El archivo en `assets/icons/logo.svg` es provisional.
 

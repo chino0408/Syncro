@@ -73,11 +73,77 @@ function alternarFavorita(id) {
   pintarRutas();
 }
 
-function mostrarMiUbicacion() {
+/* ---------- Mi ubicación ----------
+   Pide la ubicación al dispositivo y muestra un mapa real con la
+   posición y las paradas más cercanas. */
+async function mostrarMiUbicacion() {
   const cont = $('#rutas-mapa-ubicacion');
-  const visible = cont.style.display !== 'none';
-  if (visible) { cont.style.display = 'none'; return; }
+
+  // Segundo toque: se oculta
+  if (cont.style.display !== 'none') {
+    cont.style.display = 'none';
+    cont.innerHTML = '';
+    return;
+  }
+
   cont.style.display = 'block';
-  cont.innerHTML = mapaSVG(null, true);
-  toast('Ubicación aproximada (demo)');
+  cont.innerHTML = `
+    <div class="ubicacion-cargando">
+      <span class="girador"></span>
+      Buscando tu ubicación…
+    </div>`;
+
+  try {
+    const { coord, precision } = await pedirUbicacion();
+    const cercanas = paradasCercanas(coord, 3);
+
+    cont.innerHTML = `
+      <div id="mapa-ubicacion" class="mapa-real"></div>
+      <div class="cercanas">
+        <div class="cercanas-titulo">Paradas más cercanas</div>
+        ${cercanas.map(p => `
+          <div class="cercana">
+            <span class="cn-nombre">${p.nombre}</span>
+            <span class="cn-km">${formatoDistancia(p.km)}</span>
+          </div>`).join('')}
+      </div>
+      <p class="ubicacion-precision">Precisión aproximada: ${Math.round(precision)} m</p>`;
+
+    if (hayLeaflet()) {
+      const mapa = crearMapa('mapa-ubicacion', coord, 13);
+      if (mapa) {
+        L.marker(coord, { icon: marcadorUsuario() }).addTo(mapa)
+          .bindPopup('<strong>Estás acá</strong>');
+        L.circle(coord, {
+          radius: precision, color: '#1DCDF1', weight: 1,
+          fillColor: '#1DCDF1', fillOpacity: .1,
+        }).addTo(mapa);
+
+        cercanas.forEach(p => {
+          L.marker(p.coord, { icon: marcadorPunto('#10B0D4', 12) }).addTo(mapa)
+            .bindPopup(`<strong>${p.nombre}</strong><br>${formatoDistancia(p.km)}`);
+        });
+      }
+    } else {
+      // Sin Leaflet mostramos el esquema, pero los datos siguen siendo reales
+      $('#mapa-ubicacion').innerHTML = mapaSVG(null, true);
+    }
+  } catch (error) {
+    cont.innerHTML = `
+      <div class="ubicacion-error">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><path d="M12 7v4M12 15h.01"/>
+        </svg>
+        <div>
+          <div class="ue-titulo">No pudimos ubicarte</div>
+          <div class="ue-texto">${error.message}</div>
+        </div>
+      </div>
+      <button class="btn btn-secundario" data-accion="mi-ubicacion" style="margin-top:12px">Reintentar</button>`;
+  }
+}
+
+function formatoDistancia(km) {
+  if (km < 1) return Math.round(km * 1000) + ' m';
+  return km.toFixed(1).replace('.', ',') + ' km';
 }

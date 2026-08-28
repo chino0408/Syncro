@@ -12,7 +12,8 @@ function pintarDetalleRuta() {
   if (!ruta) return ir('rutas');
 
   $('#detalle-titulo').textContent = ruta.origen + ' → ' + ruta.destino;
-  $('#detalle-mapa').innerHTML = mapaSVG(ruta, false);
+  $('#detalle-mapa').innerHTML = '<div id="mapa-ruta" class="mapa-real"></div>';
+  dibujarRutaEnMapa('mapa-ruta', ruta);
 
   $('#detalle-paradas').innerHTML = ruta.paradas.map((p, i) => `
     <div style="display:flex; align-items:center; gap:12px; padding:7px 0;">
