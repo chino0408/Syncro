@@ -206,6 +206,6 @@ function actualizarResumenAsientos() {
 
 function continuarAlPago() {
   if (!estado.compra.asientos.length) return;
-  estado.pagoElegido = METODOS_PAGO[0].id;
+  estado.pagoElegido = estado.metodosPago.length ? estado.metodosPago[0].id : null;
   ir('compra');
 }

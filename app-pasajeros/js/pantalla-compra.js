@@ -26,7 +26,7 @@ function pintarCompra() {
     </div>
     <div class="resumen-linea"><span class="etq">Total</span><span class="resumen-total">${colones(subtotal)}</span></div>`;
 
-  $('#compra-pagos').innerHTML = METODOS_PAGO.map(m => `
+  $('#compra-pagos').innerHTML = estado.metodosPago.map(m => `
     <div class="opcion-pago ${estado.pagoElegido === m.id ? 'elegida' : ''}" data-pago="${m.id}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         ${m.icono === 'tarjeta'
@@ -39,12 +39,25 @@ function pintarCompra() {
       </div>
     </div>`).join('');
 
+  if (!estado.metodosPago.length) {
+    $('#compra-pagos').innerHTML = `
+      <div class="card" style="text-align:center; padding:20px;">
+        <div style="font-size:13.5px; color:var(--texto-tenue); line-height:1.6; margin-bottom:14px;">
+          No tenés métodos de pago guardados.
+        </div>
+        <button class="btn btn-secundario" data-ir="pagos">Agregar uno</button>
+      </div>`;
+  }
+
   ocultarError('#compra-error');
 }
 
 function pagar() {
   const c = estado.compra;
   if (!c || !c.asientos.length) return;
+  if (!estado.metodosPago.length) {
+    return mostrarError('#compra-error', 'Agregá un método de pago para continuar.');
+  }
   const boton = $('#btn-pagar');
   boton.disabled = true;
   boton.textContent = 'Procesando…';
@@ -73,14 +86,14 @@ function pagar() {
     estado.tiquetes.push(tiquete);
 
     const ruta = RUTAS.find(r => r.id === c.rutaId);
-    agregarNotificacion({
+    if (estado.preferencias.avisoCompra) agregarNotificacion({
       tipo: 'compra',
       titulo: 'Compra completada',
       texto: `Tu tiquete de ${ruta.origen} a ${ruta.destino} está listo. ${textoAsientos(tiquete)}.`,
       tiqueteId: tiquete.id,
     });
     // Aviso programado: 15 minutos antes de la salida
-    agregarNotificacion({
+    if (estado.preferencias.avisoViaje) agregarNotificacion({
       tipo: 'viaje',
       titulo: 'Tu viaje sale pronto',
       texto: `Salís de ${ruta.origen} a las ${horaCorta(c.hora)}. Tené tu QR listo.`,

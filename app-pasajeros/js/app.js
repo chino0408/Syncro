@@ -14,6 +14,9 @@ document.addEventListener('click', (e) => {
   const abrir = e.target.closest('[data-abrir-ruta]');
   if (abrir) { abrirRuta(abrir.dataset.abrirRuta); return; }
 
+  const quitar = e.target.closest('[data-quitar-pago]');
+  if (quitar) { quitarPago(quitar.dataset.quitarPago); return; }
+
   const asiento = e.target.closest('[data-asiento]');
   if (asiento) { alternarAsiento(asiento.dataset.asiento); return; }
 
@@ -62,9 +65,20 @@ document.addEventListener('click', (e) => {
     'verificar-codigo': verificarCodigo,
     'reenviar-codigo': reenviarCodigo,
     'guardar-clave': guardarClaveNueva,
+    'guardar-perfil': guardarPerfil,
+    'nuevo-pago': abrirNuevoPago,
+    'guardar-pago': guardarPago,
     'pagar': pagar,
     'enviar-reporte': enviarReporte,
   }[accion.dataset.accion] || (() => {}))();
+});
+
+// Interruptores de preferencias
+document.addEventListener('change', (e) => {
+  const pref = e.target.closest('[data-preferencia]');
+  if (pref) guardarPreferencia(pref.dataset.preferencia, pref.checked);
+  const tipo = e.target.closest('#np-tipo');
+  if (tipo) cambiarTipoPago();
 });
 
 // Buscador de rutas
@@ -88,6 +102,12 @@ $('#rec-correo').addEventListener('keydown', e => { if (e.key === 'Enter') envia
 /* ---------- 18. Arranque ---------- */
 (function iniciar() {
   prepararCasillas();
+  // Métodos de pago iniciales, la primera vez
+  if (!estado.metodosPago) {
+    estado.metodosPago = METODOS_PAGO.map(m => ({ ...m }));
+    persistir();
+  }
+
   // Cuenta de prueba, para poder entrar sin registrarse
   if (!estado.usuarios.length) {
     estado.usuarios.push({ nombre:'Usuario Demo', correo:'demo@syncro.cr', clave:'123456' });

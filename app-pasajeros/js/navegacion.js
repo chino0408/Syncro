@@ -29,6 +29,9 @@ function ir(pantalla) {
     notificaciones: pintarNotificaciones,
     'detalle-ruta': pintarDetalleRuta,
     asientos: pintarAsientos,
+    'editar-perfil': pintarEditarPerfil,
+    pagos: pintarPagos,
+    preferencias: pintarPreferencias,
     compra: pintarCompra,
     'ayuda-reporte': prepararReporte,
   }[pantalla];

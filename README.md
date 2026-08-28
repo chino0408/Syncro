@@ -149,10 +149,11 @@ La lámina completa está en `documentacion/marca/`.
 - Selección de asientos con mapa del bus
 - Recuperación de contraseña en tres pasos
 - Mapas reales con geolocalización del dispositivo
+- Edición de perfil, métodos de pago y preferencias de avisos
+- Diseño adaptable de 320px a escritorio
 
 ### En camino
 
-- Diseño adaptable a distintos tamaños de pantalla
 - Base de datos y backend compartido
 - Instalación como app en el teléfono
 
