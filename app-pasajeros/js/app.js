@@ -56,6 +56,12 @@ document.addEventListener('click', (e) => {
     'volver-detalle': () => ir('asientos'),
     'volver-horarios': () => ir('detalle-ruta'),
     'continuar-asientos': continuarAlPago,
+    'olvide-clave': abrirRecuperar,
+    'volver-login': volverALogin,
+    'enviar-codigo': enviarCodigo,
+    'verificar-codigo': verificarCodigo,
+    'reenviar-codigo': reenviarCodigo,
+    'guardar-clave': guardarClaveNueva,
     'pagar': pagar,
     'enviar-reporte': enviarReporte,
   }[accion.dataset.accion] || (() => {}))();
@@ -74,8 +80,14 @@ $('#rutas-buscar').addEventListener('input', (e) => {
 ['reg-clave', 'reg-correo', 'reg-nombre'].forEach(id => {
   $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter') crearCuenta(); });
 });
+
+$('#rec-correo').addEventListener('keydown', e => { if (e.key === 'Enter') enviarCodigo(); });
+['rec-clave', 'rec-clave2'].forEach(id => {
+  $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter') guardarClaveNueva(); });
+});
 /* ---------- 18. Arranque ---------- */
 (function iniciar() {
+  prepararCasillas();
   // Cuenta de prueba, para poder entrar sin registrarse
   if (!estado.usuarios.length) {
     estado.usuarios.push({ nombre:'Usuario Demo', correo:'demo@syncro.cr', clave:'123456' });

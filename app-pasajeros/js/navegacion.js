@@ -11,7 +11,7 @@ function ir(pantalla) {
   if (destino) destino.classList.add('active');
 
   // Barra inferior: visible solo en las pantallas raíz + secundarias con contexto
-  const sinNav = ['bienvenida', 'compra', 'asientos'];
+  const sinNav = ['bienvenida', 'compra', 'asientos', 'recuperar'];
   const mostrarNav = estado.sesion && !sinNav.includes(pantalla);
   $('#nav-inferior').style.display = mostrarNav ? 'flex' : 'none';
 
