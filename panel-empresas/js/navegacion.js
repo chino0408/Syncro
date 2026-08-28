@@ -40,6 +40,7 @@ function irA(vista) {
     </button>`).join('');
 
   def.pintar();
+  cerrarMenu();
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -49,4 +50,16 @@ function actualizarGlobo() {
   const globo = $('#globo-reportes');
   globo.style.display = sinVer ? 'flex' : 'none';
   globo.textContent = sinVer;
+}
+
+/* ---------- Menú lateral en pantallas chicas ----------
+   En móvil el menú se abre como cajón sobre el contenido. */
+function abrirMenu() {
+  $('#lateral').classList.add('abierta');
+  $('#velo-menu').classList.add('visible');
+}
+
+function cerrarMenu() {
+  $('#lateral').classList.remove('abierta');
+  $('#velo-menu').classList.remove('visible');
 }

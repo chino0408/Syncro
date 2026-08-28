@@ -396,10 +396,90 @@ input,select,textarea{font-family:inherit;}
 .reporte .txt{ font-size:12.5px; color:var(--tenue); line-height:1.55; margin-top:3px; }
 .reporte .meta{ font-family:var(--dato); font-size:10.5px; color:var(--tenue); margin-top:6px; }
 
+/* ==========================================================
+   PANTALLAS CHICAS
+   El menú lateral pasa a ser un cajón que se abre con el botón
+   de la barra superior. Las tablas se desplazan en horizontal
+   para no perder ninguna columna.
+   ========================================================== */
+
+/* Botones que solo existen en móvil */
+.btn-menu, .btn-cerrar-menu{
+  display:none; background:none; border:none; cursor:pointer;
+  color:var(--cian); padding:6px; border-radius:8px;
+  align-items:center; justify-content:center;
+}
+.btn-menu svg, .btn-cerrar-menu svg{ width:24px; height:24px; }
+.btn-menu:hover, .btn-cerrar-menu:hover{ background:rgba(29,205,241,.1); }
+
+#velo-menu{
+  display:none; position:fixed; inset:0;
+  background:rgba(5,8,13,.6); backdrop-filter:blur(2px);
+  z-index:55;
+}
+#velo-menu.visible{ display:block; }
+
+/* Tablas: contenedor con desplazamiento horizontal */
+.tabla-scroll{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.tabla-scroll .tabla{ min-width:620px; }
+
+@media (max-width:980px){
+  .dos-columnas{ grid-template-columns:1fr; }
+}
+
 @media (max-width:860px){
-  .lateral{ position:fixed; left:-100%; z-index:60; transition:left .2s ease; }
-  .lateral.abierta{ left:0; }
-  .barra-superior{ padding:20px; }
-  .vista{ padding:20px; }
+  .btn-menu{ display:inline-flex; }
+  .btn-cerrar-menu{ display:inline-flex; margin-right:2px; }
+
+  .lateral{
+    position:fixed; top:0; left:0; bottom:0;
+    transform:translateX(-100%);
+    z-index:60; transition:transform .22s ease;
+    box-shadow:none;
+  }
+  .lateral.abierta{
+    transform:translateX(0);
+    box-shadow:0 0 40px rgba(0,0,0,.5);
+  }
+
+  .barra-superior{
+    padding:16px 18px 14px; gap:14px; align-items:center;
+  }
+  .barra-superior h1{ font-size:20px; }
+  .barra-superior .sub{ font-size:12px; }
+  .barra-acciones .btn{ padding:9px 13px; font-size:13px; }
+
+  .vista{ padding:18px; }
   .campo-fila{ grid-template-columns:1fr; }
+  .indicadores{ grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:11px; }
+  .indicador{ padding:14px; }
+  .indicador .valor{ font-size:26px; }
+
+  .bloque-cabeza{ flex-wrap:wrap; gap:12px; }
+  .filtro{ min-width:0; width:100%; }
+
+  /* El riel de despacho se compacta */
+  .riel{ padding-left:52px; }
+  .riel::before{ left:38px; }
+  .riel-hora .marca{ left:-52px; width:32px; font-size:11px; }
+  .riel-hora .punto{ left:-16px; }
+  .salida{ gap:12px; padding:12px 13px; }
+  .salida .ruta{ min-width:140px; }
+  .salida .asignado{ gap:16px; }
+  .salida .ocupacion{ min-width:96px; }
+}
+
+@media (max-width:520px){
+  .barra-superior{ flex-wrap:wrap; }
+  .barra-acciones{ width:100%; }
+  .barra-acciones .btn{ width:100%; }
+  .modal{ border-radius:14px; }
+  #velo{ padding:24px 14px; }
+  .salida{ flex-direction:column; align-items:stretch; }
+  .salida .asignado{ justify-content:flex-start; }
+  .salida .ocupacion{ min-width:0; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .lateral{ transition:none; }
 }

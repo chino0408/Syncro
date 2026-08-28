@@ -30,6 +30,7 @@ function pintarResumen() {
       'Programá las salidas de mañana para que los pasajeros puedan comprar con anticipación.');
   } else {
     contSalidas.innerHTML = `
+      <div class="tabla-scroll">
       <table class="tabla">
         <thead><tr><th>Hora</th><th>Ruta</th><th>Unidad</th><th>Chofer</th><th>Ocupación</th></tr></thead>
         <tbody>
@@ -51,7 +52,8 @@ function pintarResumen() {
               </tr>`;
           }).join('')}
         </tbody>
-      </table>`;
+      </table>
+    </div>`;
   }
 
   /* Últimos reportes */

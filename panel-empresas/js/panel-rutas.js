@@ -24,6 +24,7 @@ function pintarRutas() {
   }
 
   cont.innerHTML = `
+    <div class="tabla-scroll">
     <table class="tabla">
       <thead>
         <tr>
@@ -62,7 +63,8 @@ function pintarRutas() {
             </td>
           </tr>`).join('')}
       </tbody>
-    </table>`;
+    </table>
+    </div>`;
 }
 
 function camposRuta(r) {

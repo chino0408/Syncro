@@ -22,6 +22,7 @@ function pintarChoferes() {
   }
 
   cont.innerHTML = `
+    <div class="tabla-scroll">
     <table class="tabla">
       <thead>
         <tr><th>Nombre</th><th>Licencia</th><th>Teléfono</th><th>Salidas hoy</th><th>Estado</th><th></th></tr>
@@ -54,7 +55,8 @@ function pintarChoferes() {
           </tr>`;
         }).join('')}
       </tbody>
-    </table>`;
+    </table>
+    </div>`;
 }
 
 function camposChofer(c) {

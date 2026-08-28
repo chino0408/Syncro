@@ -334,8 +334,8 @@ body{
   display:flex; align-items:center; justify-content:center;
 }
 .opcion-ayuda .oa-icono svg{ width:21px; height:21px; }
-.opcion-ayuda .oa-titulo{ font-family:var(--display); font-weight:500; font-size:15px; margin-bottom:4px; }
-.opcion-ayuda .oa-texto{ font-size:12.5px; color:var(--texto-tenue); line-height:1.5; }
+.opcion-ayuda .oa-titulo{ display:block; font-family:var(--display); font-weight:500; font-size:15px; margin-bottom:4px; }
+.opcion-ayuda .oa-texto{ display:block; font-size:12.5px; color:var(--texto-tenue); line-height:1.5; }
 
 .paso-intro{
   display:flex; gap:14px; margin-bottom:18px; align-items:flex-start;
@@ -346,8 +346,8 @@ body{
   font-family:var(--display); font-weight:600; font-size:13px;
   display:flex; align-items:center; justify-content:center;
 }
-.paso-titulo{ font-family:var(--display); font-weight:500; font-size:14.5px; margin-bottom:3px; }
-.paso-texto{ font-size:13px; color:var(--texto-tenue); line-height:1.6; }
+.paso-titulo{ display:block; font-family:var(--display); font-weight:500; font-size:14.5px; margin-bottom:3px; }
+.paso-texto{ display:block; font-size:13px; color:var(--texto-tenue); line-height:1.6; }
 
 .seccion-titulo{
   font-family:var(--display); font-weight:500; font-size:14px;
@@ -671,4 +671,65 @@ body{
 .ubicacion-precision{
   font-size:11.5px; color:var(--texto-tenue);
   text-align:center; margin-bottom:6px;
+}
+
+/* ==========================================================
+   AJUSTES DE TAMAÑO Y PANTALLAS GRANDES
+   ========================================================== */
+
+/* Los campos ocupan todo el alto de su contenedor, para que
+   tocar en cualquier parte del recuadro enfoque el control. */
+.campo{ min-height:46px; }
+.campo input,
+.campo select{
+  min-height:44px;
+  padding:0;
+  align-self:stretch;
+}
+.campo textarea{ min-height:90px; padding-top:12px; }
+
+/* Las pestañas necesitan un área cómoda para el dedo */
+.tab{
+  min-height:44px;
+  padding:0 2px 9px 2px;
+  display:flex; align-items:flex-end;
+}
+
+/* Los enlaces de texto también */
+.link-cambio{ min-height:44px; }
+
+/* ---------- Presentación en pantallas grandes ----------
+   La app es móvil. En una pantalla ancha, en vez de estirarla,
+   se centra en una columna del ancho de un teléfono, sobre un
+   fondo con el degradado de la marca. */
+@media (min-width:620px){
+  body{
+    background:
+      radial-gradient(900px 520px at 50% -10%, rgba(29,205,241,.10), transparent 62%),
+      var(--grafito);
+  }
+  #app{
+    max-width:430px;
+    box-shadow:0 0 0 1px rgba(29,205,241,.12), 0 24px 70px rgba(0,0,0,.5);
+  }
+  .nav-inferior,
+  .asientos-barra{ max-width:430px; }
+}
+
+/* En pantallas muy anchas se agranda un poco el respiro lateral */
+@media (min-width:1100px){
+  #app{ max-width:440px; }
+  .nav-inferior,
+  .asientos-barra{ max-width:440px; }
+}
+
+/* Teléfono acostado: la pantalla es baja, hay que comprimir */
+@media (max-height:520px) and (orientation:landscape){
+  .bienvenida{ padding-top:20px; padding-bottom:20px; }
+  .marca-logo{ width:64px; height:74px; margin-bottom:10px; }
+  .marca-nombre{ font-size:30px; }
+  .marca-tag{ margin-bottom:18px; }
+  .top-bar{ padding-top:12px; }
+  .bus{ max-width:230px; }
+  .asiento{ width:34px; height:34px; }
 }

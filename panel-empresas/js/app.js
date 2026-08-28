@@ -37,6 +37,8 @@ document.addEventListener('click', (e) => {
     'guardar-empresa': guardarEmpresa,
     'restablecer': restablecerDemo,
     'cerrar-modal': cerrarModal,
+    'abrir-menu': abrirMenu,
+    'cerrar-menu': cerrarMenu,
   }[accion.dataset.accion];
   if (fn) fn();
 });
@@ -58,7 +60,9 @@ $('#velo').addEventListener('click', (e) => {
   if (e.target.id === 'velo') cerrarModal();
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && $('#velo').classList.contains('visible')) cerrarModal();
+  if (e.key !== 'Escape') return;
+  if ($('#velo').classList.contains('visible')) cerrarModal();
+  else if ($('#lateral').classList.contains('abierta')) cerrarMenu();
 });
 
 /* ---------- Filtros de cada tabla ---------- */

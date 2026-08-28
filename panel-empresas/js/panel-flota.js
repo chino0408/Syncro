@@ -34,6 +34,7 @@ function pintarFlota() {
   }
 
   cont.innerHTML = `
+    <div class="tabla-scroll">
     <table class="tabla">
       <thead>
         <tr><th>Placa</th><th>Modelo</th><th>Año</th><th>Capacidad</th><th>Salidas hoy</th><th>Estado</th><th></th></tr>
@@ -62,7 +63,8 @@ function pintarFlota() {
           </tr>`;
         }).join('')}
       </tbody>
-    </table>`;
+    </table>
+    </div>`;
 }
 
 function camposBus(b) {

@@ -51,6 +51,9 @@
   <!-- ---- Menú lateral ---- -->
   <aside class="lateral" id="lateral">
     <div class="lateral-marca">
+      <button class="btn-cerrar-menu" data-accion="cerrar-menu" aria-label="Cerrar menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
       <img src="assets/icons/logo.svg" alt="">
       <div>
         <div class="nom">Syncro</div>
@@ -111,10 +114,15 @@
     </div>
   </aside>
 
+  <div id="velo-menu" data-accion="cerrar-menu"></div>
+
   <!-- ---- Contenido ---- -->
   <main class="contenido">
     <header class="barra-superior">
-      <div>
+      <button class="btn-menu" data-accion="abrir-menu" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div style="flex:1; min-width:0">
         <h1 id="titulo-vista">Resumen</h1>
         <div class="sub" id="sub-vista">La operación de hoy</div>
       </div>
