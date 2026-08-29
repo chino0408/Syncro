@@ -18,7 +18,7 @@ syncro-proyecto/
 │
 ├── assets/
 │   └── icons/
-│       ├── logo.svg        ← LOGO OFICIAL (reemplazar, ver abajo)
+│       ├── logo.png        ← LOGO OFICIAL (reemplazar, ver abajo)
 │       ├── icon-512.png    ← Ícono de instalación en Android
 │       └── icon-192.png
 │
@@ -49,7 +49,7 @@ Los archivos JS se cargan en orden en `index.html` y cada uno usa lo que defini�
 
 ## Cambiar el logo
 
-El logo está en **un solo lugar**: `assets/icons/logo.svg`. Reemplazá ese archivo por el logo oficial de la marca y se actualiza en toda la app.
+El logo está en **un solo lugar**: `assets/icons/logo.png`. Reemplazá ese archivo por el logo oficial de la marca y se actualiza en toda la app.
 
 Se usa en tres puntos, todos ya conectados a ese archivo:
 
@@ -57,7 +57,7 @@ Se usa en tres puntos, todos ya conectados a ese archivo:
 2. El ícono al instalar la app (`manifest.json`).
 3. El ícono en Safari/iPhone (`<link rel="apple-touch-icon">`).
 
-**Formato recomendado:** SVG, porque se ve nítido en cualquier tamaño. Si solo tenés PNG, usá uno de al menos 512×512 con fondo transparente, guardalo como `logo.png` y cambiá las tres referencias de `logo.svg` a `logo.png`.
+**Formato recomendado:** SVG, porque se ve nítido en cualquier tamaño. Si solo tenés PNG, usá uno de al menos 512×512 con fondo transparente, guardalo como `logo.png` y cambiá las tres referencias de `logo.png` a `logo.png`.
 
 **Para los íconos de instalación en Android** hacen falta además `icon-512.png` e `icon-192.png` (cuadrados, con el fondo incluido, no transparente). Se pueden exportar desde el mismo archivo de diseño.
 

@@ -167,7 +167,6 @@ La lámina completa está en `documentacion/marca/`.
 - **El pago.** No hay pasarela real; 1 de cada 8 intentos falla a propósito para poder mostrar el camino de error.
 - **El código QR.** Es un patrón visual, todavía no lo lee un escáner.
 - **Los datos.** Se guardan en el navegador. El panel y la app todavía no comparten información.
-- **El logo.** El archivo en `assets/icons/logo.svg` es provisional.
 
 ---
 

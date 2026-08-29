@@ -118,7 +118,6 @@ Por eso agregar una pantalla nueva de mantenimiento es corto: se definen los cam
 
 - **No hay backend.** Todo se guarda en el navegador; el panel y la app de pasajeros todavía no comparten datos. Esa conexión es la siguiente etapa, con Spring Boot y PostgreSQL.
 - **Los datos de ejemplo se generan al abrir**, incluyendo las salidas del día y las ventas simuladas.
-- **El logo es provisional**, pendiente de reemplazo por el oficial de la marca (`assets/icons/logo.svg`).
 - **Una sola empresa.** El acceso valida contra la empresa de ejemplo; el sistema multiempresa llega con el backend.
 
 ## Siguientes pasos
