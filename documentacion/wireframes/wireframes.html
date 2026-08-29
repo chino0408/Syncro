@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<title>Syncro — Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#EDEDEA; --marco:#FFFFFF; --linea:#C9C9C4;
+  --bloque:#DCDCD8; --fuerte:#C2C2BC; --texto:#3A3A38; --tenue:#8A8A85;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--papel);font-family:'Inter',system-ui,sans-serif;color:var(--texto);}
+
+/* Cada página se convierte en una página de Canva */
+.pagina{
+  width:1000px;height:1414px;background:var(--marco);
+  padding:70px 80px;display:flex;flex-direction:column;
+  page-break-after:always;position:relative;
+}
+.p-cab{margin-bottom:34px;}
+.p-num{font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--tenue);margin-bottom:10px;}
+.p-nom{font-size:34px;font-weight:600;letter-spacing:-.02em;margin-bottom:12px;}
+.p-desc{font-size:17px;color:#5F5E5A;line-height:1.65;max-width:640px;}
+.p-cuerpo{flex:1;display:flex;gap:60px;align-items:flex-start;}
+
+/* El marco a tamaño real 390x844, escalado como conjunto */
+.frame-wrap{width:507px;height:1097px;flex-shrink:0;}
+.frame{
+  width:390px;height:844px;
+  transform:scale(1.3);transform-origin:top left;
+  background:var(--marco);border:1px solid var(--linea);border-radius:6px;
+  position:relative;overflow:hidden;display:flex;flex-direction:column;
+}
+.status{height:25px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;flex-shrink:0;}
+.status i{display:block;height:6px;background:var(--fuerte);border-radius:4px;}
+.body{flex:1;padding:8px 18px;overflow:hidden;}
+
+.bar{background:var(--bloque);border-radius:4px;}
+.field{border:1px solid var(--linea);border-radius:5px;display:flex;align-items:center;gap:8px;padding:0 12px;}
+.ico14{width:14px;height:14px;background:var(--fuerte);border-radius:2px;flex-shrink:0;}
+.ico16{width:16px;height:16px;background:var(--fuerte);border-radius:2px;flex-shrink:0;}
+.ico{background:var(--bloque);border-radius:5px;flex-shrink:0;}
+.btn{background:var(--fuerte);border-radius:6px;height:35px;display:flex;align-items:center;justify-content:center;}
+.btn.hollow{background:transparent;border:1px solid var(--fuerte);}
+.btn .bar{background:var(--marco);}
+.btn.hollow .bar{background:var(--fuerte);}
+.card{border:1px solid var(--linea);border-radius:8px;}
+.card.dashed{border-style:dashed;}
+.row{border:1px solid var(--linea);border-radius:6px;padding:10px;display:flex;align-items:center;gap:10px;}
+.row.alto{align-items:flex-start;}
+.row.sel{border-width:2px;border-color:var(--fuerte);padding:0;}
+.row.sel .row{border:none;width:100%;}
+.rtx{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
+.end-circ{width:17px;height:17px;border:1px solid var(--fuerte);border-radius:50%;flex-shrink:0;}
+.end-chip{width:42px;height:16px;background:var(--fuerte);border-radius:8px;flex-shrink:0;}
+.cab{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.between{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.media{background:var(--bloque);border-radius:8px;position:relative;overflow:hidden;}
+.media::before,.media::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  border-top:1px solid var(--fuerte);transform-origin:top left;}
+.media::before{transform:rotate(26deg);} .media::after{transform:rotate(-26deg);}
+.tabbar{height:55px;border-top:1px solid var(--linea);display:flex;align-items:center;
+  justify-content:space-around;flex-shrink:0;padding-bottom:10px;}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.tab .sq{width:20px;height:20px;background:var(--bloque);border-radius:4px;}
+.tab .lb{width:32px;height:5px;background:var(--bloque);border-radius:4px;}
+.tab.on .sq,.tab.on .lb{background:var(--texto);opacity:.55;}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--linea);padding-bottom:8px;}
+.logo{width:88px;height:100px;background:var(--bloque);border-radius:8px;margin:0 auto;position:relative;overflow:hidden;}
+.logo::before,.logo::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  border-top:1px solid var(--fuerte);transform-origin:top left;}
+.logo::before{transform:rotate(49deg);} .logo::after{transform:rotate(-49deg);}
+.empty{text-align:center;padding:30px 0;}
+.eico{display:block;width:56px;height:56px;background:var(--bloque);border-radius:12px;margin:0 auto;}
+.errbox{border:1px dashed var(--linea);border-radius:8px;padding:12px;}
+.sep{height:1px;background:var(--linea);margin:4px 0;}
+.parada{display:flex;align-items:center;gap:12px;padding:4px 0;}
+.parada .pto{width:9px;height:9px;border:2px solid var(--fuerte);border-radius:50%;flex-shrink:0;}
+.perfil{display:flex;align-items:center;gap:14px;}
+.avatar{width:58px;height:58px;background:var(--bloque);border-radius:50%;flex-shrink:0;}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.menu{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--linea);}
+.menu .chev{width:8px;height:12px;background:var(--bloque);border-radius:2px;margin-left:auto;}
+.paso{display:flex;gap:14px;align-items:flex-start;}
+.pnum{width:28px;height:28px;background:var(--fuerte);border-radius:50%;flex-shrink:0;}
+.leyenda{display:flex;flex-wrap:wrap;gap:7px 12px;justify-content:center;
+  border:1px solid var(--linea);border-radius:7px;padding:9px;}
+.lg{display:flex;align-items:center;gap:7px;}
+.lg i{width:12px;height:12px;background:var(--bloque);border-radius:4px;display:block;}
+.bus{border:2px solid var(--fuerte);border-radius:26px 26px 10px 10px;padding:13px 10px;
+  max-width:245px;margin:0 auto;}
+.busfila{display:flex;align-items:center;justify-content:center;margin-bottom:7px;}
+.asiento{width:35px;height:35px;background:var(--bloque);border-radius:7px 7px 4px 4px;margin:0 2px;}
+.pasillo{width:24px;}
+
+/* Columna de anotaciones, a la derecha del teléfono */
+.notas{flex:1;padding-top:8px;}
+.n-tit{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--tenue);margin-bottom:20px;}
+.nota{display:flex;gap:14px;margin-bottom:18px;font-size:16px;color:#5F5E5A;line-height:1.6;}
+.nota b{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--texto);
+  border:1px solid var(--linea);border-radius:50%;width:26px;height:26px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.p-pie{position:absolute;bottom:44px;left:80px;right:80px;display:flex;justify-content:space-between;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--tenue);
+  border-top:1px solid var(--linea);padding-top:18px;}
+</style></head><body>
+<div class="pagina" data-document-role="page" data-label="Portada">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="p-num">Syncro · Sprint 3 · Wireframes</div>
+    <div style="font-size:72px;font-weight:600;letter-spacing:-.03em;line-height:1.05;margin:18px 0 26px">
+      Wireframes de<br>baja fidelidad</div>
+    <div class="p-desc" style="font-size:20px;max-width:700px">
+      Estructura de las 22 pantallas de la app móvil, sin color ni tipografía de marca.
+      En esta etapa se define qué lleva cada pantalla, su jerarquía y su ubicación.
+      El tratamiento visual se resuelve en el sprint de mockups.</div>
+    <div style="display:flex;gap:50px;margin-top:56px;padding-top:30px;border-top:1px solid var(--linea);
+      font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--tenue)">
+      <span>Marco 390 × 844</span><span>Márgenes 18</span>
+      <span>Rejilla 4 columnas</span><span>Base 4 px</span><span>22 pantallas</span></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>Syncro</span></div>
+</div><div class="pagina" data-document-role="page" data-label="Cómo leer">
+  <div class="p-cab"><div class="p-num">Referencia</div>
+    <div class="p-nom">Cómo leer estos wireframes</div>
+    <div class="p-desc">En baja fidelidad no se usa texto real ni color: distraen de lo que se está
+    evaluando, que es la estructura y la jerarquía de cada pantalla.</div></div>
+  <div style="margin-top:20px"><div style="display:flex;gap:20px;margin-bottom:22px;align-items:baseline"><div style="width:230px;font-weight:600;font-size:17px">Barra gris</div><div style="flex:1;font-size:17px;color:#5F5E5A;line-height:1.6">Texto. El ancho sugiere el largo del contenido real.</div></div><div style="display:flex;gap:20px;margin-bottom:22px;align-items:baseline"><div style="width:230px;font-weight:600;font-size:17px">Caja con aspa</div><div style="flex:1;font-size:17px;color:#5F5E5A;line-height:1.6">Imagen, mapa, logo o código QR.</div></div><div style="display:flex;gap:20px;margin-bottom:22px;align-items:baseline"><div style="width:230px;font-weight:600;font-size:17px">Cuadrado redondeado</div><div style="flex:1;font-size:17px;color:#5F5E5A;line-height:1.6">Ícono, sin dibujar su forma.</div></div><div style="display:flex;gap:20px;margin-bottom:22px;align-items:baseline"><div style="width:230px;font-weight:600;font-size:17px">Caja rellena</div><div style="flex:1;font-size:17px;color:#5F5E5A;line-height:1.6">Botón de acción principal.</div></div><div style="display:flex;gap:20px;margin-bottom:22px;align-items:baseline"><div style="width:230px;font-weight:600;font-size:17px">Caja con borde</div><div style="flex:1;font-size:17px;color:#5F5E5A;line-height:1.6">Botón secundario o contenedor.</div></div><div style="display:flex;gap:20px;margin-bottom:22px;align-items:baseline"><div style="width:230px;font-weight:600;font-size:17px">Borde punteado</div><div style="flex:1;font-size:17px;color:#5F5E5A;line-height:1.6">Mensaje de error o tarjeta destacada.</div></div></div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>Syncro</span></div>
+</div><div class="pagina" data-document-role="page" data-label="01 Bienvenida — Iniciar sesión">
+  <div class="p-cab">
+    <div class="p-num">01 · Acceso</div>
+    <div class="p-nom">Bienvenida — Iniciar sesión</div>
+    <div class="p-desc">Primera pantalla para quien no tiene sesión. El logo ancla la identidad y el formulario ocupa el centro óptico.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:8px"><div class="logo"></div><div class="bar" style="width:40%;height:17px;background:var(--fuerte);"></div><div class="bar" style="width:62%;height:6px;"></div><div class="bar" style="width:48%;height:6px;"></div><div style="height:14px"></div><div class="bar" style="width:18%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:52%;height:7px;"></div></div><div class="bar" style="width:28%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:38%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:32%;height:7px;"></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:50%;height:6px;"></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:56%;height:6px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Logo y nombre de marca, jerarquía máxima.</span></div><div class="nota"><b>2</b><span>Enlace de recuperar contraseña, subordinado al botón.</span></div><div class="nota"><b>3</b><span>Enlace para alternar a registro.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>01 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="02 Registro">
+  <div class="p-cab">
+    <div class="p-num">02 · Acceso</div>
+    <div class="p-nom">Registro</div>
+    <div class="p-desc">Misma estructura que el acceso con un campo más. Reusar el layout reduce la carga al alternar.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:8px"><div class="logo"></div><div class="bar" style="width:40%;height:17px;background:var(--fuerte);"></div><div class="bar" style="width:55%;height:6px;"></div><div style="height:14px"></div><div class="bar" style="width:32%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:42%;height:7px;"></div></div><div class="bar" style="width:18%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:52%;height:7px;"></div></div><div class="bar" style="width:28%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:46%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:28%;height:7px;"></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:56%;height:6px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Nombre, correo y contraseña: los tres campos del diagrama.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>02 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="03 Home — con próximo viaje">
+  <div class="p-cab">
+    <div class="p-num">03 · Principal</div>
+    <div class="p-nom">Home — con próximo viaje</div>
+    <div class="p-desc">El tiquete activo va primero: es lo que se necesita con urgencia al abrir la app en la parada.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="between"><div><div class="bar" style="width:30%;height:6px;margin-bottom:6px;"></div><div class="bar" style="width:52%;height:13px;background:var(--fuerte);"></div></div><div style="display:flex;gap:8px"><span class="circ"></span><span class="circ out"></span></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:10px"><div class="bar" style="width:40%;height:6px;"></div><div class="between"><div class="bar" style="width:58%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:26%;height:6px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:42%;height:7px;"></div></div></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:10px"><div class="bar" style="width:46%;height:10px;background:var(--fuerte);"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:30%;height:7px;"></div></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:36%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:34%;height:7px;"></div></div></div></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:46%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:70%;height:6px;"></div></div></div></div></div><div class="tabbar"><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Notificaciones y perfil, accesos secundarios en la esquina.</span></div><div class="nota"><b>2</b><span>“Ver mi tiquete” siempre lleva a Tiquetes.</span></div><div class="nota"><b>3</b><span>Buscador origen/destino: la acción más frecuente.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>03 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="04 Home — sin viajes">
+  <div class="p-cab">
+    <div class="p-num">04 · Principal</div>
+    <div class="p-nom">Home — sin viajes</div>
+    <div class="p-desc">Estado vacío del primer uso. La tarjeta no desaparece: se convierte en invitación a comprar.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="between"><div><div class="bar" style="width:30%;height:6px;margin-bottom:6px;"></div><div class="bar" style="width:52%;height:13px;background:var(--fuerte);"></div></div><div style="display:flex;gap:8px"><span class="circ"></span><span class="circ out"></span></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:9px"><div class="bar" style="width:40%;height:6px;"></div><div class="bar" style="width:88%;height:7px;"></div><div class="bar" style="width:62%;height:7px;"></div><div class="btn hollow" style="width:100%"><div class="bar" style="width:46%;height:7px;"></div></div></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:10px"><div class="bar" style="width:46%;height:10px;background:var(--fuerte);"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:30%;height:7px;"></div></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:36%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:34%;height:7px;"></div></div></div></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:46%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:70%;height:6px;"></div></div></div></div></div><div class="tabbar"><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Mensaje y botón que dirigen a la acción, no solo “no hay nada”.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>04 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="05 Rutas — listado">
+  <div class="p-cab">
+    <div class="p-num">05 · Rutas</div>
+    <div class="p-nom">Rutas — listado</div>
+    <div class="p-desc">Buscador, ubicación y pestañas por encima de la lista. La estrella marca favoritas sin entrar al detalle.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="bar" style="width:26%;height:17px;background:var(--fuerte);"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:50%;height:7px;"></div></div><div class="btn hollow" style="width:100%"><div class="bar" style="width:34%;height:7px;"></div></div><div class="tabs"><div class="bar" style="width:18%;height:8px;background:var(--fuerte);"></div><div class="bar" style="width:24%;height:8px;"></div></div><div style="display:flex;flex-direction:column;gap:10px"><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:48%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:62%;height:6px;"></div></div><span class="end-circ"></span></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:52%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:58%;height:6px;"></div></div><span class="end-circ"></span></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:44%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:64%;height:6px;"></div></div><span class="end-circ"></span></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:50%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:56%;height:6px;"></div></div><span class="end-circ"></span></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>“Mi ubicación” despliega el mapa de geolocalización.</span></div><div class="nota"><b>2</b><span>Estrella al final de cada fila: alterna favorita sin navegar.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>05 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="06 Detalle de ruta">
+  <div class="p-cab">
+    <div class="p-num">06 · Rutas</div>
+    <div class="p-nom">Detalle de ruta</div>
+    <div class="p-desc">El mapa da contexto geográfico, las paradas confirman el recorrido y los horarios son la zona de decisión.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:10px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:52%;height:17px;background:var(--fuerte);"></div></div><div class="media" style="height:140px"></div><div class="bar" style="width:22%;height:6px;margin:16px 0 10px;"></div><div class="card" style="padding:12px"><div style="display:flex;flex-direction:column;gap:4px"><div class="parada"><span class="pto"></span><div class="bar" style="width:50%;height:7px;"></div></div><div class="parada"><span class="pto"></span><div class="bar" style="width:40%;height:7px;"></div></div><div class="parada"><span class="pto"></span><div class="bar" style="width:46%;height:7px;"></div></div></div></div><div class="bar" style="width:36%;height:6px;margin:16px 0 10px;"></div><div style="display:flex;flex-direction:column;gap:8px"><div class="row"><span class="ico" style="width:26px;height:26px"></span><div class="rtx"><div class="bar" style="width:28%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:48%;height:6px;"></div></div><div class="bar" style="width:34px;height:7px;background:var(--fuerte);flex-shrink:0;"></div></div><div class="row"><span class="ico" style="width:26px;height:26px"></span><div class="rtx"><div class="bar" style="width:26%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:50%;height:6px;"></div></div><div class="bar" style="width:34px;height:7px;background:var(--fuerte);flex-shrink:0;"></div></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Mapa con el recorrido trazado y las paradas marcadas.</span></div><div class="nota"><b>2</b><span>Cada horario muestra hora, asientos y precio: todo para decidir.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>06 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="07 Selección de asientos">
+  <div class="p-cab">
+    <div class="p-num">07 · Compra</div>
+    <div class="p-nom">Selección de asientos</div>
+    <div class="p-desc">El bus visto desde arriba. Verde disponible, rojo ocupado, azul los cuatro accesibles. Se pueden elegir varios.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:10px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:58%;height:17px;background:var(--fuerte);"></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:52%;height:6px;"></div></div><div class="leyenda"><span class=lg><i></i><div class="bar" style="width:38px;height:6px;"></div></span><span class=lg><i></i><div class="bar" style="width:34px;height:6px;"></div></span><span class=lg><i></i><div class="bar" style="width:36px;height:6px;"></div></span><span class=lg><i></i><div class="bar" style="width:32px;height:6px;"></div></span></div><div class="bus"><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div><div class=busfila><span class=asiento></span><span class=asiento></span><span class=pasillo></span><span class=asiento></span><span class=asiento></span></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:70%;height:6px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Leyenda de colores: el color solo no basta para distinguir estados.</span></div><div class="nota"><b>2</b><span>Barra fija abajo con los asientos elegidos y el total.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>07 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="08 Confirmar compra">
+  <div class="p-cab">
+    <div class="p-num">08 · Compra</div>
+    <div class="p-nom">Confirmar compra</div>
+    <div class="p-desc">Sin navegación inferior: es un flujo cerrado, solo se confirma o se vuelve.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:10px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:48%;height:17px;background:var(--fuerte);"></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:9px"><div class="bar" style="width:22%;height:6px;"></div><div class="between"><div class="bar" style="width:18%;height:7px;"></div><div class="bar" style="width:46%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:22%;height:7px;"></div><div class="bar" style="width:38%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:24%;height:7px;"></div><div class="bar" style="width:30%;height:7px;background:var(--fuerte);"></div></div><div class="sep"></div><div class="between"><div class="bar" style="width:16%;height:7px;"></div><div class="bar" style="width:28%;height:13px;background:var(--fuerte);"></div></div></div></div><div class="bar" style="width:34%;height:6px;margin:16px 0 10px;"></div><div style="display:flex;flex-direction:column;gap:8px"><div class="row sel"><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:56%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:34%;height:6px;"></div></div></div></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:38%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:28%;height:6px;"></div></div></div></div><div class="btn" style="width:100%"><div class="bar" style="width:52%;height:7px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Resumen completo antes de pagar: ruta, salida, asientos y total.</span></div><div class="nota"><b>2</b><span>El método elegido se marca con borde, no solo con color.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>08 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="09 Tiquetes — listado">
+  <div class="p-cab">
+    <div class="p-num">09 · Tiquetes</div>
+    <div class="p-nom">Tiquetes — listado</div>
+    <div class="p-desc">Orden fijo del viaje más próximo al menos próximo. La etiqueta distingue válidos de usados.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:14px"><div class="bar" style="width:42%;height:17px;background:var(--fuerte);"></div><div style="display:flex;flex-direction:column;gap:10px"><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:46%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:66%;height:6px;"></div></div><span class="end-chip"></span></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:50%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:60%;height:6px;"></div></div><span class="end-chip"></span></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:44%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:64%;height:6px;"></div></div><span class="end-chip"></span></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:48%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:58%;height:6px;"></div></div><span class="end-chip"></span></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Etiqueta de estado a la derecha: válido o usado.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>09 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="10 Tiquete — código QR">
+  <div class="p-cab">
+    <div class="p-num">10 · Tiquetes</div>
+    <div class="p-nom">Tiquete — código QR</div>
+    <div class="p-desc">El QR domina la pantalla: se muestra a un chofer, a distancia y con prisa.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:30%;height:17px;background:var(--fuerte);"></div></div><div class="card" style="padding:18px"><div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;justify-content:center"><div class="bar" style="width:42px;height:17px;background:var(--fuerte);border-radius:10px;"></div></div><div class="media" style="width:130px;height:130px;margin:0 auto"></div><div class="bar" style="width:54%;height:10px;background:var(--fuerte);margin:0 auto;"></div><div class="bar" style="width:66%;height:6px;margin:0 auto;"></div></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:9px"><div class="between"><div class="bar" style="width:20%;height:7px;"></div><div class="bar" style="width:32%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:22%;height:7px;"></div><div class="bar" style="width:20%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:26%;height:7px;"></div><div class="bar" style="width:36%;height:7px;background:var(--fuerte);"></div></div></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Estado, QR y datos del viaje en una sola tarjeta.</span></div><div class="nota"><b>2</b><span>Código, monto y fecha: consulta, no acción.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>10 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="11 Notificaciones">
+  <div class="p-cab">
+    <div class="p-num">11 · Avisos</div>
+    <div class="p-nom">Notificaciones</div>
+    <div class="p-desc">Dos tipos de aviso: compra completada y salida en 15 minutos. El ícono los diferencia de un vistazo.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:14px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:44%;height:17px;background:var(--fuerte);"></div></div><div style="display:flex;flex-direction:column;gap:10px"><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:44%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:76%;height:6px;"></div></div></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:40%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:72%;height:6px;"></div></div></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:46%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:68%;height:6px;"></div></div></div></div></div></div><div class="tabbar"><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Al tocar un aviso se abre el tiquete relacionado.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>11 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="12 Perfil">
+  <div class="p-cab">
+    <div class="p-num">12 · Cuenta</div>
+    <div class="p-nom">Perfil</div>
+    <div class="p-desc">Identidad arriba, datos de uso al centro, opciones abajo. Cerrar sesión queda separado.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:14px"><div class="bar" style="width:24%;height:17px;background:var(--fuerte);"></div><div class="perfil"><span class="avatar"></span><div><div class="bar" style="width:120px;height:10px;background:var(--fuerte);margin-bottom:6px;"></div><div class="bar" style="width:150px;height:6px;"></div></div></div><div class="stats"><div class="card" style="padding:14px"><div style="display:flex;flex-direction:column;gap:0px"><div class="bar" style="width:30px;height:17px;background:var(--fuerte);margin:0 auto;"></div><div class="bar" style="width:70%;height:6px;margin:6px auto 0;"></div></div></div><div class="card" style="padding:14px"><div style="display:flex;flex-direction:column;gap:0px"><div class="bar" style="width:22px;height:17px;background:var(--fuerte);margin:0 auto;"></div><div class="bar" style="width:64%;height:6px;margin:6px auto 0;"></div></div></div></div><div style="display:flex;flex-direction:column;gap:0px"><div class="menu"><span class="ico14"></span><div class="bar" style="width:34%;height:7px;"></div><span class="chev"></span></div><div class="menu"><span class="ico14"></span><div class="bar" style="width:40%;height:7px;"></div><span class="chev"></span></div><div class="menu"><span class="ico14"></span><div class="bar" style="width:36%;height:7px;"></div><span class="chev"></span></div><div class="menu"><span class="ico14"></span><div class="bar" style="width:38%;height:7px;"></div><span class="chev"></span></div></div><div class="btn hollow" style="width:100%"><div class="bar" style="width:32%;height:7px;"></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Viajes comprados y rutas favoritas.</span></div><div class="nota"><b>2</b><span>Cerrar sesión separado por espacio, para evitar toques por error.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>12 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="13 Mi ubicación">
+  <div class="p-cab">
+    <div class="p-num">13 · Rutas</div>
+    <div class="p-nom">Mi ubicación</div>
+    <div class="p-desc">Se abre desde el botón de ubicación. Mapa con la posición del usuario y las paradas más cercanas.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:42%;height:17px;background:var(--fuerte);"></div></div><div class="media" style="height:230px"></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:8px"><div class="bar" style="width:40%;height:6px;"></div><div class="between"><div class="bar" style="width:50%;height:7px;"></div><div class="bar" style="width:20%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:44%;height:7px;"></div><div class="bar" style="width:22%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:46%;height:7px;"></div><div class="bar" style="width:18%;height:7px;background:var(--fuerte);"></div></div></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:54%;height:6px;"></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Marcador de la posición con su radio de precisión.</span></div><div class="nota"><b>2</b><span>Las tres paradas más cercanas con su distancia real.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>13 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="14 Ayuda">
+  <div class="p-cab">
+    <div class="p-num">14 · Soporte</div>
+    <div class="p-nom">Ayuda</div>
+    <div class="p-desc">Una pregunta y dos caminos. La pregunta grande orienta antes de que haya que elegir.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:10px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:22%;height:17px;background:var(--fuerte);"></div></div><div class="bar" style="width:86%;height:21px;background:var(--fuerte);margin-top:6px;"></div><div class="bar" style="width:54%;height:21px;background:var(--fuerte);margin-bottom:12px;"></div><div style="display:flex;flex-direction:column;gap:10px"><div class="row alto"><span class="ico" style="width:40px;height:40px"></span><div class="rtx"><div class="bar" style="width:56%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:74%;height:6px;"></div><div class="bar" style="width:48%;height:6px;"></div></div></div><div class="row alto"><span class="ico" style="width:40px;height:40px"></span><div class="rtx"><div class="bar" style="width:32%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:70%;height:6px;"></div><div class="bar" style="width:52%;height:6px;"></div></div></div></div></div></div><div class="tabbar"><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>“¿Cómo podemos ayudarte?” como título de peso.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>14 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="15 Ayuda — reportar un problema">
+  <div class="p-cab">
+    <div class="p-num">15 · Soporte</div>
+    <div class="p-nom">Ayuda — reportar un problema</div>
+    <div class="p-desc">Formulario de contacto con soporte. Sin navegación inferior: es un flujo cerrado.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:8px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:62%;height:17px;background:var(--fuerte);"></div></div><div style="display:flex;flex-direction:column;gap:6px"><div class="bar" style="width:100%;height:7px;"></div><div class="bar" style="width:86%;height:7px;"></div><div class="bar" style="width:60%;height:7px;"></div></div><div style="height:8px"></div><div class="bar" style="width:24%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:46%;height:7px;"></div></div><div class="bar" style="width:34%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:52%;height:7px;"></div></div><div class="bar" style="width:26%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:90px"><span class="ico14"></span><div class="bar" style="width:40%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:34%;height:7px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>El área de texto es más alta: se espera una descripción, no una línea.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>15 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="16 Ayuda — reporte enviado">
+  <div class="p-cab">
+    <div class="p-num">16 · Soporte</div>
+    <div class="p-nom">Ayuda — reporte enviado</div>
+    <div class="p-desc">Confirmación con folio de seguimiento, para que quede claro que el reporte existe.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:8px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:54%;height:17px;background:var(--fuerte);"></div></div><div style="height:40px"></div><div style="display:flex;justify-content:center"><div class="bar" style="width:56px;height:56px;background:var(--bloque);border-radius:50%;"></div></div><div class="bar" style="width:46%;height:10px;background:var(--fuerte);margin:14px auto 10px;"></div><div class="bar" style="width:64%;height:6px;margin:0 auto 6px;"></div><div class="bar" style="width:50%;height:6px;margin:0 auto;"></div><div style="height:14px"></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:9px"><div class="between"><div class="bar" style="width:18%;height:6px;"></div><div class="bar" style="width:30%;height:6px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:22%;height:6px;"></div><div class="bar" style="width:34%;height:6px;background:var(--fuerte);"></div></div></div></div><div class="btn hollow" style="width:100%"><div class="bar" style="width:40%;height:7px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Folio y estado: el usuario se lleva algo concreto.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>16 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="17 Ayuda — comenzar">
+  <div class="p-cab">
+    <div class="p-num">17 · Soporte</div>
+    <div class="p-nom">Ayuda — comenzar</div>
+    <div class="p-desc">Introducción a la app en cuatro pasos numerados.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:10px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:34%;height:17px;background:var(--fuerte);"></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:6px"><div class="bar" style="width:30%;height:6px;"></div><div class="bar" style="width:100%;height:7px;"></div><div class="bar" style="width:94%;height:7px;"></div><div class="bar" style="width:98%;height:7px;"></div><div class="bar" style="width:64%;height:7px;"></div></div></div><div class="bar" style="width:34%;height:6px;margin:16px 0 10px;"></div><div style="display:flex;flex-direction:column;gap:14px"><div class="paso"><span class="pnum"></span><div><div class="bar" style="width:52%;height:10px;background:var(--fuerte);margin-bottom:5px;"></div><div class="bar" style="width:88%;height:6px;"></div><div class="bar" style="width:62%;height:6px;margin-top:4px;"></div></div></div><div class="paso"><span class="pnum"></span><div><div class="bar" style="width:52%;height:10px;background:var(--fuerte);margin-bottom:5px;"></div><div class="bar" style="width:88%;height:6px;"></div><div class="bar" style="width:62%;height:6px;margin-top:4px;"></div></div></div><div class="paso"><span class="pnum"></span><div><div class="bar" style="width:52%;height:10px;background:var(--fuerte);margin-bottom:5px;"></div><div class="bar" style="width:88%;height:6px;"></div><div class="bar" style="width:62%;height:6px;margin-top:4px;"></div></div></div><div class="paso"><span class="pnum"></span><div><div class="bar" style="width:52%;height:10px;background:var(--fuerte);margin-bottom:5px;"></div><div class="bar" style="width:88%;height:6px;"></div><div class="bar" style="width:62%;height:6px;margin-top:4px;"></div></div></div></div><div class="btn" style="width:100%"><div class="bar" style="width:42%;height:7px;"></div></div></div></div><div class="tabbar"><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Los pasos numerados dan orden de lectura.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>17 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="18 Iniciar sesión — error">
+  <div class="p-cab">
+    <div class="p-num">18 · Estados</div>
+    <div class="p-nom">Iniciar sesión — error</div>
+    <div class="p-desc">Credenciales incorrectas. El mensaje va encima del primer campo, donde está la atención.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:8px"><div class="logo"></div><div class="bar" style="width:40%;height:17px;background:var(--fuerte);"></div><div class="bar" style="width:62%;height:6px;"></div><div class="bar" style="width:48%;height:6px;"></div><div style="height:10px"></div><div class="errbox"><div class="bar" style="width:100%;height:6px;margin-bottom:5px;"></div><div class="bar" style="width:72%;height:6px;margin-bottom:5px;"></div></div><div class="bar" style="width:18%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:52%;height:7px;"></div></div><div class="bar" style="width:28%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:38%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:32%;height:7px;"></div></div><div style="display:flex;justify-content:center"><div class="bar" style="width:50%;height:6px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>El error se coloca antes del campo, no después del botón.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>18 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="19 Registro — error">
+  <div class="p-cab">
+    <div class="p-num">19 · Estados</div>
+    <div class="p-nom">Registro — error</div>
+    <div class="p-desc">Correo ya registrado o datos incompletos. Misma ubicación del mensaje que en el acceso.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:8px"><div class="logo"></div><div class="bar" style="width:40%;height:17px;background:var(--fuerte);"></div><div class="bar" style="width:55%;height:6px;"></div><div style="height:10px"></div><div class="errbox"><div class="bar" style="width:100%;height:6px;margin-bottom:5px;"></div><div class="bar" style="width:64%;height:6px;margin-bottom:5px;"></div></div><div class="bar" style="width:32%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:42%;height:7px;"></div></div><div class="bar" style="width:18%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:52%;height:7px;"></div></div><div class="bar" style="width:28%;height:6px;margin-bottom:6px;"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:46%;height:7px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:28%;height:7px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>Coherencia: el error siempre aparece en el mismo lugar.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>19 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="20 Rutas — sin resultados">
+  <div class="p-cab">
+    <div class="p-num">20 · Estados</div>
+    <div class="p-nom">Rutas — sin resultados</div>
+    <div class="p-desc">No hay rutas para ese origen y destino. El estado vacío ofrece salida, no solo informa.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="bar" style="width:26%;height:17px;background:var(--fuerte);"></div><div class="field" style="height:35px"><span class="ico14"></span><div class="bar" style="width:50%;height:7px;"></div></div><div class="btn hollow" style="width:100%"><div class="bar" style="width:34%;height:7px;"></div></div><div style="height:20px"></div><div class="empty"><span class="eico"></span><div class="bar" style="width:44%;height:10px;background:var(--fuerte);margin:14px auto 10px;"></div><div class="bar" style="width:62%;height:6px;margin:0 auto 6px;"></div><div class="bar" style="width:48%;height:6px;margin:0 auto 6px;"></div><div style="display:flex;justify-content:center;margin-top:20px"><div class="btn" style="width:220px"><div class="bar" style="width:40%;height:7px;"></div></div></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>El botón devuelve al usuario al camino principal.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>20 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="21 Pago fallido">
+  <div class="p-cab">
+    <div class="p-num">21 · Estados</div>
+    <div class="p-nom">Pago fallido</div>
+    <div class="p-desc">El pago no se completó. El resumen se mantiene visible para no perder el contexto de la compra.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:10px"><div class="cab"><div class="ico16"></div><div class="bar" style="width:48%;height:17px;background:var(--fuerte);"></div></div><div class="card dashed" style="padding:14px"><div style="display:flex;flex-direction:column;gap:9px"><div class="bar" style="width:22%;height:6px;"></div><div class="between"><div class="bar" style="width:18%;height:7px;"></div><div class="bar" style="width:46%;height:7px;background:var(--fuerte);"></div></div><div class="between"><div class="bar" style="width:22%;height:7px;"></div><div class="bar" style="width:38%;height:7px;background:var(--fuerte);"></div></div><div class="sep"></div><div class="between"><div class="bar" style="width:16%;height:7px;"></div><div class="bar" style="width:28%;height:13px;background:var(--fuerte);"></div></div></div></div><div class="bar" style="width:34%;height:6px;margin:16px 0 10px;"></div><div style="display:flex;flex-direction:column;gap:8px"><div class="row sel"><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:56%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:34%;height:6px;"></div></div></div></div><div class="row"><span class="ico" style="width:31px;height:31px"></span><div class="rtx"><div class="bar" style="width:38%;height:10px;background:var(--fuerte);"></div><div class="bar" style="width:28%;height:6px;"></div></div></div></div><div class="errbox"><div class="bar" style="width:100%;height:6px;margin-bottom:5px;"></div><div class="bar" style="width:78%;height:6px;margin-bottom:5px;"></div></div><div class="btn" style="width:100%"><div class="bar" style="width:52%;height:7px;"></div></div></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>El error va entre los métodos de pago y el botón: donde se decide reintentar.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>21 / 22</span></div>
+</div><div class="pagina" data-document-role="page" data-label="22 Tiquetes y notificaciones — vacíos">
+  <div class="p-cab">
+    <div class="p-num">22 · Estados</div>
+    <div class="p-nom">Tiquetes y notificaciones — vacíos</div>
+    <div class="p-desc">Los dos estados sin contenido. Mismo patrón: ícono, mensaje y una acción para salir del vacío.</div>
+  </div>
+  <div class="p-cuerpo">
+    <div class="frame-wrap"><div class="frame"><div class="status"><i style="width:9%"></i><i style="width:13%"></i></div><div class="body"><div style="display:flex;flex-direction:column;gap:12px"><div class="bar" style="width:42%;height:17px;background:var(--fuerte);"></div><div style="height:30px"></div><div class="empty"><span class="eico"></span><div class="bar" style="width:44%;height:10px;background:var(--fuerte);margin:14px auto 10px;"></div><div class="bar" style="width:62%;height:6px;margin:0 auto 6px;"></div><div class="bar" style="width:48%;height:6px;margin:0 auto 6px;"></div><div style="display:flex;justify-content:center;margin-top:20px"><div class="btn" style="width:220px"><div class="bar" style="width:40%;height:7px;"></div></div></div></div></div></div><div class="tabbar"><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div><div class="tab on"><span class="sq"></span><span class="lb"></span></div><div class="tab"><span class="sq"></span><span class="lb"></span></div></div></div></div>
+    <div class="notas"><div class="n-tit">Decisiones de estructura</div><div class="nota"><b>1</b><span>El mismo patrón se repite en Notificaciones, con el botón de volver al inicio.</span></div></div>
+  </div>
+  <div class="p-pie"><span>Universidad Invenio · TICE</span><span>22 / 22</span></div>
+</div>
+</body></html>
