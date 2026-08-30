@@ -1,33 +1,65 @@
 /* Syncro — estado.js
-   Ver README.md para el orden de carga de los archivos. */
+   Estado de la aplicación.
 
-/* ---------- 3. Estado de la aplicación ---------- */
+   Ahora los datos viven en la base. Este objeto funciona como copia
+   local de lo que ya se descargó, para que las pantallas se dibujen
+   sin esperar en cada repintado. Se llena al iniciar sesión y se
+   actualiza después de cada operación de escritura. */
+
+let RUTAS = [];              // catálogo, se llena desde la base
+
 let estado = {
-  sesion: Guardado.leer('syncro_sesion', null),
-  usuarios: Guardado.leer('syncro_usuarios', []),
-  tiquetes: Guardado.leer('syncro_tiquetes', []),
-  favoritas: Guardado.leer('syncro_favoritas', []),
-  notificaciones: Guardado.leer('syncro_notificaciones', []),
-  reportes: Guardado.leer('syncro_reportes', []),
-  metodosPago: Guardado.leer('syncro_metodos', null),
-  preferencias: Guardado.leer('syncro_preferencias', { avisoViaje: true, avisoCompra: true }),
-  // Estado temporal (no se guarda)
+  sesion: null,              // { id, nombre, correo }
+  usuarioId: null,           // id en la tabla usuario
+  favoritas: [],
+  tiquetes: [],
+  notificaciones: [],
+  metodosPago: [],
+  preferencias: { avisoViaje: true, avisoCompra: true },
+
+  // Temporal, no se guarda
   pantalla: 'bienvenida',
   modoAuth: 'login',
   tabRutas: 'todas',
   filtro: '',
   rutaAbierta: null,
   compra: null,
-  pagoElegido: 'p1',
+  pagoElegido: null,
+  _salidas: [],
+  _vendidos: new Set(),
+  _accesibles: [5, 6, 7, 8],
+  _capacidad: 48,
 };
 
-function persistir() {
-  Guardado.escribir('syncro_sesion', estado.sesion);
-  Guardado.escribir('syncro_usuarios', estado.usuarios);
-  Guardado.escribir('syncro_tiquetes', estado.tiquetes);
-  Guardado.escribir('syncro_favoritas', estado.favoritas);
-  Guardado.escribir('syncro_notificaciones', estado.notificaciones);
-  Guardado.escribir('syncro_reportes', estado.reportes);
-  Guardado.escribir('syncro_metodos', estado.metodosPago);
-  Guardado.escribir('syncro_preferencias', estado.preferencias);
+/* Antes esto guardaba en el navegador. Ahora cada operación escribe
+   directamente en la base, así que no hay nada que persistir acá.
+   La función se mantiene para no tocar las pantallas que la llaman. */
+function persistir() { /* la base ya guarda */ }
+
+/* Trae de la base todo lo de la persona conectada */
+async function cargarDatosDeUsuario() {
+  const perfil = await Api.perfil();
+  estado.usuarioId = perfil.id;
+  estado.sesion = { nombre: perfil.nombre, correo: perfil.correo };
+  estado.preferencias = {
+    avisoViaje: perfil.aviso_viaje,
+    avisoCompra: perfil.aviso_compra,
+  };
+
+  const [favoritas, tiquetes, notificaciones, metodos] = await Promise.all([
+    Api.favoritas(),
+    Api.misTiquetes(),
+    Api.notificaciones(),
+    Api.metodosDePago(),
+  ]);
+
+  estado.favoritas = favoritas;
+  estado.tiquetes = tiquetes;
+  estado.notificaciones = notificaciones;
+  estado.metodosPago = metodos;
+}
+
+/* El catálogo de rutas es público: se puede cargar antes de entrar */
+async function cargarCatalogo() {
+  RUTAS = await Api.cargarRutas();
 }

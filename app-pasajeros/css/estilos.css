@@ -791,3 +791,32 @@ body{
 @media (prefers-reduced-motion:reduce){
   .switch, .switch::after{ transition:none; }
 }
+
+/* ==========================================================
+   ESTADOS DE CONEXIÓN
+   ========================================================== */
+
+#carga-inicial{
+  position:fixed; inset:0; z-index:200;
+  background:var(--grafito);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:16px; font-size:14px; color:var(--texto-tenue);
+}
+
+.cargando{
+  display:flex; align-items:center; justify-content:center; gap:11px;
+  padding:32px 16px; font-size:13.5px; color:var(--texto-tenue);
+}
+.cargando::before{
+  content:''; width:16px; height:16px; border-radius:50%;
+  border:2px solid rgba(29,205,241,.25); border-top-color:var(--cian);
+  animation:girar .8s linear infinite;
+}
+@media (prefers-reduced-motion:reduce){ .cargando::before{ animation-duration:2s; } }
+
+.aviso-fallo{
+  background:rgba(241,67,54,.08);
+  border:1px solid rgba(241,67,54,.28);
+  border-radius:12px; padding:16px;
+  font-size:13.5px; color:#FFB3AD; line-height:1.6; text-align:center;
+}

@@ -66,12 +66,26 @@ function plantillaVacio(icono, titulo, texto) {
     </div>`;
 }
 
-function alternarFavorita(id) {
+async function alternarFavorita(id) {
   const i = estado.favoritas.indexOf(id);
-  if (i >= 0) { estado.favoritas.splice(i, 1); toast('Quitada de favoritas'); }
-  else { estado.favoritas.push(id); toast('Agregada a favoritas'); }
-  persistir();
+  const estaba = i >= 0;
+
+  // Se actualiza la pantalla de inmediato y después la base:
+  // si la base falla, se revierte.
+  if (estaba) estado.favoritas.splice(i, 1);
+  else estado.favoritas.push(id);
   pintarRutas();
+
+  try {
+    if (estaba) await Api.quitarFavorita(estado.usuarioId, id);
+    else        await Api.marcarFavorita(estado.usuarioId, id);
+    toast(estaba ? 'Quitada de favoritas' : 'Agregada a favoritas');
+  } catch (e) {
+    if (estaba) estado.favoritas.push(id);
+    else estado.favoritas.splice(estado.favoritas.indexOf(id), 1);
+    pintarRutas();
+    toast('No se pudo guardar el cambio');
+  }
 }
 
 /* ---------- Mi ubicación ----------

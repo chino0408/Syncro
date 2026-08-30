@@ -52,60 +52,72 @@ function pintarCompra() {
   ocultarError('#compra-error');
 }
 
-function pagar() {
+async function pagar() {
   const c = estado.compra;
   if (!c || !c.asientos.length) return;
   if (!estado.metodosPago.length) {
     return mostrarError('#compra-error', 'Agregá un método de pago para continuar.');
   }
+
   const boton = $('#btn-pagar');
   boton.disabled = true;
   boton.textContent = 'Procesando…';
+  ocultarError('#compra-error');
 
-  // Simulamos la espera de una pasarela de pago
-  setTimeout(() => {
-    boton.disabled = false;
-    boton.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Pagar y generar tiquete`;
-
-    // 1 de cada 8 pagos falla, para poder mostrar el camino de error
-    if (Math.random() < 0.125) {
-      return mostrarError('#compra-error', 'El pago no se completó. Probá con otro método o intentá de nuevo.');
-    }
-
-    const cantidad = c.asientos.length;
-    const tiquete = {
-      id: 'TK' + Date.now().toString().slice(-8),
-      rutaId: c.rutaId,
-      hora: c.hora,
-      precio: c.precio * cantidad,   // lo que se pagó en total
+  try {
+    const { tiquetes } = await Api.comprar({
+      usuarioId: estado.usuarioId,
+      viajeId: c.viajeId,
+      asientos: c.asientos,
       precioUnitario: c.precio,
-      asientos: [...c.asientos],
-      comprado: new Date().toISOString(),
-      estado: 'valido',
-    };
-    estado.tiquetes.push(tiquete);
+      metodoPagoId: estado.pagoElegido,
+    });
 
     const ruta = RUTAS.find(r => r.id === c.rutaId);
-    if (estado.preferencias.avisoCompra) agregarNotificacion({
-      tipo: 'compra',
-      titulo: 'Compra completada',
-      texto: `Tu tiquete de ${ruta.origen} a ${ruta.destino} está listo. ${textoAsientos(tiquete)}.`,
-      tiqueteId: tiquete.id,
-    });
-    // Aviso programado: 15 minutos antes de la salida
-    if (estado.preferencias.avisoViaje) agregarNotificacion({
-      tipo: 'viaje',
-      titulo: 'Tu viaje sale pronto',
-      texto: `Salís de ${ruta.origen} a las ${horaCorta(c.hora)}. Tené tu QR listo.`,
-      tiqueteId: tiquete.id,
-      mostrarDesde: new Date(new Date(c.hora).getTime() - 15 * 60000).toISOString(),
-    });
+    const cantidad = c.asientos.length;
+    const primerTiquete = tiquetes[0] ? tiquetes[0].id : null;
+
+    // Los avisos se crean solo si la persona los tiene activados
+    const avisos = [];
+    if (estado.preferencias.avisoCompra) {
+      avisos.push(Api.crearNotificacion({
+        usuarioId: estado.usuarioId,
+        tipo: 'compra',
+        titulo: 'Compra completada',
+        texto: `Tu tiquete de ${ruta.origen} a ${ruta.destino} está listo. ` +
+               `${cantidad === 1 ? 'Asiento' : 'Asientos'} ${c.asientos.join(', ')}.`,
+        tiqueteId: primerTiquete,
+      }));
+    }
+    if (estado.preferencias.avisoViaje) {
+      avisos.push(Api.crearNotificacion({
+        usuarioId: estado.usuarioId,
+        tipo: 'viaje',
+        titulo: 'Tu viaje sale pronto',
+        texto: `Salís de ${ruta.origen} a las ${horaCorta(c.hora)}. Tené tu QR listo.`,
+        tiqueteId: primerTiquete,
+        mostrarDesde: new Date(new Date(c.hora).getTime() - 15 * 60000).toISOString(),
+      }));
+    }
+    await Promise.all(avisos);
+
+    // Volvemos a traer los tiquetes para tener el que se acaba de crear
+    estado.tiquetes = await Api.misTiquetes();
+    estado.notificaciones = await Api.notificaciones();
+
+    const nuevo = estado.tiquetes.find(t => t.viajeId === c.viajeId &&
+      t.asientos.join(',') === c.asientos.join(','));
 
     estado.compra = null;
-    persistir();
-    abrirTiquete(tiquete.id);
+    if (nuevo) abrirTiquete(nuevo.id); else ir('tiquetes');
     toast(cantidad === 1 ? 'Tiquete comprado' : `${cantidad} tiquetes comprados`);
-  }, 900);
+
+  } catch (e) {
+    mostrarError('#compra-error', e.message);
+  } finally {
+    boton.disabled = false;
+    boton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Pagar y generar tiquete';
+  }
 }
 
 /* Texto de asientos. Sirve tanto para los tiquetes nuevos como para

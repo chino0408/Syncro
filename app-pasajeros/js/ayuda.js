@@ -13,7 +13,7 @@ function prepararReporte() {
   ocultarError('#reporte-error');
 }
 
-function enviarReporte() {
+async function enviarReporte() {
   const nombre = $('#rep-nombre').value.trim();
   const correo = $('#rep-correo').value.trim();
   const detalle = $('#rep-detalle').value.trim();
@@ -24,8 +24,12 @@ function enviarReporte() {
   ocultarError('#reporte-error');
 
   const folio = 'SOP-' + Date.now().toString().slice(-6);
-  estado.reportes.push({ folio, nombre, correo, detalle, fecha: new Date().toISOString(), estado: 'en espera' });
-  persistir();
+  try {
+    await Api.enviarSolicitud({
+      usuarioId: estado.usuarioId, folio, nombre, correo, detalle });
+  } catch (e) {
+    return mostrarError('#reporte-error', e.message);
+  }
 
   $('#reporte-form').style.display = 'none';
   const cont = $('#reporte-enviado');

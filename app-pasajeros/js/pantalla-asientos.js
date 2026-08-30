@@ -10,54 +10,43 @@
    Fila 2:  5  6  |  8  7   <- los cuatro accesibles
    Fila 3:  9 10  | 12 11 */
 
-const CAPACIDAD_BUS = 48;              // 12 filas de 4
-const ASIENTOS_ACCESIBLES = [5, 6, 7, 8];
+// La capacidad real la define el bus asignado a cada salida
+
 const MAXIMO_POR_COMPRA = 8;
 
-/* Qué asientos ya están vendidos en una salida.
-   Se calcula a partir de la hora, así el resultado es siempre el
-   mismo para el mismo viaje y no cambia al repintar la pantalla. */
-function asientosVendidos(horaSalida) {
-  let semilla = 0;
-  const texto = String(horaSalida);
-  for (let i = 0; i < texto.length; i++) {
-    semilla = (semilla * 31 + texto.charCodeAt(i)) >>> 0;
-  }
-  const aleatorio = () => {
-    semilla = (semilla * 1664525 + 1013904223) >>> 0;
-    return semilla / 4294967296;
-  };
-
-  // Los asientos accesibles nunca se venden: quedan siempre
-  // disponibles para quien los necesite.
-  const vendibles = CAPACIDAD_BUS - ASIENTOS_ACCESIBLES.length;
-  const vendidos = new Set();
-  const cuantos = Math.floor(vendibles * (0.25 + aleatorio() * 0.35));
-
-  while (vendidos.size < cuantos) {
-    const n = 1 + Math.floor(aleatorio() * CAPACIDAD_BUS);
-    if (!esAccesible(n)) vendidos.add(n);
-  }
-  return vendidos;
-}
-
 function esAccesible(numero) {
-  return ASIENTOS_ACCESIBLES.includes(numero);
+  return estado._accesibles.includes(numero);
 }
 
 /* Se llama al tocar un horario en el detalle de la ruta */
-function elegirHorario(indice) {
+async function elegirHorario(indice) {
   const ruta = RUTAS.find(r => r.id === estado.rutaAbierta);
   const salida = estado._salidas[indice];
 
   estado.compra = {
     rutaId: ruta.id,
+    viajeId: salida.id,
     hora: salida.hora,
     precio: ruta.precio,
     asientos: [],
   };
-  estado._vendidos = asientosVendidos(salida.hora);
+  estado._capacidad = salida.capacidad || 48;
+
   ir('asientos');
+  $('#bus-asientos').innerHTML = '<div class="cargando">Cargando asientos…</div>';
+
+  try {
+    const [vendidos, accesibles] = await Promise.all([
+      Api.asientosOcupados(salida.id),
+      Api.asientosAccesibles(salida.id),
+    ]);
+    estado._vendidos = vendidos;
+    estado._accesibles = accesibles.length ? accesibles : [5, 6, 7, 8];
+    pintarAsientos();
+  } catch (e) {
+    $('#bus-asientos').innerHTML =
+      '<div class="aviso-fallo">No pudimos cargar la ocupación del bus. Probá de nuevo.</div>';
+  }
 }
 
 function pintarAsientos() {
@@ -69,14 +58,14 @@ function pintarAsientos() {
   $('#asientos-titulo').textContent = ruta.origen + ' → ' + ruta.destino;
   $('#asientos-sub').textContent = `${fechaRelativa(c.hora)} · ${horaCorta(c.hora)}`;
 
-  const libres = CAPACIDAD_BUS - vendidos.size;
+  const libres = estado._capacidad - vendidos.size;
   $('#asientos-disponibles').textContent =
-    `${libres} de ${CAPACIDAD_BUS} asientos disponibles`;
+    `${libres} de ${estado._capacidad} asientos disponibles`;
 
   // Cada fila: los dos de la izquierda en orden, los dos de la
   // derecha invertidos, como en los buses reales.
   const filas = [];
-  for (let n = 1; n <= CAPACIDAD_BUS; n += 4) {
+  for (let n = 1; n <= estado._capacidad; n += 4) {
     filas.push({ izq: [n, n + 1], der: [n + 3, n + 2] });
   }
 
@@ -127,7 +116,7 @@ function iconoSillaRuedas() {
 }
 
 function asientoHTML(numero, vendidos) {
-  if (numero > CAPACIDAD_BUS) return '<span class="asiento vacio"></span>';
+  if (numero > estado._capacidad) return '<span class="asiento vacio"></span>';
 
   const estaVendido = vendidos.has(numero);
   const accesible = esAccesible(numero);

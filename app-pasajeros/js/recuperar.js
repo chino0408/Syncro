@@ -1,19 +1,11 @@
 /* Syncro — recuperar.js
-   Recuperación de contraseña en tres pasos: correo, código y
-   nueva contraseña.
+   Recuperación de contraseña.
 
-   Sin servidor no se puede enviar un correo de verdad, así que el
-   código se muestra en pantalla dentro de un recuadro marcado como
-   demo. Cuando exista el backend, ese recuadro desaparece y el
-   código viaja por correo; el resto del flujo queda igual. */
-
-const MINUTOS_VIGENCIA = 10;
-const INTENTOS_PERMITIDOS = 3;
-
-let recuperacion = null;
+   Ya no hay código simulado: Supabase envía un correo real con un
+   enlace. Al abrirlo, la persona vuelve a la app con una sesión
+   temporal que le permite escribir su contraseña nueva. */
 
 function abrirRecuperar() {
-  recuperacion = null;
   const correoEscrito = $('#login-correo').value.trim();
   $('#rec-correo').value = correoEscrito;
   mostrarPasoRecuperar(1);
@@ -22,16 +14,19 @@ function abrirRecuperar() {
 
 function mostrarPasoRecuperar(paso) {
   [1, 2, 3].forEach(n => {
-    $('#rec-paso-' + n).style.display = n === paso ? 'block' : 'none';
+    const bloque = $('#rec-paso-' + n);
+    if (bloque) bloque.style.display = n === paso ? 'block' : 'none';
     const punto = $('#rec-punto-' + n);
-    punto.classList.toggle('activo', n === paso);
-    punto.classList.toggle('hecho', n < paso);
+    if (punto) {
+      punto.classList.toggle('activo', n === paso);
+      punto.classList.toggle('hecho', n < paso);
+    }
   });
   ocultarError('#rec-error');
 }
 
-/* ---------- Paso 1: el correo ---------- */
-function enviarCodigo() {
+/* ---------- Paso 1: pedir el correo ---------- */
+async function enviarCodigo() {
   const correo = $('#rec-correo').value.trim().toLowerCase();
 
   if (!correo) {
@@ -41,94 +36,41 @@ function enviarCodigo() {
     return mostrarError('#rec-error', 'Revisá el correo, no parece válido.');
   }
 
-  const usuario = estado.usuarios.find(u => u.correo === correo);
-  if (!usuario) {
-    return mostrarError('#rec-error', 'No hay ninguna cuenta con ese correo.');
-  }
-
-  const codigo = String(Math.floor(100000 + Math.random() * 900000));
-  recuperacion = {
-    correo,
-    codigo,
-    vence: Date.now() + MINUTOS_VIGENCIA * 60000,
-    intentos: 0,
-  };
-
-  $('#rec-correo-envio').textContent = correo;
-  $('#rec-codigo-demo').textContent = codigo;
-  limpiarCasillas();
-  mostrarPasoRecuperar(2);
-
-  const primera = $('#rec-cod-0');
-  if (primera) setTimeout(() => primera.focus(), 80);
-}
-
-/* ---------- Paso 2: el código ---------- */
-function casillasCodigo() {
-  return [0, 1, 2, 3, 4, 5].map(i => $('#rec-cod-' + i));
-}
-
-function limpiarCasillas() {
-  casillasCodigo().forEach(c => { if (c) c.value = ''; });
-}
-
-function codigoEscrito() {
-  return casillasCodigo().map(c => (c ? c.value : '')).join('');
-}
-
-function verificarCodigo() {
-  if (!recuperacion) return abrirRecuperar();
-
-  const escrito = codigoEscrito();
-  if (escrito.length < 6) {
-    return mostrarError('#rec-error', 'Escribí los seis dígitos del código.');
-  }
-
-  if (Date.now() > recuperacion.vence) {
-    return mostrarError('#rec-error', 'El código venció. Pedí uno nuevo.');
-  }
-
-  if (escrito !== recuperacion.codigo) {
-    recuperacion.intentos++;
-    const quedan = INTENTOS_PERMITIDOS - recuperacion.intentos;
-    limpiarCasillas();
-    const primera = $('#rec-cod-0');
-    if (primera) primera.focus();
-
-    if (quedan <= 0) {
-      recuperacion = null;
-      mostrarPasoRecuperar(1);
-      return mostrarError('#rec-error', 'Demasiados intentos. Pedí un código nuevo.');
-    }
-    return mostrarError('#rec-error',
-      `El código no coincide. Te ${quedan === 1 ? 'queda 1 intento' : 'quedan ' + quedan + ' intentos'}.`);
-  }
-
-  $('#rec-clave').value = '';
-  $('#rec-clave2').value = '';
-  mostrarPasoRecuperar(3);
-  const campo = $('#rec-clave');
-  if (campo) setTimeout(() => campo.focus(), 80);
-}
-
-function reenviarCodigo() {
-  if (!recuperacion) return abrirRecuperar();
-  const codigo = String(Math.floor(100000 + Math.random() * 900000));
-  recuperacion.codigo = codigo;
-  recuperacion.vence = Date.now() + MINUTOS_VIGENCIA * 60000;
-  recuperacion.intentos = 0;
-  $('#rec-codigo-demo').textContent = codigo;
-  limpiarCasillas();
   ocultarError('#rec-error');
-  const primera = $('#rec-cod-0');
-  if (primera) primera.focus();
-  toast('Te enviamos un código nuevo');
+  const boton = $('[data-accion="enviar-codigo"]');
+  const textoOriginal = boton.textContent;
+  boton.disabled = true;
+  boton.textContent = 'Enviando…';
+
+  try {
+    await Api.pedirRecuperacion(correo);
+    $('#rec-correo-envio').textContent = correo;
+    mostrarPasoRecuperar(2);
+  } catch (e) {
+    mostrarError('#rec-error', e.message);
+  } finally {
+    boton.disabled = false;
+    boton.textContent = textoOriginal;
+  }
 }
 
-/* ---------- Paso 3: la contraseña nueva ---------- */
-function guardarClaveNueva() {
-  if (!recuperacion) return abrirRecuperar();
+/* ---------- Paso 2: esperar el correo ----------
+   No hay código que escribir: el enlace del correo trae la sesión. */
+async function reenviarCodigo() {
+  const correo = $('#rec-correo').value.trim().toLowerCase();
+  if (!correo) return mostrarPasoRecuperar(1);
+  try {
+    await Api.pedirRecuperacion(correo);
+    toast('Te enviamos el correo de nuevo');
+  } catch (e) {
+    mostrarError('#rec-error', e.message);
+  }
+}
 
+/* ---------- Paso 3: contraseña nueva ----------
+   Se llega acá desde el enlace del correo, que deja una sesión de
+   recuperación abierta. */
+async function guardarClaveNueva() {
   const clave = $('#rec-clave').value;
   const repetida = $('#rec-clave2').value;
 
@@ -142,66 +84,36 @@ function guardarClaveNueva() {
     return mostrarError('#rec-error', 'Las dos contraseñas no coinciden.');
   }
 
-  const usuario = estado.usuarios.find(u => u.correo === recuperacion.correo);
-  if (!usuario) {
-    recuperacion = null;
-    mostrarPasoRecuperar(1);
-    return mostrarError('#rec-error', 'No encontramos la cuenta. Empezá de nuevo.');
+  ocultarError('#rec-error');
+  try {
+    await Api.cambiarClave(clave);
+    await Api.salir();
+    volverALogin();
+    toast('Contraseña actualizada. Iniciá sesión.');
+  } catch (e) {
+    mostrarError('#rec-error', e.message);
   }
-
-  if (usuario.clave === clave) {
-    return mostrarError('#rec-error', 'Esa es tu contraseña actual. Elegí una distinta.');
-  }
-
-  usuario.clave = clave;
-  persistir();
-
-  const correo = recuperacion.correo;
-  recuperacion = null;
-
-  volverALogin();
-  $('#login-correo').value = correo;
-  $('#login-clave').value = '';
-  toast('Contraseña actualizada. Iniciá sesión.');
 }
 
-/* ---------- Volver al acceso ---------- */
 function volverALogin() {
-  recuperacion = null;
   estado.modoAuth = 'registro';
   alternarAuth();          // deja el formulario en modo login
   ocultarError('#auth-error');
   ir('bienvenida');
 }
 
-/* Avance automático entre las casillas del código */
-function prepararCasillas() {
-  casillasCodigo().forEach((casilla, i) => {
-    if (!casilla) return;
+/* Si la app se abrió desde el enlace del correo, Supabase deja una
+   sesión de recuperación. En ese caso se salta directo al paso 3. */
+async function revisarEnlaceDeRecuperacion() {
+  const hash = window.location.hash || '';
+  if (!hash.includes('type=recovery')) return false;
 
-    casilla.addEventListener('input', () => {
-      casilla.value = casilla.value.replace(/\D/g, '').slice(0, 1);
-      if (casilla.value && i < 5) {
-        const siguiente = $('#rec-cod-' + (i + 1));
-        if (siguiente) siguiente.focus();
-      }
-      if (codigoEscrito().length === 6) verificarCodigo();
-    });
-
-    casilla.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !casilla.value && i > 0) {
-        const anterior = $('#rec-cod-' + (i - 1));
-        if (anterior) { anterior.focus(); anterior.value = ''; }
-      }
-      if (e.key === 'Enter') verificarCodigo();
-    });
-
-    // Pegar el código completo de una vez
-    casilla.addEventListener('paste', (e) => {
-      e.preventDefault();
-      const texto = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
-      casillasCodigo().forEach((c, j) => { if (c) c.value = texto[j] || ''; });
-      if (texto.length === 6) verificarCodigo();
-    });
-  });
+  history.replaceState(null, '', window.location.pathname);
+  mostrarPasoRecuperar(3);
+  ir('recuperar');
+  return true;
 }
+
+/* Las casillas de código ya no se usan: el enlace del correo
+   reemplaza al código de seis dígitos. */
+function prepararCasillas() { /* sin efecto */ }

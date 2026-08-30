@@ -3,42 +3,32 @@
    métodos de pago y preferencias de notificaciones. */
 
 /* ---------- Editar perfil ---------- */
-function pintarEditarPerfil() {
+async function pintarEditarPerfil() {
   if (!estado.sesion) return ir('bienvenida');
-  const usuario = estado.usuarios.find(u => u.correo === estado.sesion.correo);
   $('#ep-nombre').value = estado.sesion.nombre;
   $('#ep-correo').value = estado.sesion.correo;
-  $('#ep-telefono').value = (usuario && usuario.telefono) || '';
+  $('#ep-correo').disabled = true;   // el correo es la cuenta, no se cambia acá
   ocultarError('#ep-error');
+  try {
+    const p = await Api.perfil();
+    $('#ep-telefono').value = p.telefono || '';
+  } catch (e) { /* si falla se queda vacío */ }
 }
 
-function guardarPerfil() {
+async function guardarPerfil() {
   const nombre = $('#ep-nombre').value.trim();
-  const correo = $('#ep-correo').value.trim().toLowerCase();
   const telefono = $('#ep-telefono').value.trim();
 
   if (!nombre) return mostrarError('#ep-error', 'Escribí tu nombre.');
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(correo)) {
-    return mostrarError('#ep-error', 'Revisá el correo, no parece válido.');
+
+  try {
+    await Api.guardarPerfil(estado.usuarioId, { nombre, telefono });
+    estado.sesion.nombre = nombre;
+    ir('perfil');
+    toast('Datos actualizados');
+  } catch (e) {
+    mostrarError('#ep-error', e.message);
   }
-
-  const usuario = estado.usuarios.find(u => u.correo === estado.sesion.correo);
-  if (!usuario) return mostrarError('#ep-error', 'No encontramos tu cuenta.');
-
-  // Si cambia el correo, no puede chocar con otra cuenta
-  if (correo !== estado.sesion.correo &&
-      estado.usuarios.some(u => u.correo === correo)) {
-    return mostrarError('#ep-error', 'Ya hay una cuenta con ese correo.');
-  }
-
-  usuario.nombre = nombre;
-  usuario.correo = correo;
-  usuario.telefono = telefono;
-  estado.sesion = { nombre, correo };
-  persistir();
-
-  ir('perfil');
-  toast('Datos actualizados');
 }
 
 /* ---------- Métodos de pago ---------- */
@@ -92,51 +82,50 @@ function cambiarTipoPago() {
     : 'El número asociado a tu cuenta SINPE Móvil.';
 }
 
-function guardarPago() {
+async function guardarPago() {
   const tipo = $('#np-tipo').value;
   const valor = $('#np-numero').value.trim();
+  let tipo_guardar, ref_guardar;
 
   if (tipo === 'tarjeta') {
     if (!/^\d{4}$/.test(valor)) {
       return mostrarError('#np-error', 'Escribí los últimos cuatro dígitos de la tarjeta.');
     }
-    estado.metodosPago.push({
-      id: 'p' + Date.now().toString(36),
-      nombre: `Tarjeta terminada en ${valor}`,
-      detalle: 'Agregada por vos',
-      icono: 'tarjeta',
-    });
+    tipo_guardar = 'tarjeta'; ref_guardar = valor;
   } else {
     const limpio = valor.replace(/\D/g, '');
     if (limpio.length !== 8) {
       return mostrarError('#np-error', 'El teléfono debe tener ocho dígitos.');
     }
     const formateado = limpio.slice(0, 4) + '-' + limpio.slice(4);
-    estado.metodosPago.push({
-      id: 'p' + Date.now().toString(36),
-      nombre: 'SINPE Móvil',
-      detalle: formateado,
-      icono: 'movil',
-    });
+    tipo_guardar = 'sinpe'; ref_guardar = formateado;
   }
 
-  persistir();
-  ir('pagos');
-  toast('Método de pago agregado');
+  try {
+    await Api.agregarMetodo(estado.usuarioId, tipo_guardar, ref_guardar);
+    estado.metodosPago = await Api.metodosDePago();
+    ir('pagos');
+    toast('Método de pago agregado');
+  } catch (e) {
+    mostrarError('#np-error', e.message);
+  }
 }
 
-function quitarPago(id) {
+async function quitarPago(id) {
   const metodo = estado.metodosPago.find(m => m.id === id);
   if (!metodo) return;
 
-  estado.metodosPago = estado.metodosPago.filter(m => m.id !== id);
-  // Si era el elegido para una compra en curso, se pasa al primero
-  if (estado.pagoElegido === id) {
-    estado.pagoElegido = estado.metodosPago.length ? estado.metodosPago[0].id : null;
+  try {
+    await Api.quitarMetodo(id);
+    estado.metodosPago = await Api.metodosDePago();
+    if (estado.pagoElegido === id) {
+      estado.pagoElegido = estado.metodosPago.length ? estado.metodosPago[0].id : null;
+    }
+    pintarPagos();
+    toast('Método de pago eliminado');
+  } catch (e) {
+    toast('No se pudo eliminar');
   }
-  persistir();
-  pintarPagos();
-  toast('Método de pago eliminado');
 }
 
 /* ---------- Preferencias de notificaciones ---------- */
@@ -145,8 +134,16 @@ function pintarPreferencias() {
   $('#pref-compra').checked = estado.preferencias.avisoCompra;
 }
 
-function guardarPreferencia(cual, valor) {
+async function guardarPreferencia(cual, valor) {
+  const antes = estado.preferencias[cual];
   estado.preferencias[cual] = valor;
-  persistir();
-  toast(valor ? 'Aviso activado' : 'Aviso desactivado');
+  const campo = cual === 'avisoViaje' ? 'aviso_viaje' : 'aviso_compra';
+  try {
+    await Api.guardarPerfil(estado.usuarioId, { [campo]: valor });
+    toast(valor ? 'Aviso activado' : 'Aviso desactivado');
+  } catch (e) {
+    estado.preferencias[cual] = antes;
+    pintarPreferencias();
+    toast('No se pudo guardar el cambio');
+  }
 }

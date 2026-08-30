@@ -21,6 +21,13 @@
 
 <div id="app">
 
+  <!-- Mientras se conecta con el servidor -->
+  <div id="carga-inicial">
+    <span class="girador"></span>
+    <span>Conectando…</span>
+  </div>
+
+
   <!-- ============ BIENVENIDA / LOGIN / REGISTRO ============ -->
   <section class="screen" id="pantalla-bienvenida">
     <div class="bienvenida">
@@ -107,30 +114,19 @@
         <button class="btn btn-primario" style="margin-top:14px" data-accion="enviar-codigo">Enviar código</button>
       </div>
 
-      <!-- Paso 2: código -->
+      <!-- Paso 2: revisar el correo -->
       <div id="rec-paso-2" style="display:none">
         <h2 class="rec-titulo">Revisá tu correo</h2>
-        <p class="rec-texto">Enviamos un código de seis dígitos a <strong id="rec-correo-envio"></strong>. Vence en 10 minutos.</p>
+        <p class="rec-texto">Le enviamos un enlace a <strong id="rec-correo-envio"></strong>. Abrilo desde este mismo dispositivo y vas a poder escribir tu contraseña nueva.</p>
 
-        <div class="aviso-demo">
-          <div class="ad-etq">Modo demo</div>
-          <p>Todavía no hay servidor de correo, así que el código se muestra acá:</p>
-          <div class="ad-codigo" id="rec-codigo-demo">000000</div>
+        <div class="aviso-demo" style="border-color:rgba(29,205,241,.35); background:rgba(29,205,241,.06)">
+          <div class="ad-etq" style="color:var(--cian)">Qué sigue</div>
+          <p>Si no lo ves en unos minutos, revisá la carpeta de correo no deseado.</p>
         </div>
 
-        <label class="etiqueta-campo">Código de verificación</label>
-        <div class="casillas">
-          <input class="casilla" id="rec-cod-0" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 1">
-          <input class="casilla" id="rec-cod-1" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 2">
-          <input class="casilla" id="rec-cod-2" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 3">
-          <input class="casilla" id="rec-cod-3" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 4">
-          <input class="casilla" id="rec-cod-4" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 5">
-          <input class="casilla" id="rec-cod-5" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 6">
-        </div>
-
-        <button class="btn btn-primario" style="margin-top:16px" data-accion="verificar-codigo">Verificar código</button>
+        <button class="btn btn-secundario" style="margin-top:6px" data-accion="reenviar-codigo">Enviar el correo de nuevo</button>
         <div style="text-align:center">
-          <button class="link-cambio" data-accion="reenviar-codigo">No me llegó, enviar otro</button>
+          <button class="link-cambio" data-accion="volver-login">Volver al inicio de sesión</button>
         </div>
       </div>
 
@@ -668,12 +664,16 @@
   <div id="toast" role="status" aria-live="polite"></div>
 </div>
 
+<!-- Base de datos: cliente de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+
 <!-- Mapas: Leaflet con teselas de OpenStreetMap, sin clave de API -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <!-- El orden importa: cada archivo usa lo que definió el anterior -->
-<script src="js/almacenamiento.js"></script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script src="js/datos.js"></script>
 <script src="js/estado.js"></script>
 <script src="js/utilidades.js"></script>

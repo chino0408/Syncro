@@ -2,15 +2,6 @@
    Ver README.md para el orden de carga de los archivos. */
 
 /* ---------- 14. Notificaciones ---------- */
-function agregarNotificacion({ tipo, titulo, texto, tiqueteId, mostrarDesde }) {
-  estado.notificaciones.unshift({
-    id: 'N' + Date.now() + Math.floor(Math.random() * 999),
-    tipo, titulo, texto, tiqueteId,
-    creada: new Date().toISOString(),
-    mostrarDesde: mostrarDesde || new Date().toISOString(),
-    leida: false,
-  });
-}
 
 function notificacionesVisibles() {
   const ahora = new Date();
@@ -49,7 +40,9 @@ function pintarNotificaciones() {
     </div>`).join('');
 
   // Marcar como leídas al abrir la pantalla
-  estado.notificaciones.forEach(n => { n.leida = true; });
-  persistir();
+  if (estado.notificaciones.some(x => !x.leida)) {
+    estado.notificaciones.forEach(x => { x.leida = true; });
+    Api.marcarLeidas(estado.usuarioId).catch(() => {});
+  }
   actualizarPuntoNotif();
 }

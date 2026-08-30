@@ -62,7 +62,6 @@ document.addEventListener('click', (e) => {
     'olvide-clave': abrirRecuperar,
     'volver-login': volverALogin,
     'enviar-codigo': enviarCodigo,
-    'verificar-codigo': verificarCodigo,
     'reenviar-codigo': reenviarCodigo,
     'guardar-clave': guardarClaveNueva,
     'guardar-perfil': guardarPerfil,
@@ -100,26 +99,45 @@ $('#rec-correo').addEventListener('keydown', e => { if (e.key === 'Enter') envia
   $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter') guardarClaveNueva(); });
 });
 /* ---------- 18. Arranque ---------- */
-(function iniciar() {
+(async function iniciar() {
   prepararCasillas();
-  // Métodos de pago iniciales, la primera vez
-  if (!estado.metodosPago) {
-    estado.metodosPago = METODOS_PAGO.map(m => ({ ...m }));
-    persistir();
+
+  const carga = $('#carga-inicial');
+  const fallo = (mensaje) => {
+    if (carga) carga.innerHTML =
+      `<div class="aviso-fallo" style="margin:24px">${mensaje}</div>`;
+  };
+
+  try {
+    // El catálogo es público: se puede pedir antes de iniciar sesión
+    await cargarCatalogo();
+  } catch (e) {
+    return fallo('No pudimos conectar con el servidor. Revisá tu conexión y recargá la página.');
   }
 
-  // Cuenta de prueba, para poder entrar sin registrarse
-  if (!estado.usuarios.length) {
-    estado.usuarios.push({ nombre:'Usuario Demo', correo:'demo@syncro.cr', clave:'123456' });
-    persistir();
+  // ¿Se abrió desde el enlace de recuperación del correo?
+  if (await revisarEnlaceDeRecuperacion()) {
+    if (carga) carga.style.display = 'none';
+    return;
   }
-  if (estado.sesion) {
-    ir('home');
-  } else {
+
+  try {
+    const sesion = await Api.sesionActual();
+    if (sesion) {
+      await cargarDatosDeUsuario();
+      if (carga) carga.style.display = 'none';
+      ir('home');
+    } else {
+      if (carga) carga.style.display = 'none';
+      ir('bienvenida');
+    }
+  } catch (e) {
+    // Si la sesión guardada ya no sirve, se empieza de nuevo
+    await Api.salir().catch(() => {});
+    if (carga) carga.style.display = 'none';
     ir('bienvenida');
   }
-  actualizarPuntoNotif();
 
-  // Revisa cada minuto si toca mostrar el aviso de "sale en 15 minutos"
+  // Cada minuto revisa si toca mostrar el aviso de "sale en 15 minutos"
   setInterval(actualizarPuntoNotif, 60000);
 })();

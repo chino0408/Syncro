@@ -7,7 +7,7 @@ function abrirRuta(id) {
   ir('detalle-ruta');
 }
 
-function pintarDetalleRuta() {
+async function pintarDetalleRuta() {
   const ruta = RUTAS.find(r => r.id === estado.rutaAbierta);
   if (!ruta) return ir('rutas');
 
@@ -21,8 +21,23 @@ function pintarDetalleRuta() {
       <div style="font-size:13.5px;">${p}</div>
     </div>`).join('');
 
-  const salidas = proximasSalidas(ruta);
-  $('#detalle-horarios').innerHTML = salidas.map((s, i) => `
+  const cont = $('#detalle-horarios');
+  cont.innerHTML = '<div class="cargando">Buscando salidas…</div>';
+
+  let salidas = [];
+  try {
+    salidas = await Api.salidasDeRuta(ruta.id);
+  } catch (e) {
+    cont.innerHTML = '<div class="aviso-fallo">No pudimos cargar los horarios. Revisá tu conexión.</div>';
+    return;
+  }
+
+  if (!salidas.length) {
+    cont.innerHTML = '<div class="aviso-fallo">Esta ruta no tiene salidas programadas por ahora.</div>';
+    estado._salidas = [];
+    return;
+  }
+  cont.innerHTML = salidas.map((s, i) => `
     <div class="fila" data-elegir-horario="${i}">
       <div class="fila-izq">
         <div class="fila-icono">
@@ -30,7 +45,7 @@ function pintarDetalleRuta() {
         </div>
         <div>
           <div class="fila-titulo">${horaCorta(s.hora)}</div>
-          <div class="fila-sub">${s.asientos} asientos disponibles</div>
+          <div class="fila-sub">${s.capacidad} asientos</div>
         </div>
       </div>
       <div style="font-family:var(--display); font-weight:600; color:var(--cian); font-size:14px;">${colones(ruta.precio)}</div>
