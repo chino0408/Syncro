@@ -4,9 +4,11 @@ Modelo relacional en PostgreSQL. Probado en PostgreSQL 16 y compatible con Supab
 
 | Archivo | Qué contiene |
 |---|---|
+| `GUIA-SUPABASE.md` | Paso a paso para montarla en la nube |
 | `modelo-entidad-relacion.drawio` | Diagrama entidad-relación, abrir en draw.io |
 | `01-esquema.sql` | Tipos, tablas, restricciones, índices y vistas |
 | `02-datos-ejemplo.sql` | Datos de prueba que reproducen la demo |
+| `03-auth-y-seguridad.sql` | Autenticación y políticas de seguridad por fila |
 
 ---
 
@@ -219,8 +221,22 @@ Lo mismo con `metodo_pago.referencia`: solo guarda los últimos cuatro dígitos 
 
 ---
 
+## Seguridad por fila
+
+El archivo `03-auth-y-seguridad.sql` activa RLS en las 17 tablas. Con RLS encendido, ninguna consulta devuelve nada salvo que una política lo permita explícitamente.
+
+El reparto es así:
+
+| Quién | Qué ve |
+|---|---|
+| Visitante sin sesión | Rutas activas, paradas, salidas y capacidad de buses: el catálogo público |
+| Pasajero | Todo lo anterior, más su perfil, sus compras, tiquetes, favoritas y notificaciones |
+| Empresa | Su flota, sus choferes, sus rutas, y las compras e incidencias de sus propias salidas |
+
+Nadie ve los datos personales de otro. Está probado: al intentar leer el perfil ajeno, la consulta devuelve cero filas en vez de un error, que es como debe comportarse.
+
+Los asientos ocupados de un viaje se consultan con la función `asientos_ocupados()`, que devuelve solo los números sin revelar de quién es cada tiquete.
+
 ## Pendiente para el siguiente paso
 
-- Políticas de seguridad a nivel de fila (RLS) en Supabase, para que cada usuario solo vea sus propios datos y cada empresa solo su operación.
-- Conectar la app y el panel a la base.
-- Autenticación real con Supabase Auth, que reemplaza el código de verificación simulado de la recuperación de contraseña.
+- Conectar la app de pasajeros y el panel de empresas a la base.
