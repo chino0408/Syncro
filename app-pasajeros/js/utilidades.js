@@ -34,3 +34,20 @@ function toast(mensaje) {
   t._temporizador = setTimeout(() => t.classList.remove('visible'), 2600);
 }
 
+
+
+/* ---------- Mensajes de error en formularios ----------
+   Viven acá, y no en una pantalla concreta, porque las usan el acceso,
+   la compra, el perfil, la ayuda y la recuperación de contraseña. */
+
+function mostrarError(selector, mensaje) {
+  const caja = $(selector);
+  if (!caja) return;
+  caja.textContent = mensaje;
+  caja.classList.add('visible');
+}
+
+function ocultarError(selector) {
+  const caja = $(selector);
+  if (caja) caja.classList.remove('visible');
+}
