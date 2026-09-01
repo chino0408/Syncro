@@ -60,13 +60,13 @@ Y elegí **Open with Live Server**.
 **App de pasajeros**
 ```
 Correo:      demo@syncro.cr
-Contraseña:  123456
+Contraseña:  demo123456
 ```
 
 **Panel de empresas**
 ```
 Correo:      admin@transportescr.com
-Contraseña:  admin123
+Contraseña:  admin123456
 ```
 
 ---
@@ -164,9 +164,9 @@ La lámina completa está en `documentacion/marca/`.
 
 ### Simulado por ahora
 
-- **El pago.** No hay pasarela real; 1 de cada 8 intentos falla a propósito para poder mostrar el camino de error.
+- **El pago.** No hay pasarela real: la compra se registra en la base, pero no se cobra nada.
 - **El código QR.** Es un patrón visual, todavía no lo lee un escáner.
-- **Los datos.** Se guardan en el navegador. El panel y la app todavía no comparten información.
+- **El panel de empresas.** Todavía guarda su información en el navegador. La app de pasajeros ya trabaja contra Supabase; conectar el panel es la siguiente etapa.
 
 ---
 

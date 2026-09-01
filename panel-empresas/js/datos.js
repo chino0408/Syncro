@@ -7,7 +7,7 @@ const EMPRESA_EJEMPLO = {
   cedula: '3-101-482910',
   telefono: '2222-4488',
   correo: 'admin@transportescr.com',
-  clave: 'admin123',
+  clave: 'admin123456',
 };
 
 const RUTAS_EJEMPLO = [

@@ -1,6 +1,6 @@
 # Syncro — Demo funcional
 
-Demo navegable de la app móvil de Syncro. Corre entera en el teléfono, sin servidor ni base de datos: los datos se guardan en el almacenamiento del navegador.
+Demo navegable de la app móvil de Syncro. Los datos viven en Supabase (PostgreSQL): rutas, salidas, tiquetes y cuentas son reales y compartidos entre dispositivos. Ver `README-CONEXION.md`.
 
 ---
 
@@ -90,7 +90,7 @@ Se abre en el navegador y se recarga solo cada vez que guardás un cambio.
 
 ```
 Correo:      demo@syncro.cr
-Contraseña:  123456
+Contraseña:  demo123456
 ```
 
 ---
@@ -127,11 +127,9 @@ Desde el teléfono, abrí esa dirección y:
 
 Cosas resueltas de forma simulada, para trabajarlas en las siguientes etapas:
 
-- **El pago es falso.** Hay una espera de 1 segundo y 1 de cada 8 pagos falla a propósito, para poder mostrar el camino de error.
+- **El pago es simulado.** La compra y el tiquete se registran de verdad en la base, pero no hay pasarela ni cobro.
 - **El QR es un patrón visual**, no un código escaneable. Para que un lector real lo lea hay que generar un QR estándar.
-- **El mapa es un esquema dibujado**, no usa geolocalización ni datos geográficos reales.
-- **Los datos viven en el teléfono.** Si se borran los datos del navegador, se pierden los tiquetes.
-- **Las rutas son fijas**, escritas en `js/datos.js`. No hay panel de empresas todavía.
+- **El panel de empresas todavía no comparte esta base.** Sigue guardando su información en el navegador.
 
 ## Siguientes pasos sugeridos
 

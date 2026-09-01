@@ -18,7 +18,7 @@ Esta separación es la que se justificó en la propuesta de la semana 4.
 
 ```
 Correo:      admin@transportescr.com
-Contraseña:  admin123
+Contraseña:  admin123456
 ```
 
 Entra como **Transportes Unidos del Valle**, una empresa de ejemplo con 5 rutas, 5 unidades y 5 choferes ya cargados.
@@ -116,7 +116,7 @@ Por eso agregar una pantalla nueva de mantenimiento es corto: se definen los cam
 
 ## Límites de esta versión
 
-- **No hay backend.** Todo se guarda en el navegador; el panel y la app de pasajeros todavía no comparten datos. Esa conexión es la siguiente etapa, con Spring Boot y PostgreSQL.
+- **Este panel todavía no está conectado a la base.** Guarda todo en el navegador. La app de pasajeros ya trabaja contra Supabase (PostgreSQL); conectar el panel a la misma base es la siguiente etapa, replicando el patrón `config.js` + `api.js` que usa la app.
 - **Los datos de ejemplo se generan al abrir**, incluyendo las salidas del día y las ventas simuladas.
 - **Una sola empresa.** El acceso valida contra la empresa de ejemplo; el sistema multiempresa llega con el backend.
 
