@@ -101,14 +101,16 @@ function nuevoBus() {
     sub: 'La capacidad define cuántos tiquetes se pueden vender por salida.',
     campos: camposBus(null),
     guardarTexto: 'Agregar unidad',
-    alGuardar: () => {
+    alGuardar: async () => {
       const datos = leerBus(null);
       if (!datos) return false;
-      estado.flota.push({ id: nuevoId('b'), ...datos });
-      persistir();
-      pintarFlota();
-      aviso('Unidad agregada');
-      return true;
+      try {
+        const id = await Api.crearBus(estado.empresaId, datos);
+        estado.flota.push({ id, ...datos });
+        pintarFlota();
+        aviso('Unidad agregada');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -122,18 +124,19 @@ function editarBus(id) {
     sub: `Placa ${b.placa}`,
     campos: camposBus(b),
     guardarTexto: 'Guardar cambios',
-    alGuardar: () => {
+    alGuardar: async () => {
       const datos = leerBus(id);
       if (!datos) return false;
-      Object.assign(b, datos);
-      // Si pasa a taller, se libera de las salidas asignadas
-      if (b.estado === 'taller') {
-        estado.salidas.forEach(s => { if (s.busId === id) s.busId = null; });
-      }
-      persistir();
-      pintarFlota();
-      aviso('Unidad actualizada');
-      return true;
+      try {
+        await Api.actualizarBus(id, datos);
+        // Si pasa a taller, se libera de las salidas del día
+        if (datos.estado === 'taller') await Api.liberarBusDeSalidas(id);
+        Object.assign(b, datos);
+        await recargarSalidas();   // cambió la capacidad o la asignación
+        pintarFlota();
+        aviso('Unidad actualizada');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -149,12 +152,14 @@ function borrarBus(id) {
       ? `Está asignada a ${asignadas} salidas de hoy. Esas salidas quedan sin unidad hasta que asignes otra.`
       : 'La unidad deja de estar disponible para asignar.',
     textoBoton: 'Eliminar unidad',
-    alConfirmar: () => {
-      estado.flota = estado.flota.filter(x => x.id !== id);
-      estado.salidas.forEach(s => { if (s.busId === id) s.busId = null; });
-      persistir();
-      pintarFlota();
-      aviso('Unidad eliminada');
+    alConfirmar: async () => {
+      try {
+        await Api.borrarBus(id);
+        estado.flota = estado.flota.filter(x => x.id !== id);
+        await recargarSalidas();
+        pintarFlota();
+        aviso('Unidad eliminada');
+      } catch (e) { aviso(e.message, 'error'); }
     },
   });
 }

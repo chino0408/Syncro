@@ -156,7 +156,7 @@ function nuevaSalida() {
       { id: 'sal-chofer', etiqueta: 'Chofer', tipo: 'select', opciones: opcionesChoferes(true) },
     ],
     guardarTexto: 'Programar salida',
-    alGuardar: () => {
+    alGuardar: async () => {
       const rutaId = valorCampo('sal-ruta');
       const h = valorCampo('sal-hora');
       if (!/^([01]?\d|2[0-3]):[0-5]\d$/.test(h)) {
@@ -169,20 +169,21 @@ function nuevaSalida() {
 
       const busId = valorCampo('sal-bus') || null;
       const bus = busId ? buscarBus(busId) : null;
+      const choferId = valorCampo('sal-chofer') || null;
 
-      estado.salidas.push({
-        id: nuevoId('v'),
-        rutaId,
-        hora: fecha.toISOString(),
-        busId,
-        choferId: valorCampo('sal-chofer') || null,
-        vendidos: 0,
-        _cap: bus ? bus.capacidad : 44,
-      });
-      persistir();
-      pintarHorarios();
-      aviso('Salida programada');
-      return true;
+      try {
+        const id = await Api.crearSalida({
+          rutaId, busId, choferId, hora: fecha.toISOString(),
+        });
+        estado.salidas.push({
+          id, rutaId, hora: fecha.toISOString(), busId, choferId,
+          vendidos: 0,
+          _cap: bus ? bus.capacidad : 44,
+        });
+        pintarHorarios();
+        aviso('Salida programada');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -202,7 +203,7 @@ function editarSalida(id) {
       { id: 'ed-hora', etiqueta: 'Hora de salida', tipo: 'texto', valor: hora(s.hora), ayuda: 'Formato de 24 horas.' },
     ],
     guardarTexto: 'Guardar asignación',
-    alGuardar: () => {
+    alGuardar: async () => {
       const h = valorCampo('ed-hora');
       if (!/^([01]?\d|2[0-3]):[0-5]\d$/.test(h)) {
         errorModal('Escribí la hora en formato de 24 horas, por ejemplo 06:15.');
@@ -212,16 +213,21 @@ function editarSalida(id) {
       const fecha = new Date(s.hora);
       fecha.setHours(hh, mm, 0, 0);
 
-      s.busId = valorCampo('ed-bus') || null;
-      s.choferId = valorCampo('ed-chofer') || null;
-      s.hora = fecha.toISOString();
-      const bus = s.busId ? buscarBus(s.busId) : null;
-      s._cap = bus ? bus.capacidad : 44;
+      const busId = valorCampo('ed-bus') || null;
+      const choferId = valorCampo('ed-chofer') || null;
+      const cuando = fecha.toISOString();
 
-      persistir();
-      pintarHorarios();
-      aviso('Asignación guardada');
-      return true;
+      try {
+        await Api.actualizarSalida(s.id, { busId, choferId, hora: cuando });
+        s.busId = busId;
+        s.choferId = choferId;
+        s.hora = cuando;
+        const bus = busId ? buscarBus(busId) : null;
+        s._cap = bus ? bus.capacidad : 44;
+        pintarHorarios();
+        aviso('Asignación guardada');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -235,11 +241,13 @@ function borrarSalida(id) {
     titulo: 'Cancelar esta salida',
     sub: `${ruta ? ruta.origen + ' → ' + ruta.destino : 'Salida'} de las ${horaAmPm(s.hora)}. Si hay tiquetes vendidos, hay que reubicar a esos pasajeros.`,
     textoBoton: 'Cancelar salida',
-    alConfirmar: () => {
-      estado.salidas = estado.salidas.filter(x => x.id !== id);
-      persistir();
-      pintarHorarios();
-      aviso('Salida cancelada');
+    alConfirmar: async () => {
+      try {
+        await Api.borrarSalida(id);
+        estado.salidas = estado.salidas.filter(x => x.id !== id);
+        pintarHorarios();
+        aviso('Salida cancelada');
+      } catch (e) { aviso(e.message, 'error'); }
     },
   });
 }

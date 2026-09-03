@@ -91,14 +91,16 @@ function nuevoChofer() {
     sub: 'Queda disponible para asignarlo a las salidas del día.',
     campos: camposChofer(null),
     guardarTexto: 'Agregar chofer',
-    alGuardar: () => {
+    alGuardar: async () => {
       const datos = leerChofer(null);
       if (!datos) return false;
-      estado.choferes.push({ id: nuevoId('c'), ...datos });
-      persistir();
-      pintarChoferes();
-      aviso('Chofer agregado');
-      return true;
+      try {
+        const id = await Api.crearChofer(estado.empresaId, datos);
+        estado.choferes.push({ id, ...datos });
+        pintarChoferes();
+        aviso('Chofer agregado');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -112,18 +114,19 @@ function editarChofer(id) {
     sub: limpio(c.nombre),
     campos: camposChofer(c),
     guardarTexto: 'Guardar cambios',
-    alGuardar: () => {
+    alGuardar: async () => {
       const datos = leerChofer(id);
       if (!datos) return false;
-      Object.assign(c, datos);
-      // Si queda en incapacidad, se libera de las salidas asignadas
-      if (c.estado === 'incapacidad') {
-        estado.salidas.forEach(s => { if (s.choferId === id) s.choferId = null; });
-      }
-      persistir();
-      pintarChoferes();
-      aviso('Chofer actualizado');
-      return true;
+      try {
+        await Api.actualizarChofer(id, datos);
+        // Si queda en incapacidad, se libera de las salidas del día
+        if (datos.estado === 'incapacidad') await Api.liberarChoferDeSalidas(id);
+        Object.assign(c, datos);
+        await recargarSalidas();
+        pintarChoferes();
+        aviso('Chofer actualizado');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -139,12 +142,14 @@ function borrarChofer(id) {
       ? `Está asignado a ${asignadas} salidas de hoy. Esas salidas quedan sin chofer hasta que asignes otro.`
       : 'Deja de estar disponible para asignar.',
     textoBoton: 'Eliminar chofer',
-    alConfirmar: () => {
-      estado.choferes = estado.choferes.filter(x => x.id !== id);
-      estado.salidas.forEach(s => { if (s.choferId === id) s.choferId = null; });
-      persistir();
-      pintarChoferes();
-      aviso('Chofer eliminado');
+    alConfirmar: async () => {
+      try {
+        await Api.borrarChofer(id);
+        estado.choferes = estado.choferes.filter(x => x.id !== id);
+        await recargarSalidas();
+        pintarChoferes();
+        aviso('Chofer eliminado');
+      } catch (e) { aviso(e.message, 'error'); }
     },
   });
 }

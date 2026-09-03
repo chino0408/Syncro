@@ -38,10 +38,6 @@ function siglas(texto) {
     .map(p => p.charAt(0).toUpperCase()).join('');
 }
 
-function nuevoId(prefijo) {
-  return prefijo + Date.now().toString(36) + Math.floor(Math.random() * 900 + 100).toString(36);
-}
-
 /* Evita que texto del usuario rompa el HTML que armamos */
 function limpio(texto) {
   return String(texto == null ? '' : texto)
@@ -91,6 +87,14 @@ function vacio(titulo, texto, botonHtml) {
       ${botonHtml || ''}
     </div>`;
 }
+
+/* Cómo se muestra cada tipo de reporte. No son datos de ejemplo:
+   son etiquetas de la interfaz, por eso viven acá y no en la base. */
+const ETIQUETAS_REPORTE = {
+  retraso: { texto: 'Retraso en ruta', clase: 'rep-retraso' },
+  lleno:   { texto: 'Unidad llena',    clase: 'rep-lleno' },
+  falla:   { texto: 'Falla mecánica',  clase: 'rep-falla' },
+};
 
 /* Etiqueta de estado con su color */
 function etiqueta(estadoTexto) {

@@ -8,35 +8,32 @@ function pintarEmpresa() {
   $('#emp-correo').value = estado.empresa.correo;
 }
 
-function guardarEmpresa() {
+async function guardarEmpresa() {
   const razon = $('#emp-razon').value.trim();
   const correo = $('#emp-correo').value.trim();
 
   if (!razon)  return aviso('Escribí el nombre comercial de la empresa', 'error');
   if (!correo) return aviso('Escribí un correo de contacto', 'error');
 
-  estado.empresa.razon    = razon;
-  estado.empresa.cedula   = $('#emp-cedula').value.trim();
-  estado.empresa.telefono = $('#emp-tel').value.trim();
-  estado.empresa.correo   = correo;
-  persistir();
+  const datos = {
+    razon,
+    cedula: $('#emp-cedula').value.trim(),
+    telefono: $('#emp-tel').value.trim(),
+    correo,
+  };
 
-  $('#emp-sigla').textContent  = siglas(razon);
-  $('#emp-nombre').textContent = razon;
-  aviso('Datos guardados');
-}
+  const boton = $('[data-accion="guardar-empresa"]');
+  if (boton) boton.disabled = true;
 
-function restablecerDemo() {
-  confirmar({
-    titulo: 'Restablecer los datos de ejemplo',
-    sub: 'Se borran las rutas, unidades, choferes y salidas que hayas creado, y el panel vuelve al estado inicial.',
-    textoBoton: 'Restablecer todo',
-    alConfirmar: () => {
-      cargarDatosEjemplo();
-      pintarEmpresa();
-      actualizarGlobo();
-      irA('resumen');
-      aviso('Datos restablecidos');
-    },
-  });
+  try {
+    await Api.actualizarEmpresa(estado.empresa.id, datos);
+    Object.assign(estado.empresa, datos);
+    $('#emp-sigla').textContent  = siglas(razon);
+    $('#emp-nombre').textContent = razon;
+    aviso('Datos guardados');
+  } catch (e) {
+    aviso(e.message, 'error');
+  } finally {
+    if (boton) boton.disabled = false;
+  }
 }

@@ -166,7 +166,7 @@ La lámina completa está en `documentacion/marca/`.
 
 - **El pago.** No hay pasarela real: la compra se registra en la base, pero no se cobra nada.
 - **El código QR.** Es un patrón visual, todavía no lo lee un escáner.
-- **El panel de empresas.** Todavía guarda su información en el navegador. La app de pasajeros ya trabaja contra Supabase; conectar el panel es la siguiente etapa.
+- **Las paradas.** El panel arma el recorrido de una ruta escogiendo del catálogo de paradas existentes. Agregar una parada nueva requiere sus coordenadas, así que todavía no se puede hacer desde el panel.
 
 ---
 

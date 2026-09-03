@@ -35,7 +35,6 @@ document.addEventListener('click', (e) => {
     'nuevo-chofer': nuevoChofer,
     'marcar-reportes': marcarReportesVistos,
     'guardar-empresa': guardarEmpresa,
-    'restablecer': restablecerDemo,
     'cerrar-modal': cerrarModal,
     'abrir-menu': abrirMenu,
     'cerrar-menu': cerrarMenu,
@@ -44,14 +43,24 @@ document.addEventListener('click', (e) => {
 });
 
 /* ---------- Guardar desde el modal ---------- */
-$('#modal-guardar').addEventListener('click', () => {
-  if (typeof _alGuardar === 'function') {
+$('#modal-guardar').addEventListener('click', async (e) => {
+  if (typeof _alGuardar !== 'function') return cerrarModal();
+
+  // Guardar ahora implica esperar a la base. Se bloquea el botón para
+  // que dos clics seguidos no creen el registro dos veces.
+  const boton = e.currentTarget;
+  const texto = boton.textContent;
+  boton.disabled = true;
+  boton.textContent = 'Guardando…';
+
+  try {
     // Si la función devuelve false, el modal se queda abierto
     // mostrando el error de validación.
-    const ok = _alGuardar();
+    const ok = await _alGuardar();
     if (ok !== false) cerrarModal();
-  } else {
-    cerrarModal();
+  } finally {
+    boton.disabled = false;
+    boton.textContent = texto;
   }
 });
 
@@ -84,16 +93,35 @@ document.addEventListener('keydown', (e) => {
   $(sel).addEventListener('keydown', (e) => { if (e.key === 'Enter') entrar(); });
 });
 
-/* ---------- Arranque ---------- */
-(function iniciar() {
-  // Primera vez, o datos incompletos: cargamos el ejemplo
-  if (!estado.empresa || !estado.rutas || !estado.flota || !estado.choferes || !estado.salidas || !estado.reportes) {
-    cargarDatosEjemplo();
-  }
+/* ---------- Activar cuenta desde la pantalla de acceso ---------- */
+const linkActivar = $('#link-activar');
+if (linkActivar) linkActivar.addEventListener('click', (e) => {
+  e.preventDefault();
+  activarCuenta();
+});
 
-  if (estado.sesion) {
-    mostrarPanel();
-  } else {
+/* ---------- Arranque ----------
+   Si ya había una sesión abierta, se entra directo. Si no, se muestra
+   el acceso. En ambos casos los datos vienen de la base: el panel ya no
+   guarda nada en el navegador. */
+(async function iniciar() {
+  cargando(true);
+  try {
+    estado.sesion = await Api.sesionActual();
+
+    if (estado.sesion) {
+      await cargarDatos();
+      mostrarPanel();
+    } else {
+      $('#acceso').style.display = 'flex';
+    }
+  } catch (e) {
+    // La sesión existía pero los datos no se pudieron cargar: se vuelve
+    // al acceso con el motivo a la vista.
+    if (estado.sesion) { await Api.salir(); estado.sesion = null; }
     $('#acceso').style.display = 'flex';
+    mostrarError('#acceso-error', e.message);
+  } finally {
+    cargando(false);
   }
 })();

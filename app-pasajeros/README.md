@@ -129,7 +129,7 @@ Cosas resueltas de forma simulada, para trabajarlas en las siguientes etapas:
 
 - **El pago es simulado.** La compra y el tiquete se registran de verdad en la base, pero no hay pasarela ni cobro.
 - **El QR es un patrón visual**, no un código escaneable. Para que un lector real lo lea hay que generar un QR estándar.
-- **El panel de empresas todavía no comparte esta base.** Sigue guardando su información en el navegador.
+- **El panel de empresas usa esta misma base.** Lo que la empresa publica ahí aparece acá sin recargar nada.
 
 ## Siguientes pasos sugeridos
 

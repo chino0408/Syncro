@@ -41,6 +41,12 @@
     </div>
     <button class="btn btn-primario btn-ancho" data-accion="entrar">Entrar al panel</button>
 
+    <p style="text-align:center; margin-top:14px;">
+      <a href="#" id="link-activar" style="font-size:12.5px; color:var(--cian); text-decoration:none;">
+        ¿Primera vez? Activá la cuenta de tu empresa
+      </a>
+    </p>
+
     <div class="cuentas-demo">
       <div class="cuentas-demo-titulo">Cuentas de prueba</div>
       <div class="cuentas-demo-fila"><span>Empresa</span><b>admin@transportescr.com</b> · <b>admin123456</b></div>
@@ -272,12 +278,12 @@
           </div>
         </div>
         <div class="bloque">
-          <div class="bloque-cabeza"><div><h2>Datos de la demo</h2><div class="sub">Solo para pruebas</div></div></div>
+          <div class="bloque-cabeza"><div><h2>Sesión</h2><div class="sub">Acceso al panel</div></div></div>
           <div class="bloque-cuerpo">
             <p style="font-size:13px; color:var(--tenue); line-height:1.65; margin-bottom:16px;">
-              Toda la información de este panel se guarda en este navegador. Podés restablecer los datos de ejemplo para volver al estado inicial.
+              Los datos de este panel viven en la base de datos de Syncro y son los mismos que ven los pasajeros en la app. Los cambios que hagas acá se reflejan de inmediato.
             </p>
-            <button class="btn btn-peligro btn-ancho" data-accion="restablecer">Restablecer datos de ejemplo</button>
+            <button class="btn btn-peligro btn-ancho" data-accion="salir">Cerrar sesión</button>
           </div>
         </div>
       </div>
@@ -308,8 +314,12 @@
 <div id="aviso" role="status" aria-live="polite"></div>
 
 <!-- El orden importa: cada archivo usa lo que definió el anterior -->
-<script src="js/almacenamiento.js"></script>
-<script src="js/datos.js"></script>
+<!-- Velo mientras se consulta la base al abrir -->
+<div id="cargando" class="cargando"><div class="giro"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script src="js/estado.js"></script>
 <script src="js/utilidades.js"></script>
 <script src="js/modal.js"></script>

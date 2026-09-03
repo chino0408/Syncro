@@ -31,12 +31,15 @@ function pintarReportes() {
   }).join('');
 }
 
-function marcarReportesVistos() {
-  const sinVer = estado.reportes.filter(r => !r.visto).length;
-  if (!sinVer) return aviso('No hay reportes sin ver');
-  estado.reportes.forEach(r => { r.visto = true; });
-  persistir();
-  pintarReportes();
-  actualizarGlobo();
-  aviso('Reportes marcados como vistos');
+async function marcarReportesVistos() {
+  const sinVer = estado.reportes.filter(r => !r.visto);
+  if (!sinVer.length) return aviso('No hay reportes sin ver');
+
+  try {
+    await Api.marcarReportesVistos(sinVer.map(r => r.id));
+    sinVer.forEach(r => { r.visto = true; });
+    pintarReportes();
+    actualizarGlobo();
+    aviso('Reportes marcados como vistos');
+  } catch (e) { aviso(e.message, 'error'); }
 }

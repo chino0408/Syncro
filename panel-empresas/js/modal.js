@@ -91,7 +91,9 @@ function confirmar({ titulo, sub, textoBoton, alConfirmar }) {
     titulo, sub,
     campos: [],
     guardarTexto: textoBoton || 'Eliminar',
-    alGuardar: () => { alConfirmar(); return true; },
+    // alConfirmar puede escribir en la base, así que se espera antes
+    // de cerrar. Si falla, ella misma avisa.
+    alGuardar: async () => { await alConfirmar(); return true; },
   });
   const boton = $('#modal-guardar');
   boton.classList.remove('btn-primario');

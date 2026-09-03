@@ -116,7 +116,7 @@ Por eso agregar una pantalla nueva de mantenimiento es corto: se definen los cam
 
 ## Límites de esta versión
 
-- **Este panel todavía no está conectado a la base.** Guarda todo en el navegador. La app de pasajeros ya trabaja contra Supabase (PostgreSQL); conectar el panel a la misma base es la siguiente etapa, replicando el patrón `config.js` + `api.js` que usa la app.
+- **Las paradas se escogen de un catálogo.** Al armar el recorrido de una ruta, los nombres tienen que existir ya en la tabla `parada`, porque una parada nueva necesita coordenadas y el panel no las pide todavía. Si escribís un nombre desconocido, el panel avisa cuál es y no guarda la ruta a medias.
 - **Los datos de ejemplo se generan al abrir**, incluyendo las salidas del día y las ventas simuladas.
 - **Una sola empresa.** El acceso valida contra la empresa de ejemplo; el sistema multiempresa llega con el backend.
 

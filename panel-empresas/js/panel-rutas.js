@@ -2,6 +2,16 @@
    Rutas publicadas: es donde la empresa define el precio del
    tiquete y las paradas que ve el pasajero. */
 
+/* Las paradas son un catálogo compartido: guardan nombre y coordenadas,
+   y esas coordenadas son las que dibujan el recorrido en el mapa de la
+   app. Por eso el panel no puede inventar una parada nueva desde un
+   campo de texto: no sabría dónde ponerla. */
+function errorDeParadas(faltantes) {
+  const nombres = faltantes.map(p => '"' + p + '"').join(', ');
+  return 'Estas paradas no existen en el catálogo: ' + nombres +
+         '. Revisá que estén bien escritas, o pedí que se agreguen con sus coordenadas.';
+}
+
 function rutasFiltradas() {
   const f = estado.filtros.rutas.trim().toLowerCase();
   if (!f) return estado.rutas;
@@ -107,14 +117,20 @@ function nuevaRuta() {
     sub: 'Los pasajeros van a ver esta ruta y su precio en la app.',
     campos: camposRuta(null),
     guardarTexto: 'Publicar ruta',
-    alGuardar: () => {
+    alGuardar: async () => {
       const datos = leerRuta();
       if (!datos) return false;
-      estado.rutas.push({ id: nuevoId('r'), ...datos });
-      persistir();
-      pintarRutas();
-      aviso('Ruta publicada');
-      return true;
+
+      const { ids, faltantes } = Api.resolverParadas(datos.paradas, estado.paradas);
+      if (faltantes.length) { errorModal(errorDeParadas(faltantes)); return false; }
+
+      try {
+        const id = await Api.crearRuta(estado.empresaId, datos, ids);
+        estado.rutas.push({ id, ...datos });
+        pintarRutas();
+        aviso('Ruta publicada');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -128,14 +144,21 @@ function editarRuta(id) {
     sub: 'Los cambios se reflejan de inmediato en la app de los pasajeros.',
     campos: camposRuta(r),
     guardarTexto: 'Guardar cambios',
-    alGuardar: () => {
+    alGuardar: async () => {
       const datos = leerRuta();
       if (!datos) return false;
-      Object.assign(r, datos);
-      persistir();
-      pintarRutas();
-      aviso('Ruta actualizada');
-      return true;
+
+      const { ids, faltantes } = Api.resolverParadas(datos.paradas, estado.paradas);
+      if (faltantes.length) { errorModal(errorDeParadas(faltantes)); return false; }
+
+      try {
+        await Api.actualizarRuta(r.id, datos, ids);
+        Object.assign(r, datos);
+        await recargarSalidas();   // el precio y el estado afectan las salidas
+        pintarRutas();
+        aviso('Ruta actualizada');
+        return true;
+      } catch (e) { errorModal(e.message); return false; }
     },
   });
 }
@@ -151,12 +174,14 @@ function borrarRuta(id) {
       ? `Esta ruta tiene ${salidasLigadas} salidas programadas hoy. Se cancelan junto con la ruta y deja de aparecer en la app.`
       : 'La ruta deja de aparecer en la app de los pasajeros.',
     textoBoton: 'Eliminar ruta',
-    alConfirmar: () => {
-      estado.rutas = estado.rutas.filter(x => x.id !== id);
-      estado.salidas = estado.salidas.filter(s => s.rutaId !== id);
-      persistir();
-      pintarRutas();
-      aviso('Ruta eliminada');
+    alConfirmar: async () => {
+      try {
+        await Api.borrarRuta(id);
+        estado.rutas = estado.rutas.filter(x => x.id !== id);
+        estado.salidas = estado.salidas.filter(s => s.rutaId !== id);
+        pintarRutas();
+        aviso('Ruta eliminada');
+      } catch (e) { aviso(e.message, 'error'); }
     },
   });
 }
