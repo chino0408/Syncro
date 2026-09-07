@@ -75,7 +75,6 @@ syncro-admin/
 ├── assets/icons/           Logo e íconos
 └── js/
     ├── almacenamiento.js   Guardar y leer del navegador
-    ├── datos.js            Datos de ejemplo de la empresa
     ├── estado.js           Estado y generación de salidas
     ├── utilidades.js       Formato, avisos, buscadores
     ├── modal.js            Ventana de alta y edición
