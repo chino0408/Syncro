@@ -38,7 +38,7 @@ function pintarPagos() {
 
   if (!lista.length) {
     cont.innerHTML = plantillaVacio('tarjeta', 'No tenés métodos de pago',
-      'Agregá una tarjeta o SINPE Móvil para comprar tiquetes más rápido.');
+      'Agregá una tarjeta para comprar tiquetes más rápido.');
     return;
   }
 
@@ -47,9 +47,7 @@ function pintarPagos() {
       <div class="fila-izq">
         <div class="fila-icono">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            ${m.icono === 'tarjeta'
-              ? '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>'
-              : '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>'}
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
           </svg>
         </div>
         <div style="min-width:0">
@@ -64,45 +62,20 @@ function pintarPagos() {
 }
 
 function abrirNuevoPago() {
-  $('#np-tipo').value = 'tarjeta';
   $('#np-numero').value = '';
   ocultarError('#np-error');
-  cambiarTipoPago();
   ir('nuevo-pago');
 }
 
-/* El campo cambia según sea tarjeta o SINPE */
-function cambiarTipoPago() {
-  const tipo = $('#np-tipo').value;
-  const esTarjeta = tipo === 'tarjeta';
-  $('#np-label').textContent = esTarjeta ? 'Últimos 4 dígitos' : 'Número de teléfono';
-  $('#np-numero').placeholder = esTarjeta ? '4821' : '8888-4821';
-  $('#np-ayuda').textContent = esTarjeta
-    ? 'Por seguridad solo guardamos los últimos cuatro dígitos.'
-    : 'El número asociado a tu cuenta SINPE Móvil.';
-}
-
 async function guardarPago() {
-  const tipo = $('#np-tipo').value;
   const valor = $('#np-numero').value.trim();
-  let tipo_guardar, ref_guardar;
 
-  if (tipo === 'tarjeta') {
-    if (!/^\d{4}$/.test(valor)) {
-      return mostrarError('#np-error', 'Escribí los últimos cuatro dígitos de la tarjeta.');
-    }
-    tipo_guardar = 'tarjeta'; ref_guardar = valor;
-  } else {
-    const limpio = valor.replace(/\D/g, '');
-    if (limpio.length !== 8) {
-      return mostrarError('#np-error', 'El teléfono debe tener ocho dígitos.');
-    }
-    const formateado = limpio.slice(0, 4) + '-' + limpio.slice(4);
-    tipo_guardar = 'sinpe'; ref_guardar = formateado;
+  if (!/^\d{4}$/.test(valor)) {
+    return mostrarError('#np-error', 'Escribí los últimos cuatro dígitos de la tarjeta.');
   }
 
   try {
-    await Api.agregarMetodo(estado.usuarioId, tipo_guardar, ref_guardar);
+    await Api.agregarMetodo(estado.usuarioId, 'tarjeta', valor);
     estado.metodosPago = await Api.metodosDePago();
     ir('pagos');
     toast('Método de pago agregado');

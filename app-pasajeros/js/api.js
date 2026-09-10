@@ -180,13 +180,11 @@ const Api = {
       .order('creado_en');
     if (error) throw new Error(mensajeDeError(error));
     return (data || []).map(m => ({
-      id: String(m.id),
-      icono: m.tipo === 'tarjeta' ? 'tarjeta' : 'movil',
-      nombre: m.tipo === 'tarjeta'
-        ? `Tarjeta terminada en ${m.referencia}`
-        : 'SINPE Móvil',
-      detalle: m.tipo === 'tarjeta' ? 'Guardada en tu cuenta' : m.referencia,
-    }));
+  id: String(m.id),
+  icono: 'tarjeta',
+  nombre: `Tarjeta terminada en ${m.referencia}`,
+  detalle: 'Guardada en tu cuenta',
+}));
   },
 
   async agregarMetodo(usuarioId, tipo, referencia) {

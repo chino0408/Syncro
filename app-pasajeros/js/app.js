@@ -76,8 +76,6 @@ document.addEventListener('click', (e) => {
 document.addEventListener('change', (e) => {
   const pref = e.target.closest('[data-preferencia]');
   if (pref) guardarPreferencia(pref.dataset.preferencia, pref.checked);
-  const tipo = e.target.closest('#np-tipo');
-  if (tipo) cambiarTipoPago();
 });
 
 // Buscador de rutas
