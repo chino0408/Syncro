@@ -17,7 +17,7 @@ function mostrarBotonInstalar() {
   btn.id = 'btn-instalar';
   btn.className = 'btn btn-primario';
   btn.textContent = 'Instalar Syncro';
-  btn.style.cssText = 'position:fixed;left:16px;right:16px;bottom:84px;z-index:60';
+    btn.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:358px;bottom:84px;z-index:60';
 
   btn.addEventListener('click', async () => {
     if (!promptInstalacion) return;
